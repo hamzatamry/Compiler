@@ -1,7 +1,6 @@
-# Universal Language
-
 # Projet_Compilation
-    python, javascript, c, c++, java, typescript, shell script, batch script, php, Pascal
+    Nom du langage : Universal
+    Liste des langages inclus : python, javascript, c, c++, java, typescript, shell script, batch script, Pascal
 
 # les opérateurs
     opérateur affectation
