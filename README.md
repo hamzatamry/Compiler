@@ -2,18 +2,19 @@
     Nom du langage : Universal
     Liste des langages inclus : python, javascript, c, c++, java, typescript, shell script, batch script, Pascal
 
-# les opérateurs
-    opérateur affectation
+## les opérateurs
+
+    - opérateur affectation
         = affect <- := 
 
-    opérateurs arithmétiques
+    - opérateurs arithmétiques
         + add  
         - minus 
         * mult
         / div per
         % mod modulo
         
-    opérateurs de traitement de bits
+    - opérateurs de traitement de bits
         ^  
         ~ 
         << 
@@ -21,12 +22,12 @@
         & 
         |
 
-    opérateurs logiques
+    - opérateurs logiques
         && and 
         || or 
         ! not 
 
-    opérateurs de comparaison
+    - opérateurs de comparaison
 
         < lss
         > gtr
@@ -36,7 +37,7 @@
         ===
         in 
         
-    Autres opérateurs
+    - Autres opérateurs
         **
         += 
         -=
@@ -51,7 +52,7 @@
         --
         ,
 
-# les types
+## les types
     int (c, c++, java), Integer(java, c#), number(typescript, PLSQL)
     float (c, c++, java), 
     string, String, str
@@ -60,9 +61,8 @@
     var, let, $, string, String, Byte, auto, char
 
      
-# les structures conditionnelles du langage
+## les structures conditionnelles du langage
     
-    ####
     if (<condition>) 
     {
 
@@ -76,10 +76,8 @@
 
     }
     
-    ####
     <condition> ? <if_true> : <if_false> 
     
-    ####
     if <condition>:
         ___
     elif <condition>:
@@ -87,11 +85,10 @@
     else:
         ___
 
-    ####
 
 
 
-# les boucles à prendre en considération
+## les boucles à prendre en considération
 
     for (<initial>; <condition>; <step>) 
     {
@@ -132,7 +129,8 @@
     }
     
 
-# les instruction de saisi/affichage de base (comme printf, scanf en langage C)
+## les instruction de saisi/affichage de base (comme printf, scanf en langage C)
+
     printf()
     scanf()
     print()
@@ -148,16 +146,14 @@
     gets()
     cout << ___;
     cin >> ____;
-
     fopen("", "")
     open("", "")
     fclose()
     close()
-
     echo
 
 
-# Autre, comme:  ( , [ , {...
+## Autre, comme:  ( , [ , {...
 
     <return_type> <function_name>([<variable_declaration>, ...]) 
     {
@@ -198,7 +194,7 @@
 
     <function_name>([parameters, ...]);
 
-# Une grammaireLL(1)
+## Une grammaireLL(1)
 
     G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
 
@@ -223,9 +219,9 @@
     <variable_name> : <variable_type> [:][= <value>]; (python)
     <var_name> is <var_type> [:][= <value>]; (dyalna)
 
-# Tout autre élément qui vous semble nécessaire
+## Tout autre élément qui vous semble nécessaire
 
-# Affectation des roles
+## Affectation des roles
     hamza + zakaria = VAR_DECLARATION, BOUCLE, EXCEPTION
     abdelwadoud + rida = CONTROLE, BLOCK_PASCAL
     yasser + said = AFFECTATION, FONCTION, APPEL_FONCTION
