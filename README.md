@@ -211,7 +211,7 @@
     r:                  |  AFFECTATION
     r:                  |  FONCTION
     r:                  |  EXCEPTION
-    r: BLOCK           ->  BLOCK_PASCAL                   
+    r: BLOCK           ->  BLOCK_PASCAL          
 
     [const] <variable_type> <variable_name> [:][= <value>]; (C, C++, Java, C#) 
     let <variable_name> : <variable_type> [:][= <value>]; (typescript, javascript)
