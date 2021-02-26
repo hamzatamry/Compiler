@@ -1,0 +1,21 @@
+control: if_stmt
+
+
+if_stmt
+	: IF ['(' expression ')' block [elif_stmt | else_block | e]  |  expresssion ':' block]
+	| SWITCH '(' expression ')' block
+	end
+
+
+elif_stmt:
+    | 'elif' expression ':' block [elif_stmt | else_block] 
+
+else_block: 'else' [':' | e] block 
+
+shorthand: expression '?' statement ':' statement
+
+block: statement
+	|
+end
+	: ';'
+	| e
