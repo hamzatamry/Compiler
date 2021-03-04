@@ -7,6 +7,7 @@
 
 *   [regular-expressions-in-c](https://www.geeksforgeeks.org/regular-expressions-in-c/)
 *   [C-Grammar](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#expression-statement)
+*   [Python-Grammar](https://docs.python.org/3/reference/grammar.html)
 
 ## Affectation des roles
     
