@@ -1,7 +1,7 @@
 # Projet_Compilation
     
-    Nom du langage : Universal (one_for_all)
-    Liste des langages inclus : python, javascript, c, c++, java, typescript, shell script, batch script, Pascal
+*   Nom du langage : Universal (one_for_all)
+*   Liste des langages inclus : python, javascript, c, c++, java, typescript, shell script, batch script, Pascal
 
 ## Regular expressions docs
 
@@ -9,55 +9,61 @@
 
 ## les opérateurs
 
-    - opérateur affectation
-        = affect <- := 
-
-    - opérateurs arithmétiques
-        + add  
-        - minus 
-        * mult
-        / div per
-        % mod modulo
+-   opérateur affectation
         
-    - opérateurs de traitement de bits
-        ^  
-        ~ 
-        << 
-        >> 
-        & 
-        |
+    - = affect <- := 
 
-    - opérateurs logiques
-        && and 
-        || or 
-        ! not 
+-   opérateurs arithmétiques
 
-    - opérateurs de comparaison
-
-        < lss
-        > gtr
-        <= leq
-        => GEQ
-        == equ is
-        ===
-        in 
+    -   + add  
+    -    - minus 
+    -    * mult
+    -    / div per
+    -    % mod modulo
         
-    - Autres opérateurs
-        **
-        += 
-        -=
-        *=
-        /= 
-        %= 
-        ^= 
-        &=
-        |=
-        **= 
-        ++ 
-        --
-        ,
+-   opérateurs de traitement de bits
+
+    -   ^  
+    -   ~ 
+    -   << 
+    -   >> 
+    -   & 
+    -   |
+
+-   opérateurs logiques
+
+    -   && and 
+    -   || or 
+    -   ! not 
+
+-   opérateurs de comparaison
+
+    -   < lss
+    -   > gtr
+    -   <= leq
+    -   => GEQ
+    -   == equ is
+    -   ===
+    -   in 
+        
+-   Autres opérateurs
+
+    -   **
+    -    += 
+    -   -=
+    -   *=
+    -   /= 
+    -   %= 
+    -   ^= 
+    -   &=
+    -   |=
+    -   **= 
+    -   ++ 
+    -   --
+    -   ,
 
 ## les types
+
     int (c, c++, java), Integer(java, c#), number(typescript, PLSQL)
     float (c, c++, java), 
     string, String, str
@@ -89,8 +95,6 @@
         ___
     else:
         ___
-
-
 
 
 ## les boucles à prendre en considération
@@ -201,8 +205,7 @@
 
 ## Une grammaireLL(1)
 
-    G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
-
+-   G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
     r: S               ->  S'$
     r: S'              ->  INSTS
     r:                  |  BLOCK 
@@ -223,6 +226,8 @@
     const <variable_name> : <variable_type> [:][= <value>]; (typescript, javascript)
     <variable_name> : <variable_type> [:][= <value>]; (python)
     <var_name> is <var_type> [:][= <value>]; (dyalna)
+
+-   Loop Grammar
 
 ## Tout autre élément qui vous semble nécessaire
 
