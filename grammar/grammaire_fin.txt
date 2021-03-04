@@ -97,10 +97,13 @@ PARAMETER               -> ID TYPE
 VAR_DECLARATION         -> VARS' VAR_DECLARATIONS   
                         | epsilon
 
-VARS'                   -> const TYPE IDS DEC_AFFECTATION
+VARS'                   -> const TYPE IDS_CONST 
                         | let IDS : TYPE 
                         | IDS : TYPE 
                         | IDS is TYPE  
+
+IDS_CONST               -> ID DEC_AFFECTATION
+                        |  ID DEC_AFFECTATION , IDS_CONST 
 
 DEC_AFFECTATION         ->   :=  EXPRESSION 
                         |      :   EXPRESSION 
@@ -160,7 +163,7 @@ DO_WHILE                ->   do { INSTRUCTIONS } while ( CONDITION );
 
 
                                            ###### Terminaux ###### 
-TYPE                    ->   string | sumber | int | boolean | bool | char    integer | string | boolean
+TYPE                    ->   string | number | int | boolean | bool | char    | integer | boolean
 
 ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
 
