@@ -9,6 +9,11 @@
 *   [C-Grammar](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#expression-statement)
 *   [Python-Grammar](https://docs.python.org/3/reference/grammar.html)
 
+## Tools
+
+*   [Context-Free-Grammar-Tool](https://smlweb.cpsc.ucalgary.ca/start.html)
+*   [Grammophone](https://mdaines.github.io/grammophone/#)
+
 ## Affectation des roles
     
 *   hamza + zakaria = VAR_DECLARATION, BOUCLE, EXCEPTION

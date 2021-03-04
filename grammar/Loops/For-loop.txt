@@ -1,6 +1,6 @@
-iteration_statement
-	: WHILE '(' expression ')' statement
-	| DO statement WHILE '(' expression ')' ';'
-	| FOR '(' expression_statement expression_statement ')' statement
-	| FOR '(' expression_statement expression_statement expression ')' statement
-	;
+<iteration_statement>  ->   for (<var_declaration>; <condition>; <step>) { <statement> }
+                        |   for (<var_declaration>; <condition>; <step>) <statement> 
+                        |   for (<var_declaration> : <iterable>) { <statement> }   
+                        |   for (<var_declaration> : <iterable>) <statement>
+                        |   for <iterator> in <iterable>: \n\r\t <statement>
+                        |   for <identificateur> := <nombre> to <nombre> do <statement>; 
