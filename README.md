@@ -10,9 +10,11 @@
 ## les opérateurs
 
 -   opérateur affectation
-        
-    - = affect <- := 
-
+    
+    ```
+        = affect <- := 
+    ```
+   
 -   opérateurs arithmétiques
 
     ```
@@ -36,9 +38,11 @@
 
 -   opérateurs logiques
 
-    -   && and 
-    -   || or 
-    -   ! not 
+    ```
+        && and 
+        || or 
+        ! not 
+    ```
 
 -   opérateurs de comparaison
 
@@ -54,19 +58,21 @@
         
 -   Autres opérateurs
 
-    -   **
-    -    += 
-    -   -=
-    -   *=
-    -   /= 
-    -   %= 
-    -   ^= 
-    -   &=
-    -   |=
-    -   **= 
-    -   ++ 
-    -   --
-    -   ,
+    ```
+        **
+        += 
+        -=
+        *=
+        /= 
+        %= 
+        ^= 
+        &=
+        |=
+        **= 
+        ++ 
+        --
+        ,
+    ```
 
 ## les types
 
