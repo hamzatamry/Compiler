@@ -15,20 +15,24 @@
 
 -   opérateurs arithmétiques
 
-    -   + add  
-    -    - minus 
-    -    * mult
-    -    / div per
-    -    % mod modulo
+    ```
+        + add  
+        - minus 
+        * mult
+        / div per
+        % mod modulo
+    ```
         
 -   opérateurs de traitement de bits
 
-    -   ^  
-    -   ~ 
-    -   << 
-    -   >> 
-    -   & 
-    -   |
+    ```
+        ^  
+        ~ 
+        << 
+        >> 
+        & 
+        |
+    ```
 
 -   opérateurs logiques
 
@@ -38,13 +42,15 @@
 
 -   opérateurs de comparaison
 
-    -   < lss
-    -   > gtr
-    -   <= leq
-    -   => GEQ
-    -   == equ is
-    -   ===
-    -   in 
+    ```
+        < lss
+        > gtr
+        <= leq
+        => GEQ
+        == equ is
+        ===
+        in 
+    ```
         
 -   Autres opérateurs
 
