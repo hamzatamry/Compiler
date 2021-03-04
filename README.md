@@ -36,7 +36,17 @@ r: BLOCK           ->  BLOCK_PASCAL
 ```
 *   VAR_DECLARATION
 ```
-
+VAR_DECLARATION -> VARS' VAR_DECLARATIONS
+                        | eps
+VARS'          -> const TYPE CONST' {, CONST'}      
+                        | let ID : TYPE OPT {, ID : TYPE OPT}      
+                        | ID : TYPE OPT {, ID : TYPE OPT}    
+                        | ID is TYPE OPT {, ID is TYPE OPT} 
+CONST'         -> AFFECTATION      // make sure this case will be added in AFFECTATION rule(AFFECTAION_ID) 
+                        | ID 
+OPT           ->  eps
+                        | AFFECTATION      // make sure this case will be added in AFFECTATION rule(AFFECTAION_TYPE)
+TYPE          -> String | Number | int | boolean | bool | char   
 ```
 *   BOUCLE
 ```
@@ -48,7 +58,24 @@ r: BLOCK           ->  BLOCK_PASCAL
 ```
 *   CONTROLE
 ```
+if_stmt
+	: IF ['(' expression ')' block [elif_stmt | else_block | e]  |  expresssion ':' block]
+	| SWITCH '(' expression ')' block
+	end
 
+
+elif_stmt:
+    | 'elif' expression ':' block [elif_stmt | else_block] 
+
+else_block: 'else' [':' | e] block 
+
+shorthand: expression '?' statement ':' statement
+
+block: statement
+	|
+end
+	: ';'
+	| e
 ```
 *   BLOCK_PASCAL
 ```
@@ -56,15 +83,53 @@ r: BLOCK           ->  BLOCK_PASCAL
 ```
 *   AFFECTATION
 ```
+AFFECTATION' ->  ID :=  EXPRESSION ;
+              |  ID :   EXPRESSION ;
+              |  ID =   EXPRESSION ;
+              |  ID <-  EXPRESSION ;
 
+AFFECTATION  ->  const AFFECTATION'
+              |  AFFECTATION'
+
+EXPRESSION   ->   TERM 
+              | TERM OPERATEURADD TERM
+
+TERM        ->    FACTEUR OPERATEURMULT FACTEUR
+              | FACTEUR
+              | FACTEUR OPERATEURSPECIAUX
+
+
+FACTEUR      -> ID 
+              | NUMBER 
+              | ( EXPRESSION )
+
+OPERATEURSPECIAUX ->  ++
+                    | -- 
+                    
+OPERATEURADD      ->   + 
+                    |  -
+
+OPERATEURMULT    ->   *
+                    |  \
+                    |  % 
+                    |  mod
+                    |  modulo 
 ```
 *   FONCTION
 ```
+FONCTION     ->  TYPE  FONCTION'
+              |   function FONCTION'
+FONCTION'    -> ID(PARAMETERS){ INSTS };
 
+PARAMETERS    -> eps
+              | PARAMETER 
+
+PARAMETER     ->ID TYPE 
+              | PARAMETER , ID TYPE
 ```
 *   APPEL_FONCTION
 ```
-
+APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
 ```
 * AUTRES
 ```
