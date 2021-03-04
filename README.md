@@ -305,6 +305,8 @@ APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
     ```
     *   Pascal
     ```
+    while (condition) do 
+        S;
     ```
 
 *   Do-while-loop
@@ -320,6 +322,9 @@ APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
     ```
     *   Pascal
     ```
+    repeat 
+        STATEMENTS  
+    until CONDITION; 
     ```
 
 ## les instruction de saisi/affichage de base (comme printf, scanf en langage C)
