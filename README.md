@@ -15,22 +15,25 @@
 
 ## GrammaireLL(1)
 
--   G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
-    r: S               ->  S'$
-    r: S'              ->  INSTS
-    r:                  |  BLOCK 
-    r:                  |  eps
-    r: INSTS           ->  INST; INSTS
-    r:                  |  eps
-    r: INST            ->  VAR_DECLARATION
-    r:                  |  BOUCLE
-    r:                  |  CONTROLE
-    r:                  |  APPEL_FONCTION
-    r:                  |  AFFECTATION
-    r:                  |  FONCTION
-    r:                  |  EXCEPTION
-    r: BLOCK           ->  BLOCK_PASCAL          
+*   G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
 
+*   BLOCK
+```
+r: S               ->  S'$
+r: S'              ->  INSTS
+r:                  |  BLOCK 
+r:                  |  eps
+r: INSTS           ->  INST; INSTS
+r:                  |  eps
+r: INST            ->  VAR_DECLARATION
+r:                  |  BOUCLE
+r:                  |  CONTROLE
+r:                  |  APPEL_FONCTION
+r:                  |  AFFECTATION
+r:                  |  FONCTION
+r:                  |  EXCEPTION
+r: BLOCK           ->  BLOCK_PASCAL          
+```
 *   VAR_DECLARATION
 ```
 
