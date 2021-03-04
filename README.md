@@ -7,6 +7,67 @@
 
 *    [docs](https://www.geeksforgeeks.org/regular-expressions-in-c/)
 
+## Affectation des roles
+    
+*   hamza + zakaria = VAR_DECLARATION, BOUCLE, EXCEPTION
+*   abdelwadoud + rida = CONTROLE, BLOCK_PASCAL
+*   yasser + said = AFFECTATION, FONCTION, APPEL_FONCTION
+
+## GrammaireLL(1)
+
+-   G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
+    r: S               ->  S'$
+    r: S'              ->  INSTS
+    r:                  |  BLOCK 
+    r:                  |  eps
+    r: INSTS           ->  INST; INSTS
+    r:                  |  eps
+    r: INST            ->  VAR_DECLARATION
+    r:                  |  BOUCLE
+    r:                  |  CONTROLE
+    r:                  |  APPEL_FONCTION
+    r:                  |  AFFECTATION
+    r:                  |  FONCTION
+    r:                  |  EXCEPTION
+    r: BLOCK           ->  BLOCK_PASCAL          
+
+*   VAR_DECLARATION
+```
+
+```
+*   BOUCLE
+```
+
+```
+*   EXCEPTION
+```
+
+```
+*   CONTROLE
+```
+
+```
+*   BLOCK_PASCAL
+```
+
+```
+*   AFFECTATION
+```
+
+```
+*   FONCTION
+```
+
+```
+*   APPEL_FONCTION
+```
+
+```
+* Autres
+```
+
+```
+
 ## les opérateurs
 
 -   opérateur affectation
@@ -83,7 +144,14 @@
     float, long, double, short int, long int, long long, long double, unsigned, boolean, bool, Boolean, 
     var, let, $, string, String, Byte, auto, char
 
-     
+## Declaration des variables
+
+    [const] <variable_type> <variable_name> [:][= <value>]; (C, C++, Java, C#) 
+    let <variable_name> : <variable_type> [:][= <value>]; (typescript, javascript)
+    const <variable_name> : <variable_type> [:][= <value>]; (typescript, javascript)
+    <variable_name> : <variable_type> [:][= <value>]; (python)
+    <var_name> is <var_type> [:][= <value>]; (dyalna)
+
 ## les structures conditionnelles du langage
     
     if (<condition>) 
@@ -215,35 +283,5 @@
 
     <function_name>([parameters, ...]);
 
-## Une grammaireLL(1)
-
--   G = <T={:, =, const, ;, end}, NT={S, INSTS}, S, P={r1, ...}>
-    r: S               ->  S'$
-    r: S'              ->  INSTS
-    r:                  |  BLOCK 
-    r:                  |  eps
-    r: INSTS           ->  INST; INSTS
-    r:                  |  eps
-    r: INST            ->  VAR_DECLARATION
-    r:                  |  BOUCLE
-    r:                  |  CONTROLE
-    r:                  |  APPEL_FONCTION
-    r:                  |  AFFECTATION
-    r:                  |  FONCTION
-    r:                  |  EXCEPTION
-    r: BLOCK           ->  BLOCK_PASCAL          
-
-    [const] <variable_type> <variable_name> [:][= <value>]; (C, C++, Java, C#) 
-    let <variable_name> : <variable_type> [:][= <value>]; (typescript, javascript)
-    const <variable_name> : <variable_type> [:][= <value>]; (typescript, javascript)
-    <variable_name> : <variable_type> [:][= <value>]; (python)
-    <var_name> is <var_type> [:][= <value>]; (dyalna)
-
--   Loop Grammar
-
 ## Tout autre élément qui vous semble nécessaire
 
-## Affectation des roles
-    hamza + zakaria = VAR_DECLARATION, BOUCLE, EXCEPTION
-    abdelwadoud + rida = CONTROLE, BLOCK_PASCAL
-    yasser + said = AFFECTATION, FONCTION, APPEL_FONCTION
