@@ -5,7 +5,7 @@
 
 ## Docs
 
-*   [regular-expressions-in-c-excp](https://www.geeksforgeeks.org/regular-expressions-in-c/)
+*   [regular-expressions-in-c](https://www.geeksforgeeks.org/regular-expressions-in-c/)
 *   [C-Grammar](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#expression-statement)
 
 ## Affectation des roles
