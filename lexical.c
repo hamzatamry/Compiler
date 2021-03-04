@@ -19,11 +19,11 @@ char Car_Cour;
 
 const char tokens[][20] = {   //taille 111
     "int", "Integer", "number", "float", "char", "string", "str", "long", "double",                                   
-    "short", "long", "long", "long", "unsigned", "boolean", "bool", "let", "$", "byte", "auto",                       
-    "program", "const", "var", "Begin", "end", "if", "then", "while", "do", "read", "write", "switch", "goto", "def", "function"                                 
-    ";", ".", ":", "+", "add", "-", "minus", "*", "mult", "/", "div", "per", "%", "mod",                    
+    "short", "unsigned", "boolean", "bool", "let", "$", "byte", "auto",                       
+    "program", "const", "var", "begin", "end", "if", "then", "while", "do", "read", "write", "switch", "goto", "def", "function" ,                               
+    ";", ".", ":", "+", "add", "-", "minus", "*", "mult", "/", "div", "per", "%%", "mod",                    
     "modulo", ",", "=", ":=", "affect", "<-", "<", "lss", "<=", "leq", ">", "gtr", ">=", "geq", "==" , "equ",      
-    "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%=", "^=", "&=", "|=", "++", "--",                      
+    "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
     "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "LE RESTE"                                 
     };
@@ -34,14 +34,15 @@ const char lexical_unit[][20] = {
     "INT_TOKEN", "INTEGER_TOKEN", "NUMBER_TOKEN", "FLOAT_TOKEN", "CHAR_TOKEN", "STRING_TOKEN", "STR_TOKEN", "LONG_TOKEN",
     "DOUBLE_TOKEN", "SHORT_TOKEN", "UNSIGNED_TOKEN", "BOOLEAN_TOKEN", "BOOL_TOKEN", "LET_TOKEN", "$_TOKEN", "BYTE_TOKEN", "AUTO_TOKEN",
     "PROGRAM_TOKEN", "CONST_TOKEN", "VAR_TOKEN", "BEGIN_TOKEN", "END_TOKEN", "IF_TOKEN", "THEN_TOKEN", "WHILE_TOKEN",
-    "DO_TOKEN", "READ_TOKEN", "WRITE_TOKEN", "SWITCH_TOKEN", "GOTO_TOKEN", "DEF_TOKEN", "FUNCTION_TOKEN", "PV_TOKEN", "PT_TOKEN", "PTS_TOKEN", "PLUS_TOKEN", "ADD_TOKEN", "MOINS_TOKEN", "MINUS_TOKEN",
-    "MULT_TOKEN","MULT1_TOKEN", "DIV_TOKEN","DIV1_TOKEN", "PER_TOKEN", "MOD_TOKEN", "MOD1_TOKEN", "MODULO_TOKEN", "VIR_TOKEN", "EG_TOKEN", 
-    "AFF_TOKEN", "AFF1_TOKEN","AFF2_TOKEN", "INF_TOKEN", "LSS_TOKEN", "INFEG_TOKEN", "LEQ_TOKEN", "SUP_TOKEN", "GTR_TOKEN", "SUPEG_TOKEN",
-    "GEQ_TOKEN", "EQU_TOKEN", "EQU1_TOKEN", "IS_TOKEN", "TRIPPLEEQU_TOKEN", "IN_TOKEN", "PUISS_TOKEN", "PUISSAFFEC_TOKEN", "ADDAFFEC_TOKEN",
-    "MINUSAFFEC_TOKEN", "MULTAFFEC_TOKEN", "DIVAFFEC_TOKEN", "MODAFFEC_TOKEN","BXORAFFEC_TOKEN", "AMPAFFEC_TOKEN", "BANDAFFEC_TOKEN", "BORAFFEC_TOKEN",
-    "DIFF_TOKEN", "PO_TOKEN", "PF_TOKEN", "DC_TOKEN", "FC_TOKEN", "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFT_SHIFT", "RIGHT_SHIFT",
-    "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN","EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN",
-    "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN", "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "ERREUR_TOKEN"
+    "DO_TOKEN", "READ_TOKEN", "WRITE_TOKEN", "SWITCH_TOKEN", "GOTO_TOKEN", "DEF_TOKEN", "FUNCTION_TOKEN", "PV_TOKEN", "PT_TOKEN", "PTS_TOKEN",
+    "PLUS_TOKEN", "ADD_TOKEN", "MOINS_TOKEN", "MINUS_TOKEN","MULT_TOKEN","MULT1_TOKEN", "DIV_TOKEN","DIV1_TOKEN", "PER_TOKEN", "MOD_TOKEN",
+    "MOD1_TOKEN", "MODULO_TOKEN", "VIR_TOKEN", "EG_TOKEN", "AFFECPASCAL_TOKEN", "AFFECT_TOKEN"," AFFECARROW_TOKEN", "INF_TOKEN", "LSS_TOKEN", 
+    "INFEG_TOKEN", "LEQ_TOKEN", "SUP_TOKEN", "GTR_TOKEN", "SUPEG_TOKEN","GEQ_TOKEN", "EQU_TOKEN", "EQU1_TOKEN", "IS_TOKEN", "TRIPPLEEQU_TOKEN",
+    "IN_TOKEN", "PUISS_TOKEN", "PUISSAFFEC_TOKEN", "ADDAFFEC_TOKEN", "MINUSAFFEC_TOKEN", "MULTAFFEC_TOKEN", "DIVAFFEC_TOKEN", "MODAFFEC_TOKEN",
+    "BXORAFFEC_TOKEN", "BANDAFFEC_TOKEN", "BORAFFEC_TOKEN","INCREM_TOKEN", "DECREM_TOKEN","DIFF_TOKEN", "PO_TOKEN", "PF_TOKEN", "DC_TOKEN", "FC_TOKEN",
+    "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
+    "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN","EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
+    "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "ERREUR_TOKEN"
     };
 
 typedef struct
@@ -55,7 +56,7 @@ TSym_Cour SYM_COUR;
 void ouvrir_fichier(char nom[20])
 {
     f = fopen(nom, "r");
-    g = fopen("../lex.txt", "w");
+    g = fopen("./lex.txt", "w");
     if (f == NULL || g == NULL)
         printf("erreur d'ouverture du fichier");
     else
@@ -79,7 +80,7 @@ bool isSeparator()
 
 int mot_cle()
 {
-    for (int i = 0; i < 111; i++)
+    for (int i = 0; i < 108; i++)
     {
         if (strcmp(tokens[i], SYM_COUR.NOM) == 0)
             return i;
@@ -90,29 +91,33 @@ int mot_cle()
 void isID()
 {
     int n = strlen(SYM_COUR.NOM);
+    SYM_COUR.CODE = ID_TOKEN;
     if (n > 20)
     {
         SYM_COUR.CODE = ERREUR_TOKEN;
         ERREUR(ID_LONG_ERR);
     }
-    for (int i = 0; i < n; i++)
+    else
     {
-        char c = SYM_COUR.NOM[i];
-        if (i == 0 && !isalpha(c))
+        for (int i = 0; i < n; i++)
         {
-            SYM_COUR.CODE = ERREUR_TOKEN;
-            ERREUR(ID_INC_ERR);
-           
-        }
+            char c = SYM_COUR.NOM[i];
+            if (i == 0 && !isalpha(c))
+            {
+                SYM_COUR.CODE = ERREUR_TOKEN;
+                ERREUR(ID_INC_ERR);
+            
+            }
 
-        if (!isalpha(c) && !isdigit(c))
-        {
-            SYM_COUR.CODE = ERREUR_TOKEN; 
-            ERREUR(ID_INC_ERR);
-           
+            if (!isalpha(c) && !isdigit(c))
+            {
+                SYM_COUR.CODE = ERREUR_TOKEN; 
+                ERREUR(ID_INC_ERR);
+            }
+        }
+        
     }
-    SYM_COUR.CODE = ID_TOKEN;
-}
+    
 }
 
 bool isSpecial()
@@ -146,6 +151,22 @@ bool isSpecial()
     case ':':
         break;
     case '{':
+        break;
+    case '}':
+        break;
+    case '^':
+        break;
+    case '$':
+        break;
+    case '&':
+        break;
+    case '~': 
+        break;
+    case '|':
+        break;
+    case '!':
+        break;
+    case '?':
         break;
     default:
     return false;
@@ -203,15 +224,65 @@ void lire_specials()
         break;
     case '+':
         SYM_COUR.CODE = PLUS_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = ADDAFFEC_TOKEN;
+        if (Car_Cour == '+')
+            SYM_COUR.CODE = INCREM_TOKEN;
+        break;
+
         break;
     case '-':
         SYM_COUR.CODE = MOINS_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = MINUSAFFEC_TOKEN;
+        if (Car_Cour == '-')
+            SYM_COUR.CODE = DECREM_TOKEN;
         break;
     case '*':
         SYM_COUR.CODE = MULT_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = MULTAFFEC_TOKEN;
+        if (Car_Cour == '*')
+        {
+            SYM_COUR.CODE = PUISS_TOKEN;
+            lire_car();
+            if (Car_Cour == '=')
+                SYM_COUR.CODE = PUISSAFFEC_TOKEN;
+        }
         break;
     case '/':
         SYM_COUR.CODE = DIV_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = DIVAFFEC_TOKEN;
+        if (Car_Cour == '*')
+        {
+            strcpy(SYM_COUR.NOM,"/*");
+            SYM_COUR.CODE = DC_TOKEN;
+            afficher_token();
+            lire_car();
+            while (Car_Cour != '*' && Car_Cour != EOF)
+                lire_car();
+            if (Car_Cour == '*')
+            {
+                lire_car();
+                if (Car_Cour == '/')
+                {
+                    strcpy(SYM_COUR.NOM,"*/");
+                    SYM_COUR.CODE = FC_TOKEN; // check here
+                    lire_car(); 
+                }   
+            }
+            else
+            {
+                SYM_COUR.CODE = ERREUR_TOKEN;
+                ERREUR(COMMENT_ERR);
+            }
+               
+        }
         break;
     case ',':
         SYM_COUR.CODE = VIR_TOKEN;
@@ -229,6 +300,10 @@ void lire_specials()
             SYM_COUR.CODE = INFEG_TOKEN;
         if (Car_Cour == '>')
             SYM_COUR.CODE = DIFF_TOKEN;
+        if (Car_Cour == '<')
+            SYM_COUR.CODE = LEFTSHIFT_TOKEN;
+        if (Car_Cour == '-')
+            SYM_COUR.CODE = AFFECARROW_TOKEN;
         break;
 
     case '>':
@@ -236,15 +311,20 @@ void lire_specials()
         lire_car();
         if (Car_Cour == '=')
             SYM_COUR.CODE = SUPEG_TOKEN;
+        if (Car_Cour == '>')
+            SYM_COUR.CODE == RIGHTSHIFT_TOKEN;
         break;
     case '=':
         SYM_COUR.CODE = EG_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+        SYM_COUR.CODE = EQU_TOKEN;
         break;
     case ':':
         SYM_COUR.CODE = PTS_TOKEN;
         lire_car();
         if (Car_Cour == '=')
-            SYM_COUR.CODE = AFF_TOKEN;
+            SYM_COUR.CODE = AFFECPASCAL_TOKEN;
         break;
     case '{':
         SYM_COUR.CODE = ACO_TOKEN;         // check here 
@@ -274,6 +354,41 @@ void lire_specials()
             }
                
         }
+        break;
+    case '}':
+        SYM_COUR.CODE = ACF_TOKEN;
+        break;
+    case '^':
+        SYM_COUR.CODE = BXOR_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = BXORAFFEC_TOKEN;
+        break;
+    case '$':
+         SYM_COUR.CODE = $_TOKEN;
+        break;
+    case '&':
+        SYM_COUR.CODE = BAND_TOKEN;
+        lire_car();
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = BANDAFFEC_TOKEN;
+        if (Car_Cour == '&')
+            SYM_COUR.CODE = AND_TOKEN;
+        break;
+    case '~': 
+         SYM_COUR.CODE = TILD_TOKEN;
+        break;
+    case '|':
+        SYM_COUR.CODE = BOR_TOKEN;
+        if (Car_Cour == '=')
+            SYM_COUR.CODE = BORAFFEC_TOKEN;
+        if (Car_Cour == '|')
+            SYM_COUR.CODE = OR_TOKEN; 
+        break;
+    case '!':
+        SYM_COUR.CODE = NOT_TOKEN;
+        break;
+    case '?':                             // à ajouter
         break;
     default:
         SYM_COUR.CODE = ERREUR_TOKEN;

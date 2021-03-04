@@ -5,7 +5,7 @@
 
 int main()
 {
-    ouvrir_fichier("../source.c");
+    ouvrir_fichier("source.c");
     while(Car_Cour != EOF)
     {
         sym_suiv();
