@@ -1,6 +1,11 @@
 # Projet_Compilation
+    
     Nom du langage : Universal (one_for_all)
     Liste des langages inclus : python, javascript, c, c++, java, typescript, shell script, batch script, Pascal
+
+## Regular expressions docs
+
+*    [docs](https://www.geeksforgeeks.org/regular-expressions-in-c/)
 
 ## les opérateurs
 
