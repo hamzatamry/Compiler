@@ -5,8 +5,14 @@
 
 ## Docs
 
-*   [regular-expressions-in-c-excp](https://www.geeksforgeeks.org/regular-expressions-in-c/)
+*   [regular-expressions-in-c](https://www.geeksforgeeks.org/regular-expressions-in-c/)
 *   [C-Grammar](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#expression-statement)
+*   [Python-Grammar](https://docs.python.org/3/reference/grammar.html)
+
+## Tools
+
+*   [Context-Free-Grammar-Tool](https://smlweb.cpsc.ucalgary.ca/start.html)
+*   [Grammophone](https://mdaines.github.io/grammophone/#)
 
 ## Affectation des roles
     
@@ -299,6 +305,8 @@ APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
     ```
     *   Pascal
     ```
+    while (condition) do 
+        S;
     ```
 
 *   Do-while-loop
@@ -314,6 +322,9 @@ APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
     ```
     *   Pascal
     ```
+    repeat 
+        STATEMENTS  
+    until CONDITION; 
     ```
 
 ## les instruction de saisi/affichage de base (comme printf, scanf en langage C)
