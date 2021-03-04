@@ -94,15 +94,15 @@ PARAMETER               -> ID TYPE
                         | PARAMETER , ID TYPE
             
 
-VAR_DECLARATION         -> VARS' VAR_DECLARATIONS   
+VAR_DECLARATION         -> VARS' VAR_DECLARATIONS        // khass je pense VARS'; VAR_DECLARATION mais prob virgule lfo9
                         | epsilon
 
 VARS'                   -> const TYPE IDS_CONST 
-                        | let IDS : TYPE 
-                        | IDS : TYPE 
+                        | let IDS : TYPE                // hadi je pense maghadich t3ti (let var1:int, var2:string)
+                        | IDS : TYPE                    // nfs haja
                         | IDS is TYPE  
 
-IDS_CONST               -> ID DEC_AFFECTATION
+IDS_CONST               -> ID DEC_AFFECTATION                     // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
                         |  ID DEC_AFFECTATION , IDS_CONST 
 
 DEC_AFFECTATION         ->   :=  EXPRESSION 
