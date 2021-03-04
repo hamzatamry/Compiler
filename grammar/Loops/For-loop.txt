@@ -1,0 +1,13 @@
+r: FORLOOP         ->  for(VAR_DECLARATION;CONDITION;STEP){
+r:                  |  for(ITERATOR:ITERABLE)
+r:                  |  eps
+r: INSTS           ->  INST; INSTS
+r:                  |  eps
+r: INST            ->  VAR_DECLARATION
+r:                  |  BOUCLE
+r:                  |  CONTROLE
+r:                  |  APPEL_FONCTION
+r:                  |  AFFECTATION
+r:                  |  FONCTION
+r:                  |  EXCEPTION
+r: BLOCK           ->  BLOCK_PASCAL 

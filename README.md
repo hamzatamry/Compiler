@@ -1,11 +1,12 @@
 # Compilateur
     
 *   Nom du langage : Universal (one_for_all)
-*   Liste des langages inclus : python, javascript, c, c++, java, typescript, shell script, batch script, Pascal
+*   Liste des langages inclus : python, javascript, c, c++, java typescript, Pascal
 
-## Regular expressions docs
+## Docs
 
-*    [docs](https://www.geeksforgeeks.org/regular-expressions-in-c/)
+*   [regular-expressions-in-c-excp](https://www.geeksforgeeks.org/regular-expressions-in-c/)
+*   [C-Grammar](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#expression-statement)
 
 ## Affectation des roles
     
@@ -244,40 +245,6 @@ APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
     else:
         ___
 
-
-## les boucles à prendre en considération
-
-    for (<initial>; <condition>; <step>) 
-    {
-        [break;]
-    }
-
-    while (<condition>)
-    {
-        [
-            break; 
-            continue;
-        ]
-    }
-
-    do 
-    {
-    } while (<condition>);
-
-    for <iterator> in <iterable>:
-        ____
-
-    for (<interator> : <iterable>)
-    {
-
-    }
-
-    :loop
-        if <condition> do
-            exit;
-        done
-    goto :loop;
-
     switch ()
     {
         case __: ____; break;
@@ -285,6 +252,69 @@ APPEL_FONCTIOn -> ID ( PARAMETERS ) ;
         default: ___;
     }
     
+## les boucles à prendre en considération
+
+*   For-loop
+    *   c, c++, java
+    ```
+    for (<var-declaration>; <condition>; <step>) 
+    {
+        [break;|continue;]
+    }
+    ```
+    ```
+    for (<interator> : <iterable>)
+    {
+    
+    }
+    ```
+    *   python
+    ```
+    for <iterator> in <iterable>:
+        [break|pass|continue]
+    ```
+    *   javascript, typescript,
+    ```
+    for <iterator> in <iterable>:
+        [break;|continue;]
+    ```
+    *   Pascal
+    ```
+    for <index> := <StartingLow> to EndingHigh do
+        <statement>;
+    ```
+
+*   While-loop
+    *   c, c++, java, javascript, , typescript
+    ```
+    while (<condition>)
+    {
+        [break;|continue;]
+    }
+    ```
+    *   python
+    ```
+    while <condition>:
+        ____
+    ```
+    *   Pascal
+    ```
+    ```
+
+*   Do-while-loop
+    *   c, c++, java, javascript, , typescript
+    ```
+    do 
+    {
+
+    } while (<condition>);
+    ```
+    *   python
+    ```
+    ```
+    *   Pascal
+    ```
+    ```
 
 ## les instruction de saisi/affichage de base (comme printf, scanf en langage C)
 
