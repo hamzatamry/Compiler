@@ -66,7 +66,7 @@ r: BLOCK           ->  BLOCK_PASCAL
 ```
 
 ```
-* Autres
+* AUTRES
 ```
 
 ```
