@@ -1,0 +1,186 @@
+                                    ##############  GRAMMAIRE du langage universelle  ############ 
+
+
+S                       ->  S'$
+S'                      ->  INSTRUCTIONS
+                        |  BLOCK 
+                        |  epsilon
+
+INSTRUCTIONS            -> INSTRUCTION 
+                        | INSTRUCTION INSTRUCTIONS
+
+INSTRUCTION             ->  AFFECTATION ;
+                        |  APPEL_FONCTION ;
+                        |  BOUCLE 
+                        |  RETURN ;
+                        |  VAR_DECLARATION ;
+                        |  FONCTION 
+                        |  CONTROLE 
+                        |  EXCEPTION
+                        |  FILEHANDLING 
+                        
+
+FILEHANDLING            -> print ( PARAMETERS ) ;
+                        | printf ( PARAMETERS ) ;
+                        | scanf ( PARAMETERS ) ;
+                        | print ( PARAMETERS ) ;
+                        | input ( PARAMETERS ) ;
+                        | log ( PARAMETERS )  ;
+                        | fprintf ( PARAMETERS ) ; 
+                        | fscanf ( PARAMETERS ) ;
+                        | fread ( PARAMETERS ) ; 
+                        | fwrite (  PARAMETERS ) ;
+                        | write ( PARAMETERS ) ; 
+                        | read (  PARAMETERS ) ;
+                        | puts ( PARAMETERS ) ; 
+                        | gets (  PARAMETERS ) ;
+
+BLOCK                   ->  begin end
+                        | begin S' end
+
+AFFECTATION             ->  const AFFECTATION'
+                        |  AFFECTATION'
+
+AFFECTATION'            ->  ID :=  EXPRESSION 
+                        |  ID :   EXPRESSION 
+                        |  ID =   EXPRESSION 
+                        |  ID <-  EXPRESSION 
+
+EXPRESSION              ->   TERM 
+                        |   TERM OPERATEURADD TERM
+
+        TERM            ->    FACTEUR OPERATEURMULT FACTEUR
+                        |   FACTEUR
+                        | + FACTEUR 
+                        | - FACTEUR
+                        |   FACTEUR OPERATEURSPECIAUX
+
+FACTEUR                 -> ID 
+                        | NUMBER 
+                        | ( EXPRESSION )
+                        | BOOLEAN
+                        | APPEL_FONCTION
+                        | STRING
+
+
+
+OPERATEURSPECIAUX       ->  ++
+                        | -- 
+                    
+OPERATEURADD            ->   + 
+                        |  add
+                        |  -
+                        | minus 
+
+ OPERATEURMULT          ->   *
+                        |  mult 
+                        |  \
+                        |  div
+                        |  % 
+                        |  mod
+                        |  modulo 
+
+APPEL_FONCTION          -> ID ( PARAMETERS ) ;
+
+FONCTION                ->  TYPE  FONCTION'
+                        |   function FONCTION'
+
+FONCTION'               -> ID(PARAMETERS){ INSTS };
+
+PARAMETERS              -> epsilon
+                        | PARAMETER 
+
+PARAMETER               -> ID TYPE 
+                        | PARAMETER , ID TYPE
+            
+
+VAR_DECLARATION         -> VARS' VAR_DECLARATIONS   
+                        | epsilon
+
+VARS'                   -> const TYPE IDS DEC_AFFECTATION
+                        | let IDS : TYPE 
+                        | IDS : TYPE 
+                        | IDS is TYPE  
+
+DEC_AFFECTATION         ->   :=  EXPRESSION 
+                        |      :   EXPRESSION 
+                        |      =   EXPRESSION 
+                        |      <-  EXPRESSION
+
+IDS                     -> ID OPT
+                        |  ID OPT , IDS 
+
+OPT                     ->  epsilon
+                        | DEC_AFFECTATION  
+
+RETURN                  -> return EXPRESSION 
+
+CONDITION               -> BOOLEAN 
+                        | EXPRESSION COMPAR EXPRESSION
+
+COMPAR                  ->  > 
+                        | < 
+                        | >=
+                        | <=
+                        | !=
+                        | ==
+
+
+                                             ###### Controles ######
+
+CONTROL                 -> IF 
+                        |   CASE 
+
+
+IF                      ->   if (  CONDITION  )  BLOCK_IF 
+                        |    if ( CONDITION  )  else BLOCK_IF
+                        |    if ( CONDITION  )  BLOCK_IF elif BLOCK_IF else BLOCK_IF
+
+BLOCK_IF                ->   INSTRUCTION
+                        ->   { INSTRUCTIONS }
+
+CASE                    ->   switch ( ID ) { BLOCK_CASE }
+
+BLOCK_CASE              ->   case FACTEUR : INSTRUCTIONS 
+                        |    case FACTEUR : INSTRUCTIONS  BLOCK_CASE 
+
+                                          ###### Boucles ######  
+
+BOUCLE                  ->   WHILE
+                        |    FOR
+                        |    DO_WHILE
+
+WHILE                   ->   while ( CONDITION ) INSTRUCTION 
+                        |    while ( CONDITION ) { INSTRUCTIONS }
+
+FOR                     ->   for ( INSTRUCTION ; INSTRUCTION ; INSTRUCTION) {   INSTRUCTIONS }
+                        |    for ( INSTRUCTION ; INSTRUCTION ; INSTRUCTION)    INSTRUCTION 
+
+DO_WHILE                ->   do { INSTRUCTIONS } while ( CONDITION ); 
+
+
+                                           ###### Terminaux ###### 
+TYPE                    ->   string | sumber | int | boolean | bool | char    integer | string | boolean
+
+ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
+
+STRING                  ->   " STR " 
+                        |    ' STR ' 
+
+STR                     ->   [ a-zA-Z0-9_;:!,?\|[](]&~^$µéè@à` ]* 
+NUMBER                  ->   [0-9]+
+BOOLEAN                 ->   true | false
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
