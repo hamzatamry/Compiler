@@ -6,11 +6,14 @@ gcc main.c sources\*.c -o lexical
 ```
 ## Documentation
 
-*   [docs](https://www.geeksforgeeks.org/flex-fast-lexical-analyzer-generator/)
+*  [developpez.com](https://nicolasj.developpez.com/articles/regex/#LIII-B) 
+*  [ibm](https://www.ibm.com/support/knowledgecenter/en/ssw_ibm_i_74/rtref/regcomp.htm)
+*  [geeksforgeeks](https://www.geeksforgeeks.org/flex-fast-lexical-analyzer-generator/)
+   
 
 ## Download Links
 
-*   [Flex](https://sourceforge.net/projects/gnuwin32/)
+*  [Flex](https://sourceforge.net/projects/gnuwin32/)
 
 ## Instructions 
 
