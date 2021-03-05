@@ -13,7 +13,8 @@ Error MESSAGE_ERR[100] = {
     {ID_LONG_ERR,"identificateur long"},
     {ID_INC_ERR,"identificateur incorrect"},
     {COMMENT_ERR,"erreur commentaire"},
-    {NUM_LONG_ERR,"numero long"}
+    {NUM_LONG_ERR,"numero long"},
+    {STRING_ERR,"string non proprement declaré : missing \""}
 };
 
 char Car_Cour;
@@ -25,8 +26,8 @@ const char tokens[][20] = {   //taille 111
     ";", ".", ":", "+", "add", "-", "minus", "*", "mult", "/", "div", "per", "%%", "mod",                    
     "modulo", ",", "=", ":=", "affect", "<-", "<", "lss", "<=", "leq", ">", "gtr", ">=", "geq", "==" , "equ",      
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
-    "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "EOF",
-    "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "LE RESTE"                                 
+    "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "EOF",
+    "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "STRINGVAL", "LE RESTE"                                 
 };
 
 const char lexical_unit[][20] = {
@@ -40,8 +41,8 @@ const char lexical_unit[][20] = {
     "IN_TOKEN", "PUISS_TOKEN", "PUISSAFFEC_TOKEN", "ADDAFFEC_TOKEN", "MINUSAFFEC_TOKEN", "MULTAFFEC_TOKEN", "DIVAFFEC_TOKEN", "MODAFFEC_TOKEN",
     "BXORAFFEC_TOKEN", "BANDAFFEC_TOKEN", "BORAFFEC_TOKEN","INCREM_TOKEN", "DECREM_TOKEN","DIFF_TOKEN", "PO_TOKEN", "PF_TOKEN", "DC_TOKEN", "FC_TOKEN",
     "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
-    "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN","EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
-    "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN", "ERREUR_TOKEN"
+    "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN", "QUOTE_TOKEN", "EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
+    "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN"
 };
 
 typedef struct
@@ -55,7 +56,7 @@ TSym_Cour SYM_COUR;
 void ouvrir_fichier(char nom[20])
 {
     flux_input = fopen(nom, "r");
-    flux_output = fopen("tests\\output\\out_1", "w");
+    flux_output = fopen("..\\tests\\output\\out_1", "w");
 
     if (flux_input == NULL || flux_output == NULL)
     {
@@ -82,7 +83,7 @@ _Bool isSeparator()
 
 int mot_cle()
 {
-    for (int i = 0; i < 112; i++)
+    for (int i = 0; i < 114; i++)
     {
         if (strcmp(tokens[i], SYM_COUR.NOM) == 0)
             return i;
@@ -120,6 +121,33 @@ void isID()
         
     }
     
+}
+
+void isString()
+{
+    
+    int i = 0;
+    do
+    {
+        SYM_COUR.NOM[i] = Car_Cour;
+        i++;
+        lire_car();
+    }while (Car_Cour != '\"' && Car_Cour != EOF);
+    
+    if(Car_Cour == '\"')
+    {
+        SYM_COUR.NOM[i] = Car_Cour;
+        i++;
+        SYM_COUR.CODE = STRINGVAL_TOKEN;
+    }
+    else
+    {
+        SYM_COUR.CODE = ERREUR_TOKEN;
+        ERREUR(STRING_ERR);
+    }
+
+     SYM_COUR.NOM[i] = '\0';
+
 }
 
 _Bool isSpecial()
@@ -170,6 +198,8 @@ _Bool isSpecial()
         break;
     case '?':
         break;
+    case '\"':
+        break;
     default:
     return false;
     }
@@ -218,6 +248,7 @@ void lire_nombres()
 
 void lire_specials()
 {
+    bool string = false;
     switch (Car_Cour)
     {
     case ';':
@@ -447,11 +478,21 @@ void lire_specials()
         break;
     case '?':                             // à ajouter
         break;
+    case '\"':
+        isString();
+        lire_car();
+        string = true;
+        break;
     default:
         SYM_COUR.CODE = ERREUR_TOKEN;
     }
-    strcpy(SYM_COUR.NOM, tokens[SYM_COUR.CODE]);
-    //lire_car();
+    if(!string)
+    {
+        strcpy(SYM_COUR.NOM, tokens[SYM_COUR.CODE]);
+        //lire_car();
+    }
+  
+    
 }
 
 void sym_suiv()
