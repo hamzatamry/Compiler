@@ -3,9 +3,9 @@ INSTRUCTIONS 			-> ACC_O INSTRUCTION INST'  ACC_F
 
 INST'					-> INSTRUCTIONS | e
 
-ACC_O 					-> { | epsilon
+ACC_O 					-> accolade_ouverte | epsilon
 
-ACC_F 					-> } | epsilon
+ACC_F 					-> accolade_fermée | epsilon
 
 INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
@@ -90,7 +90,7 @@ END: ';'
 
 ##############################LOOPS##############################
 
-DOWHILELOOP_STATEMENT       ->  do { STATEMENTS } while (CONDITION) ;
+DOWHILELOOP_STATEMENT       ->  do accolade_ouverte STATEMENTS accolade_fermée while (CONDITION) ;
                             |   repeat STATEMENTS until CONDITION; 
                             |   .
 
@@ -109,7 +109,7 @@ B_F 			->  B_F'
 				| ITERATOR in ITERABLE :
 				| do STATEMENTS ;
 
-B_F'  			-> { STATEMENTS } | STATEMENT
+B_F'  			-> accolade_ouverte STATEMENTS accolade_fermée | STATEMENT
 
 WHILELOOP_STATEMENT     ->  while A_W B_W
 
@@ -128,7 +128,7 @@ APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
 FONCTION                ->  TYPE  FONCTION'
                         |   function FONCTION'
 
-FONCTION'               -> ID(PARAMETERS){ INSTS };
+FONCTION'               -> ID(PARAMETERS) accolade_ouverte INSTS accolade_fermée;
 
 PARAMETERS              -> PARAMETER
                         | epsilon 
@@ -185,7 +185,7 @@ TYPE                    ->   string
 
 ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
 
-STRING                  ->   " STR " 
+STRING                  ->   guillemets STR guillemets 
                         |    ' STR ' 
 
 STR                     ->   [ a-zA-Z0-9_;:!,?\|[](]&~^$µéè@à` ]* 
@@ -207,3 +207,10 @@ FILEHANDLING            -> print ( PARAMETERS ) ;
                         | read (  PARAMETERS ) ;
                         | puts ( PARAMETERS ) ; 
                         | gets (  PARAMETERS ) ;
+
+
+
+#############################TERMS##############
+accolade_ouverte    -> {
+accolade_fermée 	-> }
+guillemets 			-> "
