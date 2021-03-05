@@ -19,14 +19,14 @@ Error MESSAGE_ERR[100] = {
 
 char Car_Cour;
 
-const char tokens[][20] = {   //taille 111
+const char tokens[][20] = {   //taille 115
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
     "short", "unsigned", "boolean", "bool", "let", "$", "byte", "auto", "void", "true", "false",                      
     "program", "const", "var", "begin", "end", "if", "then", "while", "do", "read", "write", "switch", "goto", "def", "function" ,                               
     ";", ".", ":", "+", "add", "-", "minus", "*", "mult", "/", "div", "per", "%%", "mod",                    
     "modulo", ",", "=", ":=", "affect", "<-", "<", "lss", "<=", "leq", ">", "gtr", ">=", "geq", "==" , "equ",      
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
-    "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "EOF",
+    "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "\'", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "STRINGVAL", "LE RESTE"                                 
 };
 
@@ -41,7 +41,7 @@ const char lexical_unit[][20] = {
     "IN_TOKEN", "PUISS_TOKEN", "PUISSAFFEC_TOKEN", "ADDAFFEC_TOKEN", "MINUSAFFEC_TOKEN", "MULTAFFEC_TOKEN", "DIVAFFEC_TOKEN", "MODAFFEC_TOKEN",
     "BXORAFFEC_TOKEN", "BANDAFFEC_TOKEN", "BORAFFEC_TOKEN","INCREM_TOKEN", "DECREM_TOKEN","DIFF_TOKEN", "PO_TOKEN", "PF_TOKEN", "DC_TOKEN", "FC_TOKEN",
     "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
-    "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN", "QUOTE_TOKEN", "EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
+    "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN", "QUOTE_TOKEN", "SINGLEQUOTE_TOKEN", "EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
     "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN"
 };
 
@@ -83,7 +83,7 @@ _Bool isSeparator()
 
 int mot_cle()
 {
-    for (int i = 0; i < 114; i++)
+    for (int i = 0; i < 115; i++)
     {
         if (strcmp(tokens[i], SYM_COUR.NOM) == 0)
             return i;
@@ -147,6 +147,12 @@ void isString()
     }
 
      SYM_COUR.NOM[i] = '\0';
+     lire_car();
+
+}
+
+void isChar()
+{
 
 }
 
@@ -198,8 +204,8 @@ _Bool isSpecial()
         break;
     case '?':
         break;
-    case '\"':
-        break;
+    // case '\"':
+    //     break;
     default:
     return false;
     }
@@ -476,11 +482,11 @@ void lire_specials()
         break;
     case '?':                             // à ajouter
         break;
-    case '\"':
-        isString();
-        lire_car();
-        string = true;
-        break;
+    // case '\"':
+    //     isString();
+    //     lire_car();
+    //     string = true;
+    //     break;
     default:
         SYM_COUR.CODE = ERREUR_TOKEN;
     }
@@ -506,6 +512,14 @@ void sym_suiv()
     else if (isdigit(Car_Cour))
     {
         lire_nombres();
+    }
+    else if (Car_Cour == '\"')
+    {
+        isString();
+    }
+    else if (Car_Cour == '\'')
+    {
+        isChar();
     }
     else
     {
