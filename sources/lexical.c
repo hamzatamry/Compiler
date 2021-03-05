@@ -7,15 +7,22 @@
 FILE *f;
 FILE *g;
 
+TSym_Cour SYM_COUR;
+char Car_Cour;
+
+typedef struct
+{
+    CODES_LEX CODE;
+    char NOM[20];
+} TSym_Cour;
+
 Error MESSAGE_ERR[100] = {
     {FICH_VID_ERR,"fichier vide"},
     {ID_LONG_ERR,"identificateur long"},
     {ID_INC_ERR,"identificateur incorrect"},
     {COMMENT_ERR,"erreur commentaire"},
     {NUM_LONG_ERR,"numero long"}
-    };
-
-char Car_Cour;
+};
 
 const char tokens[][20] = {   //taille 111
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
@@ -26,9 +33,7 @@ const char tokens[][20] = {   //taille 111
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
     "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "LE RESTE"                                 
-    };
-
-
+};
 
 const char lexical_unit[][20] = {
     "INT_TOKEN", "INTEGER_TOKEN", "NUMBER_TOKEN", "FLOAT_TOKEN", "CHAR_TOKEN", "STRING_TOKEN", "STR_TOKEN", "LONG_TOKEN",
@@ -43,20 +48,12 @@ const char lexical_unit[][20] = {
     "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
     "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN","EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
     "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN", "ERREUR_TOKEN"
-    };
-
-typedef struct
-{
-    CODES_LEX CODE;
-    char NOM[20];
-} TSym_Cour;
-
-TSym_Cour SYM_COUR;
+};
 
 void ouvrir_fichier(char nom[20])
 {
     f = fopen(nom, "r");
-    g = fopen("lexical.txt", "w");
+    g = fopen("output\\lexical.txt", "w");
     if (f == NULL || g == NULL)
         printf("erreur d'ouverture du fichier");
     else
