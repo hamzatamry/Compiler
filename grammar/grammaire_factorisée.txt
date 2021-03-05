@@ -1,0 +1,156 @@
+S                       ->  S'$
+S'                      ->  INSTRUCTIONS
+                        |  BLOCK 
+                        |  epsilon
+
+INSTRUCTIONS            -> INSTRUCTION [INSTRUCTIONS | e]
+
+INSTRUCTION             ->  AFFECTATION ;
+                        |  APPEL_FONCTION ;
+                        |  BOUCLE 
+                        |  RETURN ;
+                        |  VAR_DECLARATION ;
+                        |  FONCTION 
+                        |  CONTROLE 
+                        |  EXCEPTION
+                        |  FILEHANDLING 
+                        
+
+FILEHANDLING            -> print ( PARAMETERS ) ;
+                        | printf ( PARAMETERS ) ;
+                        | scanf ( PARAMETERS ) ;
+                        | print ( PARAMETERS ) ;
+                        | input ( PARAMETERS ) ;
+                        | log ( PARAMETERS )  ;
+                        | fprintf ( PARAMETERS ) ; 
+                        | fscanf ( PARAMETERS ) ;
+                        | fread ( PARAMETERS ) ; 
+                        | fwrite (  PARAMETERS ) ;
+                        | write ( PARAMETERS ) ; 
+                        | read (  PARAMETERS ) ;
+                        | puts ( PARAMETERS ) ; 
+                        | gets (  PARAMETERS ) ;
+
+BLOCK                   ->  begin (end | S' end)
+
+
+AFFECTATION             ->  const AFFECTATION'
+                        |  AFFECTATION'
+
+AFFECTATION'            ->  ID [: [= |e] | = | <-]  EXPRESSION
+
+EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
+
+        TERM            ->    FACTEUR [OPERATEURMULT FACTEUR | OPERATEURSPECIAUX |e]
+                        | + FACTEUR 
+                        | - FACTEUR
+
+FACTEUR                 -> ID 
+                        | NUMBER 
+                        | ( EXPRESSION )
+                        | BOOLEAN
+                        | APPEL_FONCTION
+                        | STRING
+
+
+
+OPERATEURSPECIAUX       ->  ++
+                        | -- 
+                    
+OPERATEURADD            ->   + 
+                        |  add
+                        |  -
+                        | minus 
+
+ OPERATEURMULT          ->   *
+                        |  mult 
+                        |  \
+                        |  div
+                        |  % 
+                        |  mod
+                        |  modulo 
+
+APPEL_FONCTION          -> ID ( PARAMETERS ) ;
+
+FONCTION                ->  TYPE  FONCTION'
+                        |   function FONCTION'
+
+FONCTION'               -> ID(PARAMETERS){ INSTS };
+
+PARAMETERS              -> epsilon
+                        | PARAMETER 
+
+PARAMETER               -> ID TYPE 
+                        | PARAMETER , ID TYPE
+            
+
+VAR_DECLARATION         -> VARS' VAR_DECLARATIONS        // khass je pense VARS'; VAR_DECLARATION mais prob virgule lfo9
+                        | epsilon
+
+VARS'                   -> const TYPE IDS_CONST 
+                        | let IDS : TYPE                // hadi je pense maghadich t3ti (let var1:int, var2:string)
+                        | IDS [: TYPE  | is TYPE]                  // nfs haja
+
+IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]                    // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
+
+
+IDS                     -> ID OPT
+                        |  ID OPT , IDS 
+
+OPT                     ->  epsilon
+                        | AFFECTATION'  
+
+RETURN                  -> return EXPRESSION 
+
+CONDITION               -> BOOLEAN 
+                        | EXPRESSION COMPAR EXPRESSION
+
+COMPAR                  ->  > 
+                        | < 
+                        | >=
+                        | <=
+                        | !=
+                        | ==
+
+
+                                             ###### Controles ######
+
+CONTROL                 -> IF 
+                        |   CASE 
+
+
+IF                      ->   if (  CONDITION  )  [BLOCK_IF [elif BLOCK_IF else BLOCK_IF | e] | else BLOCK_IF]
+
+
+BLOCK_IF                ->   INST
+
+CASE                    ->   switch ( ID ) { BLOCK_CASE }
+
+BLOCK_CASE              ->   case FACTEUR : INSTRUCTIONS [BLOCK_CASE | e] 
+
+                                          ###### Boucles ######  
+
+BOUCLE                  ->   WHILE
+                        |    FOR
+                        |    DO_WHILE
+
+WHILE                   ->   while ( CONDITION ) INST
+
+INST                    ->  INSTRUCTION | { INSTRUCTIONS }
+
+FOR                     ->   for ( INSTRUCTION ; INSTRUCTION ; INSTRUCTION) INST
+
+DO_WHILE                ->   do { INSTRUCTIONS } while ( CONDITION ); 
+
+
+                                           ###### Terminaux ###### 
+TYPE                    ->   string | number | int | boolean | bool | char    | integer | boolean
+
+ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
+
+STRING                  ->   " STR " 
+                        |    ' STR ' 
+
+STR                     ->   [ a-zA-Z0-9_;:!,?\|[](]&~^$µéè@à` ]* 
+NUMBER                  ->   [0-9]+
+BOOLEAN                 ->   true | false
