@@ -64,10 +64,10 @@ ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?       //Termina
 
 ######################################  CONTROL  ##############################
 
-IF_STMT			   		-> if  COND  IF_STMT_SYMB INSTRUCTIONS [SUITE_IF  | .]  END
+IF_STMT			   		-> if  COND  IF_STMT_SYMB INSTRUCTIONS  SUITE' END
 						| SWITCH ( EXPRESSION ) INSTRUCTIONS END
 
-
+SUITE' 					->  SUITE_IF  | .
 IF_STMT_SYMB			->  : | .
 			    	    
     		
