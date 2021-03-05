@@ -1,6 +1,7 @@
 int id=5;
 let var1:bool = true, var2, var3;
 const constante <- 6;
+myString is string = "helloWorld";
 
 int function(){
     for(int i=0; i<id; i++)
