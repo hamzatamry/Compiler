@@ -9,7 +9,7 @@ INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
                         |  BOUCLE 
                         |  RETURN ;
-                        |  VAR_DECLARATION ;
+                        |  VAR_DECLARATION                   // removed ; from here
                         |  FONCTION 
                         |  CONTROLE 
                         |  EXCEPTION
@@ -34,10 +34,10 @@ FILEHANDLING            -> print ( PARAMETERS ) ;
 BLOCK                   ->  begin (end | S' end)
 
 
-AFFECTATION             ->  const AFFECTATION'
-                        |  AFFECTATION'
+AFFECTATION             ->  const ID AFFECTATION'
+                        | ID AFFECTATION'
 
-AFFECTATION'            ->  ID [: [= |e] | = | <-]  EXPRESSION
+AFFECTATION'            ->  [: [= |e] | = | <-]  EXPRESSION                  // removed ID from here and add it in AFFECTATION (kan probleme lteht)
 
 EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
 
@@ -86,15 +86,18 @@ PARAMETER               -> ID TYPE
                         | PARAMETER , ID TYPE
             
 
-VAR_DECLARATION         -> VARS' VAR_DECLARATIONS        // khass je pense VARS'; VAR_DECLARATION mais prob virgule lfo9
+VAR_DECLARATION         -> VARS' ; VAR_DECLARATION       
                         | epsilon
 
 VARS'                   -> const TYPE IDS_CONST 
-                        | let IDS : TYPE                // hadi je pense maghadich t3ti (let var1:int, var2:string)
-                        | IDS [: TYPE  | is TYPE]                  // nfs haja
+                        | let JS_IDS  
+			| VARS''              
+
+VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | epsilon]                  
 
 IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]                    // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
 
+JS_IDS                  -> ID : TYPE OPT [, JS_IDS | epsilon]
 
 IDS                     -> ID OPT [, IDS | epsilon]
 
