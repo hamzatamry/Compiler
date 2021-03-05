@@ -5,7 +5,7 @@
 
 int main()
 {
-    ouvrir_fichier("source.c");
+    ouvrir_fichier("source.txt");
     while(Car_Cour != EOF)
     {
         sym_suiv();
@@ -13,6 +13,8 @@ int main()
     }
     printf("EOF -> EOF_TOKEN");
     fprintf(g,"EOF %d\n",EOF_TOKEN);     // g est le fichier d'entree de l'analyseur syntaxique
+    fclose(g);
+    fclose(f);
     return 0;
 }
 
