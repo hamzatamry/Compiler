@@ -18,3 +18,36 @@ int main() {
 }
 
 ######################################
+
+if(n>0){
+	abs_n=n;
+	printf(n);
+}
+elif(n<0){
+	abs_n=-n;
+}
+else{
+	print(0);
+}
+
+######################################
+if(m>=1 and n<9){
+	print("fine")
+}
+else{
+	m=n;
+}
+####################################
+if(note<12){
+	print("NV")
+	if(note<5){
+		print("ajourne")
+	}
+	else{
+		print("ratt")
+	}
+}
+else{
+	print("V")
+}
+############################
