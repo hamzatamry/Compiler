@@ -1,32 +1,14 @@
 #include <stdio.h>
-#include <regex.h>
+#include "..\headers\regex.h"
 
-int main(void)
+
+int main()
 {
-    regex_t regex;
-    char* regex_string = "^[0-9]+.?[0-9]*$";
-    char* string = "148942..";
+    char* number_pattern = "^[+-]?([0-9]*[.])?[0-9]+$";
+    char* string_pattern =  "^(\"|\').*(\"|\')$";
+    char* character_pattern = "^\'.\'$";
 
-    int err = regcomp(&regex, regex_string,  REG_EXTENDED);
+    printf("%d", match("\'$\'", character_pattern));
 
-    if (err == 0) 
-    {
-        int match = regexec(&regex, string, 0, NULL, 0);
-
-        regfree(&regex);
-
-        if (match == 0) 
-        {
-            printf("Match");
-        }
-        else if (match == REG_NOMATCH)
-        {
-            printf("No Match");
-        }
-    }
-    else 
-    {
-        printf("Error");
-    }
     return 0;
 }

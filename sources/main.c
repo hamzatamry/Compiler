@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/lexical.h"
+#include "..\headers\lexical.h"
 
 int main()
 {
