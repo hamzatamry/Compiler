@@ -1,5 +1,9 @@
 # Analyseur lexical 
 
+## Compilation command
+```
+gcc main.c sources\*.c -o lexical
+```
 ## Documentation
 
 *   [docs](https://www.geeksforgeeks.org/flex-fast-lexical-analyzer-generator/)
