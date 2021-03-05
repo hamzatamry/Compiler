@@ -41,7 +41,7 @@ AFFECTATION'            ->  ID [: [= |e] | = | <-]  EXPRESSION
 
 EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
 
-        TERM            ->    FACTEUR [OPERATEURMULT FACTEUR | OPERATEURSPECIAUX |e]
+TERM                    ->    FACTEUR [OPERATEURMULT FACTEUR | OPERATEURSPECIAUX |e]
                         | + FACTEUR 
                         | - FACTEUR
 
@@ -70,7 +70,9 @@ OPERATEURADD            ->   +
                         |  mod
                         |  modulo 
 
-APPEL_FONCTION          -> ID ( PARAMETERS ) ;
+
+
+APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
 
 FONCTION                ->  TYPE  FONCTION'
                         |   function FONCTION'
@@ -94,8 +96,7 @@ VARS'                   -> const TYPE IDS_CONST
 IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]                    // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
 
 
-IDS                     -> ID OPT
-                        |  ID OPT , IDS 
+IDS                     -> ID OPT [, IDS | epsilon]
 
 OPT                     ->  epsilon
                         | AFFECTATION'  
@@ -144,7 +145,20 @@ DO_WHILE                ->   do { INSTRUCTIONS } while ( CONDITION );
 
 
                                            ###### Terminaux ###### 
-TYPE                    ->   string | number | int | boolean | bool | char    | integer | boolean
+TYPE                    ->   string 
+                        | number 
+                        | int 
+                        | boolean 
+                        | bool 
+                        | char  
+                        | integer 
+                        | boolean 
+                        | void 
+                        | float 
+                        | double 
+                        | signed
+                        | unsigned
+                        | short
 
 ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
 
