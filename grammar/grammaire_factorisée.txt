@@ -42,7 +42,7 @@ AFFECTATION'            ->  ID [: [= |e] | = | <-]  EXPRESSION
 EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
 
 TERM                    ->    FACTEUR [OPERATEURMULT FACTEUR | OPERATEURSPECIAUX |e]
-                        | + FACTEUR 
+                        | + FACTEUR                           //operateuradd  here ?
                         | - FACTEUR
 
 FACTEUR                 -> ID 

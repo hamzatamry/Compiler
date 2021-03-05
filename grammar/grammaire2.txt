@@ -1,0 +1,182 @@
+
+INSTRUCTIONS 			-> ACC_O INSTRUCTION [INSTRUCTIONS | e]  ACC_F
+
+ACC_O 					-> { | epsilon
+ACC_F 					-> } | epsilon
+
+INSTRUCTION             ->  AFFECTATION ;
+                        |  APPEL_FONCTION ;
+                        |  BOUCLE 
+                        |  RETURN ;
+                        |  VAR_DECLARATION ;
+                        |  FONCTION 
+                        |  CONTROLE 
+                        |  EXCEPTION
+                        |  FILEHANDLING 
+                        
+
+
+############################################# AFFECTATION #################
+AFFECTATION             ->  const ID AFFECTATION'
+                        | ID AFFECTATION'
+
+AFFECTATION'            ->  [: [= |e] | = | <-]  EXPRESSION     
+
+EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
+
+VAR_DECLARATION         -> VARS' ; VAR_DECLARATION       
+                        | epsilon
+
+VARS'                   -> const TYPE IDS_CONST 
+                        | let JS_IDS  
+						| VARS''              
+
+VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | epsilon]                  
+
+IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]   
+
+JS_IDS                  -> ID : TYPE OPT [, JS_IDS | epsilon]
+
+IDS                     -> ID OPT [, IDS | epsilon]
+
+OPT                     ->  epsilon
+                        | AFFECTATION'
+
+ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?       //Terminal
+
+######################################  CONTROL  ##############################
+
+IF_STMT			   		-> if  COND  [: | epsilon] INSTRUCTIONS [SUITE_IF  | epsilon]  END
+			    	    | SWITCH ( EXPRESSION ) INSTRUCTIONS END
+    		
+
+COND     		->   ( STATEMENT ) | STATEMENT
+
+SUITE_IF        -> 	ELIF_STMT | ELSE_BLOCK | epsilon
+
+ELIF_STMT		->  elif COND : INSTRUCTIONS [ELIF_STMT | ELSE_BLOCK] 
+
+ELSE_BLOCK		->  else [ : | epsilon] INSTRUCTIONS 
+
+SHORTHAND: 
+    COND ? STATEMENT : STATEMENT
+
+END: ';'
+    | epsilon
+
+
+##############################LOOPS##############################
+
+DOWHILELOOP_STATEMENT       ->  do { STATEMENTS } while (CONDITION) ;
+                            |   repeat STATEMENTS until CONDITION; 
+                            |   epsilon
+
+FORLOOP_STATEMENT       ->  for A_F B_F
+                        |   epsilon
+
+A_F 			-> (VAR_DECLARATION [; CONDITION ; INSTRUCTION)  | (VAR_DECLARATION : ITERABLE) ]
+				| VAR_ID affectation NOMBRE to NOMBRE
+
+B_F 				->  [{ STATEMENTS } | STATEMENT]
+				| entree tab STATEMENTS
+				| ITERATOR in ITERABLE :
+				| do STATEMENTS ;
+
+
+
+WHILELOOP_STATEMENT     ->  while A_W B_W
+
+A_W    -> ( CONDITION )
+		| CONDITION :
+
+B_W    -> STATEMENT
+		| accolade_ouvrante STATEMENTS accolade_fermante
+		| entree tab STATEMENTS
+		| do STATEMENTS ;
+
+#########################   FONCTIONS  #########################
+
+APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
+
+FONCTION                ->  TYPE  FONCTION'
+                        |   function FONCTION'
+
+FONCTION'               -> ID(PARAMETERS){ INSTS };
+
+PARAMETERS              -> PARAMETER
+                        | epsilon 
+
+PARAMETER               -> ID TYPE 
+                        | PARAMETER , ID TYPE
+
+#####################################################
+
+OPERATEURSPECIAUX       ->  ++
+                        | -- 
+                    
+OPERATEURADD            ->   + 
+                        |  add
+                        |  -
+                        | minus 
+
+ OPERATEURMULT          ->   *
+                        |  mult 
+                        |  \
+                        |  div
+                        |  % 
+                        |  mod
+                        |  modulo 
+
+RETURN                  -> return EXPRESSION 
+
+CONDITION               -> BOOLEAN 
+                        | EXPRESSION COMPAR EXPRESSION
+
+COMPAR                  ->  > 
+                        | < 
+                        | >=
+                        | <=
+                        | !=
+                        | ==
+
+
+##################     ###### ###### 
+TYPE                    ->   string 
+                        | number 
+                        | int 
+                        | boolean 
+                        | bool 
+                        | char  
+                        | integer 
+                        | boolean 
+                        | void 
+                        | float 
+                        | double 
+                        | signed
+                        | unsigned
+                        | short
+
+ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
+
+STRING                  ->   " STR " 
+                        |    ' STR ' 
+
+STR                     ->   [ a-zA-Z0-9_;:!,?\|[](]&~^$µéè@à` ]* 
+NUMBER                  ->   [0-9]+
+BOOLEAN                 ->   true | false
+
+
+FILEHANDLING            -> print ( PARAMETERS ) ;
+                        | printf ( PARAMETERS ) ;
+                        | scanf ( PARAMETERS ) ;
+                        | print ( PARAMETERS ) ;
+                        | input ( PARAMETERS ) ;
+                        | log ( PARAMETERS )  ;
+                        | fprintf ( PARAMETERS ) ; 
+                        | fscanf ( PARAMETERS ) ;
+                        | fread ( PARAMETERS ) ; 
+                        | fwrite (  PARAMETERS ) ;
+                        | write ( PARAMETERS ) ; 
+                        | read (  PARAMETERS ) ;
+                        | puts ( PARAMETERS ) ; 
+                        | gets (  PARAMETERS ) ;
