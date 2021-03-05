@@ -1,19 +1,15 @@
-                                    ##############  GRAMMAIRE du langage universelle  ############ 
-
-
 S                       ->  S'$
 S'                      ->  INSTRUCTIONS
                         |  BLOCK 
                         |  epsilon
 
-INSTRUCTIONS            -> INSTRUCTION 
-                        | INSTRUCTION INSTRUCTIONS
+INSTRUCTIONS            -> INSTRUCTION [INSTRUCTIONS | e]
 
 INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
                         |  BOUCLE 
                         |  RETURN ;
-                        |  VAR_DECLARATION ;
+                        |  VAR_DECLARATION                   // removed ; from here
                         |  FONCTION 
                         |  CONTROLE 
                         |  EXCEPTION
@@ -35,25 +31,19 @@ FILEHANDLING            -> print ( PARAMETERS ) ;
                         | puts ( PARAMETERS ) ; 
                         | gets (  PARAMETERS ) ;
 
-BLOCK                   ->  begin end
-                        | begin S' end
+BLOCK                   ->  begin (end | S' end)
 
-AFFECTATION             ->  const AFFECTATION'
-                        |  AFFECTATION'
 
-AFFECTATION'            ->  ID :=  EXPRESSION 
-                        |  ID :   EXPRESSION 
-                        |  ID =   EXPRESSION 
-                        |  ID <-  EXPRESSION 
+AFFECTATION             ->  const ID AFFECTATION'
+                        | ID AFFECTATION'
 
-EXPRESSION              ->   TERM 
-                        |   TERM OPERATEURADD TERM
+AFFECTATION'            ->  [: [= |e] | = | <-]  EXPRESSION                  // removed ID from here and add it in AFFECTATION (kan probleme lteht)
 
-        TERM            ->    FACTEUR OPERATEURMULT FACTEUR
-                        |   FACTEUR
+EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
+
+TERM                    ->    FACTEUR [OPERATEURMULT FACTEUR | OPERATEURSPECIAUX |e]
                         | + FACTEUR 
                         | - FACTEUR
-                        |   FACTEUR OPERATEURSPECIAUX
 
 FACTEUR                 -> ID 
                         | NUMBER 
@@ -80,7 +70,9 @@ OPERATEURADD            ->   +
                         |  mod
                         |  modulo 
 
-APPEL_FONCTION          -> ID ( PARAMETERS ) ;
+
+
+APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
 
 FONCTION                ->  TYPE  FONCTION'
                         |   function FONCTION'
@@ -94,27 +86,23 @@ PARAMETER               -> ID TYPE
                         | PARAMETER , ID TYPE
             
 
-VAR_DECLARATION         -> VARS' VAR_DECLARATIONS        // khass je pense VARS'; VAR_DECLARATION mais prob virgule lfo9
+VAR_DECLARATION         -> VARS' ; VAR_DECLARATION       
                         | epsilon
 
 VARS'                   -> const TYPE IDS_CONST 
-                        | let IDS : TYPE                // hadi je pense maghadich t3ti (let var1:int, var2:string)
-                        | IDS : TYPE                    // nfs haja
-                        | IDS is TYPE  
+                        | let JS_IDS  
+			| VARS''              
 
-IDS_CONST               -> ID DEC_AFFECTATION                     // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
-                        |  ID DEC_AFFECTATION , IDS_CONST 
+VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | epsilon]                  
 
-DEC_AFFECTATION         ->   :=  EXPRESSION 
-                        |      :   EXPRESSION 
-                        |      =   EXPRESSION 
-                        |      <-  EXPRESSION
+IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]                    // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
 
-IDS                     -> ID OPT
-                        |  ID OPT , IDS 
+JS_IDS                  -> ID : TYPE OPT [, JS_IDS | epsilon]
+
+IDS                     -> ID OPT [, IDS | epsilon]
 
 OPT                     ->  epsilon
-                        | DEC_AFFECTATION  
+                        | AFFECTATION'  
 
 RETURN                  -> return EXPRESSION 
 
@@ -135,17 +123,14 @@ CONTROL                 -> IF
                         |   CASE 
 
 
-IF                      ->   if (  CONDITION  )  BLOCK_IF 
-                        |    if ( CONDITION  )  else BLOCK_IF
-                        |    if ( CONDITION  )  BLOCK_IF elif BLOCK_IF else BLOCK_IF
+IF                      ->   if (  CONDITION  )  [BLOCK_IF [elif BLOCK_IF else BLOCK_IF | e] | else BLOCK_IF]
 
-BLOCK_IF                ->   INSTRUCTION
-                        ->   { INSTRUCTIONS }
+
+BLOCK_IF                ->   INST
 
 CASE                    ->   switch ( ID ) { BLOCK_CASE }
 
-BLOCK_CASE              ->   case FACTEUR : INSTRUCTIONS 
-                        |    case FACTEUR : INSTRUCTIONS  BLOCK_CASE 
+BLOCK_CASE              ->   case FACTEUR : INSTRUCTIONS [BLOCK_CASE | e] 
 
                                           ###### Boucles ######  
 
@@ -153,17 +138,30 @@ BOUCLE                  ->   WHILE
                         |    FOR
                         |    DO_WHILE
 
-WHILE                   ->   while ( CONDITION ) INSTRUCTION 
-                        |    while ( CONDITION ) { INSTRUCTIONS }
+WHILE                   ->   while ( CONDITION ) INST
 
-FOR                     ->   for ( INSTRUCTION ; INSTRUCTION ; INSTRUCTION) {   INSTRUCTIONS }
-                        |    for ( INSTRUCTION ; INSTRUCTION ; INSTRUCTION)    INSTRUCTION 
+INST                    ->  INSTRUCTION | { INSTRUCTIONS }
+
+FOR                     ->   for ( INSTRUCTION ; INSTRUCTION ; INSTRUCTION) INST
 
 DO_WHILE                ->   do { INSTRUCTIONS } while ( CONDITION ); 
 
 
                                            ###### Terminaux ###### 
-TYPE                    ->   string | number | int | boolean | bool | char    | integer | boolean
+TYPE                    ->   string 
+                        | number 
+                        | int 
+                        | boolean 
+                        | bool 
+                        | char  
+                        | integer 
+                        | boolean 
+                        | void 
+                        | float 
+                        | double 
+                        | signed
+                        | unsigned
+                        | short
 
 ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
 
@@ -173,17 +171,3 @@ STRING                  ->   " STR "
 STR                     ->   [ a-zA-Z0-9_;:!,?\|[](]&~^$µéè@à` ]* 
 NUMBER                  ->   [0-9]+
 BOOLEAN                 ->   true | false
-
-
-              
-
-
-
-
-
-
-
-
-
-
-
