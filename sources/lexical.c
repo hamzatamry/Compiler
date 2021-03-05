@@ -2,19 +2,11 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include "lexical.h"
+#include <stdbool.h>
+#include "..\headers\lexical.h"
 
 FILE *f;
 FILE *g;
-
-TSym_Cour SYM_COUR;
-char Car_Cour;
-
-typedef struct
-{
-    CODES_LEX CODE;
-    char NOM[20];
-} TSym_Cour;
 
 Error MESSAGE_ERR[100] = {
     {FICH_VID_ERR,"fichier vide"},
@@ -23,6 +15,8 @@ Error MESSAGE_ERR[100] = {
     {COMMENT_ERR,"erreur commentaire"},
     {NUM_LONG_ERR,"numero long"}
 };
+
+char Car_Cour;
 
 const char tokens[][20] = {   //taille 111
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
@@ -34,6 +28,8 @@ const char tokens[][20] = {   //taille 111
     "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "LE RESTE"                                 
 };
+
+
 
 const char lexical_unit[][20] = {
     "INT_TOKEN", "INTEGER_TOKEN", "NUMBER_TOKEN", "FLOAT_TOKEN", "CHAR_TOKEN", "STRING_TOKEN", "STR_TOKEN", "LONG_TOKEN",
@@ -50,12 +46,24 @@ const char lexical_unit[][20] = {
     "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN", "ERREUR_TOKEN"
 };
 
+typedef struct
+{
+    CODES_LEX CODE;
+    char NOM[20];
+} TSym_Cour;
+
+TSym_Cour SYM_COUR;
+
 void ouvrir_fichier(char nom[20])
 {
     f = fopen(nom, "r");
-    g = fopen("output\\lexical.txt", "w");
+    g = fopen("tests\\output\\out_1", "w");
+
     if (f == NULL || g == NULL)
+    {
+        printf("f%s g%s", f, g);
         printf("erreur d'ouverture du fichier");
+    } 
     else
     {
         lire_car();
@@ -70,7 +78,7 @@ void lire_car()
     Car_Cour = fgetc(f);
 }
 
-bool isSeparator()
+_Bool isSeparator()
 {
     return (Car_Cour == ' ') || (Car_Cour == '\n') || (Car_Cour == '\t');
 }
@@ -117,7 +125,7 @@ void isID()
     
 }
 
-bool isSpecial()
+_Bool isSpecial()
 {
     switch (Car_Cour)
     {

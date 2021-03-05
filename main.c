@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lexical.h"
-
+#include "headers/lexical.h"
 
 int main()
 {
-    ouvrir_fichier("input\\source.txt");
+    ouvrir_fichier("tests\\input\\in_1");
     while(Car_Cour != EOF)
     {
         sym_suiv();

@@ -46,9 +46,9 @@ int main (void)
    {
       int match;
 
-      match = regexec(&preg, str_request, 0, NULL, 0);
+      match = regexec(&preg, str_request, 0, NULL, 0); //compare the string to the regular expression
 
-      regfree(&preg);
+      regfree(&preg);   //free the regular expression
 
       if (match == 0)
       {

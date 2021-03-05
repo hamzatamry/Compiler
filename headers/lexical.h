@@ -1,10 +1,7 @@
 #ifndef LEXICAL_H 
 #define LEXICAL_H
-#include <stdio.h>
-#include <stdbool.h>
 
-typedef enum 
-{
+typedef enum {
     INT_TOKEN, INTEGER_TOKEN, NUMBER_TOKEN, FLOAT_TOKEN, CHAR_TOKEN, STRING_TOKEN, STR_TOKEN, LONG_TOKEN,
     DOUBLE_TOKEN, SHORT_TOKEN, UNSIGNED_TOKEN, BOOLEAN_TOKEN, BOOL_TOKEN, LET_TOKEN, $_TOKEN, BYTE_TOKEN, AUTO_TOKEN, VOID_TOKEN, TRUE_TOKEN, FALSE_TOKEN, 
     PROGRAM_TOKEN, CONST_TOKEN, VAR_TOKEN, BEGIN_TOKEN, END_TOKEN, IF_TOKEN, THEN_TOKEN, WHILE_TOKEN, DO_TOKEN, READ_TOKEN, WRITE_TOKEN,
@@ -17,8 +14,7 @@ typedef enum
     EOF_TOKEN, ID_TOKEN, NUM_TOKEN, ELSE_TOKEN, UNTIL_TOKEN, REPEAT_TOKEN, FOR_TOKEN, DOWNTO_TOKEN, CASE_TOKEN, OF_TOKEN, INTO_TOKEN , RETURN_TOKEN, ERREUR_TOKEN
 } CODES_LEX;
 
-typedef enum 
-{
+typedef enum {
   FICH_VID_ERR, ID_LONG_ERR, ID_INC_ERR, COMMENT_ERR, NUM_LONG_ERR
 } ERREURS;
 
@@ -31,9 +27,9 @@ typedef struct
 
 
 extern void ouvrir_fichier(char nom[20]);
-extern bool isSpecial();
+extern _Bool isSpecial();
 extern void lire_car();
-extern bool isSeparator();
+extern _Bool isSeparator();
 extern void isID();
 extern int  mot_cle();
 extern void lire_mots();

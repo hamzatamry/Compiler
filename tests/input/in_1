@@ -6,6 +6,8 @@ int function(){
     for(int i=0; i<id; i++)
     {
     }
+    for(int i=0; i<id; i++)
+    {
+    }
     return 10;
 }
-
