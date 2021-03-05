@@ -11,9 +11,9 @@ int main()
         afficher_token();
     }
     printf("EOF -> EOF_TOKEN");
-    fprintf(g,"EOF %d\n",EOF_TOKEN);     // g est le fichier d'entree de l'analyseur syntaxique
-    fclose(g);
-    fclose(f);
+    fprintf(flux_output,"EOF %d\n",EOF_TOKEN);     // g est le fichier d'entree de l'analyseur syntaxique
+    fclose(flux_output);
+    fclose(flux_input);
     return 0;
 }
 

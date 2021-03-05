@@ -5,8 +5,8 @@
 #include <stdbool.h>
 #include "..\headers\lexical.h"
 
-FILE *f;
-FILE *g;
+FILE* flux_input;
+FILE* flux_output;
 
 Error MESSAGE_ERR[100] = {
     {FICH_VID_ERR,"fichier vide"},
@@ -28,7 +28,6 @@ const char tokens[][20] = {   //taille 111
     "<>", "(",")", "{*" , "*}", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "LE RESTE"                                 
 };
-
 
 
 const char lexical_unit[][20] = {
@@ -56,12 +55,11 @@ TSym_Cour SYM_COUR;
 
 void ouvrir_fichier(char nom[20])
 {
-    f = fopen(nom, "r");
-    g = fopen("tests\\output\\out_1", "w");
+    flux_input = fopen(nom, "r");
+    flux_output = fopen("tests\\output\\out_1", "w");
 
-    if (f == NULL || g == NULL)
+    if (flux_input == NULL || flux_output == NULL)
     {
-        printf("f%s g%s", f, g);
         printf("erreur d'ouverture du fichier");
     } 
     else
@@ -75,7 +73,7 @@ void ouvrir_fichier(char nom[20])
 
 void lire_car()
 {
-    Car_Cour = fgetc(f);
+    Car_Cour = fgetc(flux_input);
 }
 
 _Bool isSeparator()
@@ -478,8 +476,8 @@ void sym_suiv()
 void afficher_token()
 {
     printf("%s -> %s\n", SYM_COUR.NOM, lexical_unit[SYM_COUR.CODE]);
-    fprintf(g, "%s %d\n", SYM_COUR.NOM, SYM_COUR.CODE);
-    fflush(g);
+    fprintf(flux_output, "%s %d\n", SYM_COUR.NOM, SYM_COUR.CODE);
+    fflush(flux_output);
 }
 
 void ERREUR(ERREURS e)
