@@ -25,7 +25,7 @@ gcc main.c sources\*.c -o lexical
 
 ## Regex installation and execution
 
-1.  [Regex](https://www.mediafire.com/file/m5tm1u8q9xmows9/regex.rar/file)
+1.  Download [Regex](https://www.mediafire.com/file/m5tm1u8q9xmows9/regex.rar/file)
 2.  Extract bin to compiler's bin, lib to compiler's lib and include to compiler's include 
 3.  To run a program that includes regex library add -lregex to the compilation command as follow
 ```

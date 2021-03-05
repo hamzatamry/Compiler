@@ -29,7 +29,6 @@ const char tokens[][20] = {   //taille 111
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "LE RESTE"                                 
 };
 
-
 const char lexical_unit[][20] = {
     "INT_TOKEN", "INTEGER_TOKEN", "NUMBER_TOKEN", "FLOAT_TOKEN", "CHAR_TOKEN", "STRING_TOKEN", "STR_TOKEN", "LONG_TOKEN",
     "DOUBLE_TOKEN", "SHORT_TOKEN", "UNSIGNED_TOKEN", "BOOLEAN_TOKEN", "BOOL_TOKEN", "LET_TOKEN", "$_TOKEN", "BYTE_TOKEN", "AUTO_TOKEN", "VOID_TOKEN", "TRUE_TOKEN", "FALSE_TOKEN", 
@@ -484,3 +483,5 @@ void ERREUR(ERREURS e)
 {
     printf("%s -> %s\n", SYM_COUR.NOM, MESSAGE_ERR[e].msg);
 }
+
+

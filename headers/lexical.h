@@ -17,7 +17,7 @@ typedef enum
 
 typedef enum 
 {
-  FICH_VID_ERR, ID_LONG_ERR, ID_INC_ERR, COMMENT_ERR, NUM_LONG_ERR
+    FICH_VID_ERR, ID_LONG_ERR, ID_INC_ERR, COMMENT_ERR, NUM_LONG_ERR
 } ERREURS;
 
 typedef struct
