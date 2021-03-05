@@ -188,7 +188,9 @@ void lire_mots()
     SYM_COUR.NOM[i] = '\0';
 
     if (mot_cle() != -1)
+    {
         SYM_COUR.CODE = mot_cle();
+    }  
     else
     {
         isID();
@@ -458,6 +460,7 @@ void sym_suiv()
     {
         lire_car();
     }
+
     if (isSpecial())
     {
         lire_specials();
@@ -484,4 +487,5 @@ void ERREUR(ERREURS e)
     printf("%s -> %s\n", SYM_COUR.NOM, MESSAGE_ERR[e].msg);
 }
 
+/****************************************************************************************************************************/
 
