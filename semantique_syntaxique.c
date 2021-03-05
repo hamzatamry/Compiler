@@ -53,321 +53,214 @@ void Test_Symbole(CODES_LEX lex,ERREURS err)
         ERREUR(err);
 }
 
-void PROGRAM()
-{
-    Test_Symbole(PROGRAM_TOKEN, PROGRAM_ERR);
-    Test_Symbole(ID_TOKEN, ID_ERR);
-    addID(TPROG);
-    Test_Symbole(PV_TOKEN, PV_ERR);
-    BLOCK();
-    Test_Symbole(PT_TOKEN, PT_ERR);
-}
+void PROGRAM(){
 
-void BLOCK()
-{
-    CONSTS();
-    VARS();
-    INSTS();
-}
+};
+void INSTRUCTIONS(){
+  
+};
+void INSTRUCTION(){
+
+};
+void INST1(){
+
+};
+void ACC_O(){
+
+};
+void ACC_F(){
+
+};
+void AFFECTATION(){
+
+};
+void APPEL_FONCTION(){
+
+};
+void BOUCLE(){
+
+};
+void RETURN(){
+
+};
+void VAR_DECLARATION(){
+
+};
+void FONCTION(){
+
+};
+void CONTROLE(){
+
+};
+void EXCEPTION(){
+
+};
+void FILEHANDLING(){
+
+};
+void AFFECTATION1(){
+
+};
+void SYMBOLE_AFF(){
+
+};
+void ID(){
+
+};
+void EXPRESSION(){
+
+};
+void EG(){
+
+};
+void TERM(){
+
+};
+void EX1(){
+
+};
+void OPPERATEURADD(){
+
+};
+void VARS1(){
+
+};
+void TYPE(){
+
+};
+void IDS_CONST(){
+
+};
+void JS_IDS(){
+
+};
+void VARS2(){
+
+};
+void VARS_TYPE(){
+
+};
+void OPT(){
+
+};
+void VARS3(){
+
+};
+void IDS(){
+
+};
+void IDS1(){
+
+};
+void JS1(){
+
+};
+void IDS2(){
+
+};
+void IF_STMT(){
+
+};
+void COND(){
+
+};
+void IF_STMT_SYMB(){
+
+};
+void SUITE1(){
+
+};
+void END(){
+
+};
+void SWITCH(){
+
+};
+void SWITCH_IF(){
+
+};
+void STATEMENT(){
+
+};
+void SUITE_IF(){
+
+};
+void ELIF_STMT(){
+
+};
+void ELSE_BLOCK(){
+
+};
+void ELIF_SUITE(){
+
+};
+void SHORTHAND(){
+
+};
+void DOWHILELOOP_STATEMENT(){
+
+};
+void STATEMENTS(){
+
+};
+void CONDITION(){
+
+};
+void FORLOOP_STATEMENT(){
+
+};
+void A_F(){
+
+};
+void B_F(){
+
+};
+void AF1(){
+
+};
+void NOMBRE(){
+
+};
+void B_F1(){
+
+};
+void WHILELOOP_STATEMENT(){
+
+};
+void A_W(){
+
+};
+void B_W(){
+
+};
+void PARAMETERS(){
+
+};
+void FONCTION1(){
+
+};
+void PARAMETER(){
+
+};
+void OPPERATEURSPECIAUX(){
+
+};
+void COMPAR(){
+
+};
+void OPPERATEURMULT(){
+
+};
+void STRING(){
+
+};
 
 
-void CONSTS() {
-    switch (SYM_COUR.CODE)
-    {
-        case CONST_TOKEN : Sym_Suiv();
-                            Test_Symbole(ID_TOKEN, ID_ERR);
-                            addID(TCONST);
-                            Test_Symbole(EG_TOKEN, EG_ERR);
-                            Test_Symbole(NUM_TOKEN, NUM_ERR);
-                            Test_Symbole(PV_TOKEN, PV_ERR);
-                            while (SYM_COUR.CODE == ID_TOKEN)
-                            {
-                                addID(TCONST);
-                                Sym_Suiv();
-                                Test_Symbole(EG_TOKEN, EG_ERR);
-                                Test_Symbole(NUM_TOKEN, NUM_ERR);
-                                Test_Symbole(PV_TOKEN, PV_ERR);
-                            };
-                            break;
-        case VAR_TOKEN :    break;
-        case BEGIN_TOKEN :  break;
-        default :           ERREUR(CONST_VAR_BEGIN_ERR);
-                            break;
-    }
-}
 
-void VARS()
-{
-    switch (SYM_COUR.CODE)
-    {
-        case VAR_TOKEN :    Sym_Suiv();
-                            Test_Symbole(ID_TOKEN, ID_ERR);
-                            addID(TVAR);
-                            while (SYM_COUR.CODE == VIR_TOKEN)
-                            {
-                                Sym_Suiv();
-                                Test_Symbole(ID_TOKEN, ID_ERR);
-                                addID(TVAR);
-                            };
-                            Test_Symbole(PV_TOKEN, PV_ERR);
-                            break;
-        case BEGIN_TOKEN :  break;
-        default :           ERREUR(CONST_VAR_BEGIN_ERR);
-                            break;
-    }
-}
 
-void INSTS()
-{
-    Test_Symbole(BEGIN_TOKEN,BEGIN_ERR);
-    INST();
-    while (SYM_COUR.CODE == PV_TOKEN)
-    {
-        Sym_Suiv();
-        INST();
-    }
-    Test_Symbole(END_TOKEN,END_ERR);
-}
 
-void INST()
-{
-    switch(SYM_COUR.CODE)
-    {
-        case BEGIN_TOKEN :  INSTS();
-                            break;
-        case ID_TOKEN    :  AFFEC();
-                            break;
-        case IF_TOKEN    :  SI();
-                            break;
-        case WHILE_TOKEN :  TANTQUE();
-                            break;
-        case WRITE_TOKEN :  ECRIRE();
-                            break;
-        case READ_TOKEN  :  LIRE();
-                            break;
-        case END_TOKEN   :  break;
-        case PV_TOKEN    :  break;
-        case ELSE_TOKEN  :  break;
-        case UNTIL_TOKEN :  break;
-        case NUM_TOKEN   :  break;
-        default          : ERREUR(INST_ERR);
-    }
 
-}
 
-void AFFEC()
-{
-    Test_Symbole(ID_TOKEN,ID_ERR);
-    semCheck(0);
-    Test_Symbole(AFF_TOKEN,AFF_ERR);
-    EXPR();
-}
-
-void SI()
-{
-    Test_Symbole(IF_TOKEN,IF_ERR);
-    COND();
-    Test_Symbole(THEN_TOKEN,THEN_ERR);
-    INST();
-}
-
-void TANTQUE()
-{
-    Test_Symbole(WHILE_TOKEN,WHILE_ERR);
-    COND();
-    Test_Symbole(DO_TOKEN,DO_ERR);
-    INST();
-}
-
-void ECRIRE()
-{
-    Test_Symbole(WRITE_TOKEN,WRITE_ERR);
-    Test_Symbole(PO_TOKEN,PO_ERR);
-    EXPR();
-    Sym_Suiv();
-    while(SYM_COUR.CODE == VIR_TOKEN)
-    {
-        Sym_Suiv();
-        EXPR();
-    }
-    Test_Symbole(PF_TOKEN,PF_ERR);
-}
-
-void LIRE()
-{
-    Test_Symbole(READ_TOKEN,READ_ERR);
-    Test_Symbole(PO_TOKEN,PO_ERR);
-    Test_Symbole(ID_TOKEN,ID_ERR);
-    semCheck(0);
-    while( SYM_COUR.CODE == VIR_TOKEN)
-    {
-        Sym_Suiv();
-        Test_Symbole(ID_TOKEN,ID_ERR);
-        semCheck(0);
-
-    }
-    Test_Symbole(PF_TOKEN,PF_ERR);
-}
-
-void COND()
-{
-    EXPR();
-    Sym_Suiv();
-    switch(SYM_COUR.CODE)
-    {
-        case EG_TOKEN    : break;
-        case DIFF_TOKEN  : break;
-        case INF_TOKEN   : break;
-        case SUP_TOKEN   : break;
-        case INFEG_TOKEN : break;
-        case SUPEG_TOKEN : break;
-    }
-    EXPR();
-}
-
-void EXPR()
-{
-    TERM();
-    while(SYM_COUR.CODE == PLUS_TOKEN || SYM_COUR.CODE == MOINS_TOKEN)
-    {
-        Sym_Suiv();
-        TERM();
-    }
-}
-
-void TERM()
-{
-    FACT();
-    while(SYM_COUR.CODE == MULT_TOKEN || SYM_COUR.CODE == DIV_TOKEN)
-    {
-        Sym_Suiv();
-        FACT();
-    }
-}
-
-void FACT()
-{
-    switch(SYM_COUR.CODE)
-    {
-        case ID_TOKEN : Sym_Suiv();
-                        semCheck(1);
-                        break;
-        case NUM_TOKEN : Sym_Suiv();break;
-        case PO_TOKEN : Sym_Suiv();
-                        EXPR();
-                        Test_Symbole(PF_TOKEN,PF_ERR);
-                        break;
-        default : ERREUR(FACT_ERR);
-    }
-}
-
-void REPETER()
-{
-    Test_Symbole(REPEAT_TOKEN,REPEAT_ERR);
-    INST();
-    Test_Symbole(UNTIL_TOKEN,UNTIL_ERR);
-    COND();
-}
-
-void POUR()
-{
-    Test_Symbole(FOR_TOKEN,FOR_ERR);
-    Test_Symbole(ID_TOKEN,ID_ERR);
-    semCheck(0);
-    Test_Symbole(DO_TOKEN,DO_ERR);
-    Test_Symbole(AFF_TOKEN,AFF_ERR);
-    Test_Symbole(NUM_TOKEN,NUM_ERR);
-    Sym_Suiv();
-    switch(SYM_COUR.CODE)
-    {
-        case INTO_TOKEN : break;
-        case DOWNTO_TOKEN : break;
-        default: ERREUR(POUR_ERR);
-    }
-    Sym_Suiv();
-    Test_Symbole(NUM_TOKEN,NUM_ERR);
-    Test_Symbole(DO_TOKEN,DO_ERR);
-    INST();
-}
-
-void CAS()
-{
-    Test_Symbole(CASE_TOKEN,CASE_ERR);
-    Test_Symbole(ID_TOKEN,ID_ERR);
-    semCheck(0);
-    Test_Symbole(OF_TOKEN,OF_ERR);
-    Test_Symbole(NUM_TOKEN,NUM_ERR);
-    Test_Symbole(PTS_TOKEN,PTS_ERR);
-    INST();
-    Sym_Suiv();
-    while(SYM_COUR.CODE == NUM_TOKEN)
-    {
-        Sym_Suiv();
-        Test_Symbole(PTS_TOKEN,PTS_ERR);
-        INST();
-    }
-    switch(SYM_COUR.CODE)
-    {
-        case ELSE_TOKEN : Sym_Suiv();
-                          INST();
-                          break;
-        case END_TOKEN : Sym_Suiv();
-                         break;
-        default : ERREUR(CAS_ERR);
-    }
-}
-
-void CONTROL(){
-  switch(SYM_COUR.CODE)
-  {
-      case IF_TOKEN : Sym_Suiv();
-                      IF();
-                      break;
-      case CASE_TOKEN : Sym_Suiv();
-                        CASE();
-                        break;
-      default : ERREUR(CAS_ERR);
-  }
-}
-
-void IF(){
-  Test_Symbole(IF_TOKEN,IF_ERR);
-  Test_Symbole(PO_TOKEN,PO_ERR);
-  COND();
-  Test_Symbole(PF_TOKEN,PF_ERR);
-  INSTS();
-  if(SYM_COUR.CODE == ELIF_TOKEN)){
-    Sym_Suiv();
-    INSTS();
-    if(SYM_COUR.CODE == ELSE_TOKEN){
-      Sym_Suiv();
-      INSTS();
-    }
-  }
-  if(SYM_COUR.CODE == ELSE_TOKEN){
-    Sym_Suiv();
-    INSTS();
-
-}
-
-void CASE(){
-  Test_Symbole(SWITCH_TOKEN,SWITCH_ERR);
-  Test_Symbole(PO_TOKEN,PO_ERR);
-  Test_Symbole(NUM_TOKEN,NUM_ERR);
-  Test_Symbole(PF_TOKEN,PF_ERR);
-  BLOCK_CASE();
-}
-
-void BLOCK_CASE(){
-  Test_Symbole(CASE_TOKEN,CASE_ERR);
-  FACT();
-  Test_Symbole(PTS_TOKEN,PTS_ERR);
-  INSTS();
-  while(SYM_COUR.CODE == CASE_TOKEN){
-      Sym_Suiv();
-      BLOCK_CASE();
-  }
-}
 
 
 void ERREUR(ERREURS e)

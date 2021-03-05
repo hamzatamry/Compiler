@@ -55,7 +55,7 @@ char previous[20];
 extern void ouvrir_fichier(char nom[20]);
 extern void Test_Symbole(CODES_LEX lex,ERREURS err);
 extern void Sym_Suiv();
-extern void PROGRAM();
+/* extern void PROGRAM();
 extern void BLOCK();
 extern void CONSTS();
 extern void VARS();
@@ -77,7 +77,83 @@ extern void CAS();
 extern void CONTROL();
 extern void IF();
 extern void CASE();
-extern void BLOCK_CASE();
+extern void BLOCK_CASE(); */
+
+extern void PROGRAM();
+extern void INSTRUCTIONS();
+extern void INSTRUCTION();
+extern void INST1();
+extern void ACC_O();
+extern void ACC_F();
+extern void AFFECTATION();
+extern void APPEL_FONCTION();
+extern void BOUCLE();
+extern void RETURN();
+extern void VAR_DECLARATION();
+extern void FONCTION();
+extern void CONTROLE();
+extern void EXCEPTION();
+extern void FILEHANDLING();
+extern void AFFECTATION1();
+extern void SYMBOLE_AFF();
+extern void ID();
+extern void EXPRESSION();
+extern void EG();
+extern void TERM();
+extern void EX1();
+extern void OPPERATEURADD();
+extern void VARS1();
+extern void TYPE();
+extern void IDS_CONST();
+extern void JS_IDS();
+extern void VARS2();
+extern void VARS_TYPE();
+extern void OPT();
+extern void VARS3();
+extern void IDS();
+extern void IDS1();
+extern void JS1();
+extern void IDS2();
+extern void IF_STMT();
+extern void COND();
+extern void IF_STMT_SYMB();
+extern void SUITE1();
+extern void END();
+extern void SWITCH();
+extern void SWITCH_IF();
+extern void STATEMENT();
+extern void SUITE_IF();
+extern void ELIF_STMT();
+extern void ELSE_BLOCK();
+extern void ELIF_SUITE();
+extern void SHORTHAND();
+extern void DOWHILELOOP_STATEMENT();
+extern void STATEMENTS();
+extern void CONDITION();
+extern void FORLOOP_STATEMENT();
+extern void A_F();
+extern void B_F();
+extern void AF1();
+extern void NOMBRE();
+extern void B_F1();
+extern void WHILELOOP_STATEMENT();
+extern void A_W();
+extern void B_W();
+extern void PARAMETERS();
+extern void FONCTION1();
+extern void PARAMETER();
+extern void OPPERATEURSPECIAUX();
+extern void COMPAR();
+extern void OPPERATEURMULT();
+extern void STRING();
+
+
+
+
+
+
+
+
 extern void ERREUR(ERREURS e);
 
 extern void addID(TSYM type);
