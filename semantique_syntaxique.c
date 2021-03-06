@@ -17,7 +17,7 @@ char ERR[][100] = {"erreur program","erreur constante", "erreur variable","erreu
 "different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
 "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur", "numero erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
 "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
-"cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise"};
+"cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,"erreur is or :"};
 
 
 void ouvrir_fichier(char nom[20])
@@ -84,8 +84,12 @@ void RETURN(){
 
 };
 void VAR_DECLARATION(){
+    if( SYM_COUR.CODE == CONST_TOKEN || SYM_COUR.CODE == LET_TOKEN || SYM_COUR.CODE == ID_TOKEN)
+        VARS1();
+    else 
+        Test_Symbole(PV_TOKEN,PV_ERR);                // cas où VAR_DECLARATION == epsilon
+    };
 
-};
 void FONCTION(){
 
 };
@@ -123,40 +127,159 @@ void OPPERATEURADD(){
 
 };
 void VARS1(){
-
+    switch (SYM_COUR.CODE)
+    {
+    case CONST_TOKEN:
+        Sym_Suiv();
+        TYPE();             // ICI je pense c'est un terminal (make sure to call sym_suiv)
+        IDS_CONST();
+        break;
+    case LET_TOKEN:
+        Sym_Suiv();
+        JS_IDS();
+        break;
+    case ID_TOKEN:
+        VARS2();
+        break;
+    default:
+        break;
+    }
 };
+
 void TYPE(){
-
+    switch(SYM_COUR.CODE){
+        case INT_TOKEN:
+            break;
+        case INTEGER_TOKEN:
+            break;
+        case NUMBER_TOKEN:
+            break;
+        case FLOAT_TOKEN:
+            break;
+        case STR_TOKEN:
+            break;
+        case LONG_TOKEN:
+            break;
+        case DOUBLE_TOKEN:
+            break;
+        case SHORT_TOKEN:
+            break;
+        case UNSIGNED_TOKEN:               // ajouter les autres types apres ?
+            break;
+        case STRING_TOKEN:
+            break;
+        case CHAR_TOKEN:
+            break;
+        case BOOL_TOKEN:
+            break;
+        case BOOLEAN_TOKEN:
+            break;
+        default: 
+            ERREUR(TYPE_ERR);
+    }
+    Sym_Suiv();                           // à verifier si jamais il'ya une erreur
 };
+
 void IDS_CONST(){
-
+    Test_Symbole(ID_TOKEN,ID_ERR);
+    AFFECTATION1();
+    IDS1();
 };
-void JS_IDS(){
 
+void JS_IDS(){
+    Test_Symbole(ID_TOKEN,ID_ERR);
+    Test_Symbole(PTS_TOKEN,PTS_ERR);
+    TYPE();
+    OPT();
+    JS1();
 };
 void VARS2(){
-
+    Sym_Suiv();
+    Test_Symbole(ID_TOKEN,ID_ERR);
+    VARS_TYPE();
+    OPT();
+    VARS3();
 };
 void VARS_TYPE(){
-
+    switch (SYM_COUR.CODE)
+    {
+    case PTS_TOKEN:
+        Sym_Suiv();
+        TYPE();
+        break;
+    case IS_TOKEN:
+         Sym_Suiv();
+        TYPE();
+        break;
+    default:
+        ERREUR(VARS_TYPE_ERR);
+        break;
+    }
 };
-void OPT(){
 
+void OPT(){
+    if(SYM_COUR.CODE == PTS_TOKEN || SYM_COUR.CODE == EG_TOKEN || SYM_COUR.CODE == AFFECARROW_TOKEN)
+        AFFECTATION1();
+    else
+    {
+        switch (SYM_COUR.CODE)
+        {
+        case PTS_TOKEN:
+            VARS3();
+            break;
+        case PV_TOKEN:                    
+            JS1();
+            break;
+        default:
+            return;
+        }
+      
+    }
+       
 };
 void VARS3(){
-
+    if( SYM_COUR.CODE == VIR_TOKEN)
+    {
+        Sym_Suiv();
+        VARS2();
+    }
+    else{
+        Test_Symbole(PV_TOKEN,PV_ERR);              // check the followings of VARS3
+        return;
+    }
 };
-void IDS(){
 
+void IDS(){
+    // Test_Symbole(ID_TOKEN,ID_ERR);
+    // OPT();
+    // IDS2();
+
+    // à supprimer ?
 };
 void IDS1(){
-
+    if (SYM_COUR.CODE == VIR_TOKEN)
+    {
+        Sym_Suiv();
+        IDS_CONST();
+    }
+    else 
+    {
+        Test_Symbole(PV_TOKEN,PV_ERR);              // check the followings of IDS1
+    }
 };
 void JS1(){
-
+    if (SYM_COUR.CODE == VIR_TOKEN){
+        Sym_Suiv();
+        JS_IDS();
+    }
+    else{
+        Test_Symbole(PV_TOKEN,PV_ERR);
+        return;
+    }
+       
 };
 void IDS2(){
-
+    // à supprimer ?
 };
 void IF_STMT(){
 
