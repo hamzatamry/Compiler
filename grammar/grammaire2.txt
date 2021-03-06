@@ -1,9 +1,14 @@
 
-INSTRUCTIONS 			-> ACC_O INSTRUCTION INSTRUCTIONS' ACC_F
-INSTRUCTIONS'           -> INSTRUCTIONS
-                        | . 
-ACC_O 					-> acc_o | .
-ACC_F 					-> acc_f | .
+INSTRUCTIONS 			-> ACC_O INSTRUCTION INST'  ACC_F.
+
+INST'					-> INSTRUCTIONS
+                        | .
+
+ACC_O 					-> accolade_ouverte 
+                        | .
+
+ACC_F 					-> accolade_fermée 
+                        | .
 
 INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
@@ -21,46 +26,63 @@ INSTRUCTION             ->  AFFECTATION ;
 AFFECTATION             ->  const ID AFFECTATION'
                         | ID AFFECTATION'
 
-AFFECTATION'            -> SYMBOLE_AFFECTATION  EXPRESSION     
-SYMBOLE_AFFECTATION     -> : SYMBOLE_AFFECTATION2 | = | left_arrow
-SYMBOLE_AFFECTATION2    -> = 
-                        | .
+AFFECTATION'            ->  SYMBOLE_AFF  EXPRESSION.    
+SYMBOLE_AFF             -> : EG | = | arrow_affec.
+EG 						-> = | .
 
-EXPRESSION              ->   TERM [OPERATEURADD TERM | .]
+EXPRESSION              ->   TERM EX'
+EX'                     ->  OPERATEURADD TERM | .
 
-VAR_DECLARATION         -> VARS' ; VAR_DECLARATION       
+VAR_DECLARATION         -> VARS'      
                         | .
 
 VARS'                   -> const TYPE IDS_CONST 
                         | let JS_IDS  
-						| VARS''              
+						| VARS''.              
 
-VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | .]                  
+VARS''                  -> ID VARS_TYPE OPT VARS'''. 
 
-IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]   
+VARS_TYPE 				-> : TYPE  
+						| is TYPE.
 
-JS_IDS                  -> ID : TYPE OPT [, JS_IDS | .]
+VARS'''					-> , VARS'' 
+						| . 
 
-IDS                     -> ID OPT [, IDS | .]
+IDS_CONST               -> ID AFFECTATION' IDS'.
 
-OPT                     ->  .
-                        | AFFECTATION'
+
+IDS'					-> , VARS'' 
+						| .    
+
+JS_IDS                  -> ID : TYPE OPT JS'.
+JS'						-> , JS_IDS | .
+
+IDS                     -> ID OPT IDS''.
+IDS''					-> , IDS | .
+
+OPT                     ->  AFFECTATION'
+                        | .
 
 ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?       //Terminal
 
 ######################################  CONTROL  ##############################
 
-IF_STMT			   		-> if  COND  [: | .] INSTRUCTIONS [SUITE_IF  | .]  END
-			    	    | SWITCH ( EXPRESSION ) INSTRUCTIONS END
+IF_STMT			   		-> if  COND  IF_STMT_SYMB INSTRUCTIONS  SUITE' END
+						| SWITCH ( EXPRESSION ) INSTRUCTIONS END.
+
+SUITE' 					->  SUITE_IF  | .
+IF_STMT_SYMB			->  : | .
+			    	    
     		
 
-COND     		->   ( STATEMENT ) | STATEMENT
+COND     		->   ( STATEMENT ) | STATEMENT.
 
 SUITE_IF        -> 	ELIF_STMT | ELSE_BLOCK | .
 
-ELIF_STMT		->  elif COND : INSTRUCTIONS [ELIF_STMT | ELSE_BLOCK] 
+ELIF_STMT		->  elif COND : INSTRUCTIONS ELIF_SUITE.
+ELIF_SUITE		-> 	ELIF_STMT | ELSE_BLOCK.
 
-ELSE_BLOCK		->  else [ : | .] INSTRUCTIONS 
+ELSE_BLOCK		->  else IF_STMT_SYMB INSTRUCTIONS.
 
 SHORTHAND: 
     COND ? STATEMENT : STATEMENT
@@ -71,57 +93,61 @@ END: ';'
 
 ##############################LOOPS##############################
 
-DOWHILELOOP_STATEMENT       ->  do acc_o STATEMENTS acc_f while (CONDITION) ;
+DOWHILELOOP_STATEMENT       ->  do accolade_ouverte STATEMENTS accolade_fermée while (CONDITION) ;
                             |   repeat STATEMENTS until CONDITION; 
                             |   .
 
 FORLOOP_STATEMENT       ->  for A_F B_F
                         |   .
 
-A_F 			-> (VAR_DECLARATION [; CONDITION ; INSTRUCTION)  | (VAR_DECLARATION : ITERABLE) ]
-				| VAR_ID affectation NOMBRE to NOMBRE
+A_F 			-> (VAR_DECLARATION AF'
+				| VAR_ID affectation NOMBRE to NOMBRE.
 
-B_F 				->  [acc_o STATEMENTS acc_f | STATEMENT]
+
+AF'				->  ; CONDITION ; INSTRUCTION)  
+				| (VAR_DECLARATION : ITERABLE). 
+
+B_F 			->  B_F'
 				| entree tab STATEMENTS
 				| ITERATOR in ITERABLE :
-				| do STATEMENTS ;
+				| do STATEMENTS ;.
 
+B_F'  			-> accolade_ouverte STATEMENTS accolade_fermée | STATEMENT.
 
-
-WHILELOOP_STATEMENT     ->  while A_W B_W
+WHILELOOP_STATEMENT     ->  while A_W B_W.
 
 A_W    -> ( CONDITION )
-		| CONDITION :
+		| CONDITION :.
 
 B_W    -> STATEMENT
 		| accolade_ouvrante STATEMENTS accolade_fermante
 		| entree tab STATEMENTS
-		| do STATEMENTS ;
+		| do STATEMENTS ;.
 
 #########################   FONCTIONS  #########################
 
 APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
 
 FONCTION                ->  TYPE  FONCTION'
-                        |   function FONCTION'
+                        |   function FONCTION'.
 
-FONCTION'               -> ID(PARAMETERS)acc_o INSTS acc_f;
+FONCTION'               -> ID(PARAMETERS) accolade_ouverte INSTS accolade_fermée;.
 
 PARAMETERS              -> PARAMETER
-                        | . 
+                        | epsilon.
 
 PARAMETER               -> ID TYPE 
-                        | PARAMETER , ID TYPE
+                        | PARAMETER , ID TYPE.
 
 #####################################################
 
 OPERATEURSPECIAUX       ->  ++
-                        | -- 
+                        | --.
                     
 OPERATEURADD            ->   + 
                         |  add
                         |  -
-                        | minus 
+                        | minus.
 
  OPERATEURMULT          ->   *
                         |  mult 
@@ -129,19 +155,19 @@ OPERATEURADD            ->   +
                         |  div
                         |  % 
                         |  mod
-                        |  modulo 
+                        |  modulo.
 
-RETURN                  -> return EXPRESSION 
+RETURN                  -> return EXPRESSION.
 
 CONDITION               -> BOOLEAN 
-                        | EXPRESSION COMPAR EXPRESSION
+                        | EXPRESSION COMPAR EXPRESSION.
 
 COMPAR                  ->  > 
                         | < 
                         | >=
                         | <=
                         | !=
-                        | ==
+                        | ==.
 
 
 ##################     ###### ###### 
@@ -158,12 +184,12 @@ TYPE                    ->   string
                         | double 
                         | signed
                         | unsigned
-                        | short
+                        | short.
 
-ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?
+ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?.
 
-STRING                  ->   " STR " 
-                        |    ' STR ' 
+STRING                  ->   guillemets STR guillemets 
+                        |    ' STR '.
 
 STR                     ->   [ a-zA-Z0-9_;:!,?\|[](]&~^$µéè@à` ]* 
 NUMBER                  ->   [0-9]+
@@ -183,4 +209,11 @@ FILEHANDLING            -> print ( PARAMETERS ) ;
                         | write ( PARAMETERS ) ; 
                         | read (  PARAMETERS ) ;
                         | puts ( PARAMETERS ) ; 
-                        | gets (  PARAMETERS ) ;
+                        | gets (  PARAMETERS ) ;.
+
+
+
+#############################TERMS##############
+accolade_ouverte    -> {
+accolade_fermée 	-> }
+guillemets 			-> "
