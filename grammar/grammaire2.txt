@@ -1,8 +1,9 @@
 
-INSTRUCTIONS 			-> ACC_O INSTRUCTION [INSTRUCTIONS | e]  ACC_F
-
-ACC_O 					-> { | epsilon
-ACC_F 					-> } | epsilon
+INSTRUCTIONS 			-> ACC_O INSTRUCTION INSTRUCTIONS' ACC_F
+INSTRUCTIONS'           -> INSTRUCTIONS
+                        | . 
+ACC_O 					-> acc_o | .
+ACC_F 					-> acc_f | .
 
 INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
@@ -20,64 +21,67 @@ INSTRUCTION             ->  AFFECTATION ;
 AFFECTATION             ->  const ID AFFECTATION'
                         | ID AFFECTATION'
 
-AFFECTATION'            ->  [: [= |e] | = | <-]  EXPRESSION     
+AFFECTATION'            -> SYMBOLE_AFFECTATION  EXPRESSION     
+SYMBOLE_AFFECTATION     -> : SYMBOLE_AFFECTATION2 | = | left_arrow
+SYMBOLE_AFFECTATION2    -> = 
+                        | .
 
-EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
+EXPRESSION              ->   TERM [OPERATEURADD TERM | .]
 
 VAR_DECLARATION         -> VARS' ; VAR_DECLARATION       
-                        | epsilon
+                        | .
 
 VARS'                   -> const TYPE IDS_CONST 
                         | let JS_IDS  
 						| VARS''              
 
-VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | epsilon]                  
+VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | .]                  
 
 IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]   
 
-JS_IDS                  -> ID : TYPE OPT [, JS_IDS | epsilon]
+JS_IDS                  -> ID : TYPE OPT [, JS_IDS | .]
 
-IDS                     -> ID OPT [, IDS | epsilon]
+IDS                     -> ID OPT [, IDS | .]
 
-OPT                     ->  epsilon
+OPT                     ->  .
                         | AFFECTATION'
 
 ID                      ->   [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?       //Terminal
 
 ######################################  CONTROL  ##############################
 
-IF_STMT			   		-> if  COND  [: | epsilon] INSTRUCTIONS [SUITE_IF  | epsilon]  END
+IF_STMT			   		-> if  COND  [: | .] INSTRUCTIONS [SUITE_IF  | .]  END
 			    	    | SWITCH ( EXPRESSION ) INSTRUCTIONS END
     		
 
 COND     		->   ( STATEMENT ) | STATEMENT
 
-SUITE_IF        -> 	ELIF_STMT | ELSE_BLOCK | epsilon
+SUITE_IF        -> 	ELIF_STMT | ELSE_BLOCK | .
 
 ELIF_STMT		->  elif COND : INSTRUCTIONS [ELIF_STMT | ELSE_BLOCK] 
 
-ELSE_BLOCK		->  else [ : | epsilon] INSTRUCTIONS 
+ELSE_BLOCK		->  else [ : | .] INSTRUCTIONS 
 
 SHORTHAND: 
     COND ? STATEMENT : STATEMENT
 
 END: ';'
-    | epsilon
+    | .
 
 
 ##############################LOOPS##############################
 
-DOWHILELOOP_STATEMENT       ->  do { STATEMENTS } while (CONDITION) ;
+DOWHILELOOP_STATEMENT       ->  do acc_o STATEMENTS acc_f while (CONDITION) ;
                             |   repeat STATEMENTS until CONDITION; 
-                            |   epsilon
+                            |   .
 
 FORLOOP_STATEMENT       ->  for A_F B_F
-                        |   epsilon
+                        |   .
 
 A_F 			-> (VAR_DECLARATION [; CONDITION ; INSTRUCTION)  | (VAR_DECLARATION : ITERABLE) ]
 				| VAR_ID affectation NOMBRE to NOMBRE
 
-B_F 				->  [{ STATEMENTS } | STATEMENT]
+B_F 				->  [acc_o STATEMENTS acc_f | STATEMENT]
 				| entree tab STATEMENTS
 				| ITERATOR in ITERABLE :
 				| do STATEMENTS ;
@@ -101,10 +105,10 @@ APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
 FONCTION                ->  TYPE  FONCTION'
                         |   function FONCTION'
 
-FONCTION'               -> ID(PARAMETERS){ INSTS };
+FONCTION'               -> ID(PARAMETERS)acc_o INSTS acc_f;
 
 PARAMETERS              -> PARAMETER
-                        | epsilon 
+                        | . 
 
 PARAMETER               -> ID TYPE 
                         | PARAMETER , ID TYPE
