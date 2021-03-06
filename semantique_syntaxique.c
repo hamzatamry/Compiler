@@ -14,7 +14,7 @@ bool good = true;
 char ERR[][100] = {"erreur program","erreur constante", "erreur variable","erreur begin","End Erreur", "if erreur", "then erreur","While erreur",
 "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
 "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
-"different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur", 
+"different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
 "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur", "numero erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
 "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
 "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise"};
@@ -48,7 +48,7 @@ void Test_Symbole(CODES_LEX lex,ERREURS err)
     {
         Sym_Suiv();
     }
-        
+
     else
         ERREUR(err);
 }
@@ -106,8 +106,8 @@ void VARS()
                             while (SYM_COUR.CODE == VIR_TOKEN)
                             {
                                 Sym_Suiv();
-                                Test_Symbole(ID_TOKEN, ID_ERR); 
-                                addID(TVAR);        
+                                Test_Symbole(ID_TOKEN, ID_ERR);
+                                addID(TVAR);
                             };
                             Test_Symbole(PV_TOKEN, PV_ERR);
                             break;
@@ -140,13 +140,13 @@ void INST()
         case IF_TOKEN    :  SI();
                             break;
         case WHILE_TOKEN :  TANTQUE();
-                            break; 
+                            break;
         case WRITE_TOKEN :  ECRIRE();
                             break;
         case READ_TOKEN  :  LIRE();
                             break;
         case END_TOKEN   :  break;
-        case PV_TOKEN    :  break;     
+        case PV_TOKEN    :  break;
         case ELSE_TOKEN  :  break;
         case UNTIL_TOKEN :  break;
         case NUM_TOKEN   :  break;
@@ -282,7 +282,7 @@ void POUR()
     {
         case INTO_TOKEN : break;
         case DOWNTO_TOKEN : break;
-        default: ERREUR(POUR_ERR); 
+        default: ERREUR(POUR_ERR);
     }
     Sym_Suiv();
     Test_Symbole(NUM_TOKEN,NUM_ERR);
@@ -312,10 +312,63 @@ void CAS()
                           INST();
                           break;
         case END_TOKEN : Sym_Suiv();
-                         break; 
+                         break;
         default : ERREUR(CAS_ERR);
     }
 }
+
+void CONTROL(){
+  switch(SYM_COUR.CODE)
+  {
+      case IF_TOKEN : Sym_Suiv();
+                      IF();
+                      break;
+      case CASE_TOKEN : Sym_Suiv();
+                        CASE();
+                        break;
+      default : ERREUR(CAS_ERR);
+  }
+}
+
+void IF(){
+  Test_Symbole(IF_TOKEN,IF_ERR);
+  Test_Symbole(PO_TOKEN,PO_ERR);
+  COND();
+  Test_Symbole(PF_TOKEN,PF_ERR);
+  INSTS();
+  if(SYM_COUR.CODE == ELIF_TOKEN)){
+    Sym_Suiv();
+    INSTS();
+    if(SYM_COUR.CODE == ELSE_TOKEN){
+      Sym_Suiv();
+      INSTS();
+    }
+  }
+  if(SYM_COUR.CODE == ELSE_TOKEN){
+    Sym_Suiv();
+    INSTS();
+
+}
+
+void CASE(){
+  Test_Symbole(SWITCH_TOKEN,SWITCH_ERR);
+  Test_Symbole(PO_TOKEN,PO_ERR);
+  Test_Symbole(NUM_TOKEN,NUM_ERR);
+  Test_Symbole(PF_TOKEN,PF_ERR);
+  BLOCK_CASE();
+}
+
+void BLOCK_CASE(){
+  Test_Symbole(CASE_TOKEN,CASE_ERR);
+  FACT();
+  Test_Symbole(PTS_TOKEN,PTS_ERR);
+  INSTS();
+  while(SYM_COUR.CODE == CASE_TOKEN){
+      Sym_Suiv();
+      BLOCK_CASE();
+  }
+}
+
 
 void ERREUR(ERREURS e)
 {
@@ -346,7 +399,7 @@ void semCheck(int accepted)
         {
             if(TAB_IDFS[i].TIDF == TCONST && !accepted)
                 ERREUR(CONST_MODIF_ERR);
-            else if(TAB_IDFS[i].TIDF == TPROG) 
+            else if(TAB_IDFS[i].TIDF == TPROG)
                 ERREUR(PRO_ID_ERR);
             return;
         }
