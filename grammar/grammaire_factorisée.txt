@@ -9,7 +9,7 @@ INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
                         |  BOUCLE 
                         |  RETURN ;
-                        |  VAR_DECLARATION                   // removed ; from here
+                        |  VAR_DECLARATION ;                  
                         |  FONCTION 
                         |  CONTROLE 
                         |  EXCEPTION
@@ -37,12 +37,12 @@ BLOCK                   ->  begin (end | S' end)
 AFFECTATION             ->  const ID AFFECTATION'
                         | ID AFFECTATION'
 
-AFFECTATION'            ->  [: [= |e] | = | <-]  EXPRESSION                  // removed ID from here and add it in AFFECTATION (kan probleme lteht)
+AFFECTATION'            ->  [: [= |e] | = | <-]  EXPRESSION                 
 
 EXPRESSION              ->   TERM [OPERATEURADD TERM | e]
 
 TERM                    ->    FACTEUR [OPERATEURMULT FACTEUR | OPERATEURSPECIAUX |e]
-                        | + FACTEUR                           //operateuradd  here ?
+                        | + FACTEUR                          
                         | - FACTEUR
 
 FACTEUR                 -> ID 
@@ -72,7 +72,7 @@ OPERATEURADD            ->   +
 
 
 
-APPEL_FONCTION          -> ID ( PARAMETERS ) ;  // "ID ();" ???
+APPEL_FONCTION          -> ID ( PARAMETERS ) ;  
 
 FONCTION                ->  TYPE  FONCTION'
                         |   function FONCTION'
@@ -86,7 +86,7 @@ PARAMETER               -> ID TYPE
                         | PARAMETER , ID TYPE
             
 
-VAR_DECLARATION         -> VARS' ; VAR_DECLARATION       
+VAR_DECLARATION         -> VARS'      
                         | epsilon
 
 VARS'                   -> const TYPE IDS_CONST 
@@ -95,7 +95,7 @@ VARS'                   -> const TYPE IDS_CONST
 
 VARS''                  -> ID [: TYPE  | is TYPE] OPT [, VARS'' | epsilon]                  
 
-IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]                    // n9drou naffectew apres donc machi mochkil tkoun ghir declaration bhal c ?
+IDS_CONST               -> ID AFFECTATION' [, IDS_CONST| e]           
 
 JS_IDS                  -> ID : TYPE OPT [, JS_IDS | epsilon]
 

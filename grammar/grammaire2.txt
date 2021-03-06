@@ -49,16 +49,14 @@ VARS'''					-> , VARS''
 						| . 
 
 IDS_CONST               -> ID AFFECTATION' IDS'.
-
-
-IDS'					-> , VARS'' 
+IDS'					-> , IDS_CONST                           // pour les constantes on ne declare qu'un seul type (sahla)
 						| .    
 
 JS_IDS                  -> ID : TYPE OPT JS'.
 JS'						-> , JS_IDS | .
 
-IDS                     -> ID OPT IDS''.
-IDS''					-> , IDS | .
+IDS                     -> ID OPT IDS''.                // removed
+IDS''					-> , IDS | .                     // removed
 
 OPT                     ->  AFFECTATION'
                         | .
