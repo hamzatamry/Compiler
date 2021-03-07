@@ -7,7 +7,9 @@ accolade_ouverte        {
 accolade_fermee 	    }
 guillemets 			    "
 id_pattern              [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])? 
-increment               ++    
+increment               ++  
+slash                    /  
+pourcentage             %
 decrement               --    
 minus_sign              -
 gtr_sign                > 
@@ -21,16 +23,9 @@ number_pattern          [0-9]+
 
 *****************************************************************************
 
-INSTRUCTIONS 			-> ACC_O INSTRUCTION INST'  ACC_F.
-
-INST'					-> INSTRUCTIONS
-                        | .
-
-ACC_O 					-> accolade_ouverte 
-                        | .
-
-ACC_F 					-> accolade_fermee 
-                        | .
+INSTRUCTIONS 			-> accolade_ouverte INSTRUCTION INSTRUCTIONS accolade_fermee
+                        | INSTRUCTION INSTRUCTIONS
+                        | INSTRUCTION.
 
 INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
@@ -40,15 +35,85 @@ INSTRUCTION             ->  AFFECTATION ;
                         |  FONCTION 
                         |  CONTROLE 
                         |  EXCEPTION
-                        |  INPUT_OUTPUT 
+                        |  INPUT_OUTPUT.
+
+AFFECTATION             -> id deux_points egal  EXPRESSION ;
+                        |  id egal EXPRESSION ;
+                        |  id left_arrow EXPRESSION ;.
+
+EXPRESSION              ->  TERM 
+                        |   ( EXPRESSION )
+                        |   TERM  +   EXPRESSION
+                        |   TERM  minus_sign  EXPRESSION.
+
+TERM                    ->  FACTEUR OPERATEURMULT FACTEUR
+                        |   FACTEUR
+                        |   + FACTEUR 
+                        |   minus_sign FACTEUR
+                        |   FACTEUR OPERATEURSPECIAUX.
+
+OPERATEURMULT          ->   *
+                        |  mult 
+                        |  slash
+                        |  div
+                        |  pourcentage 
+                        |  mod
+                        |  modulo. 
+
+OPERATEURSPECIAUX       ->  increment
+                        | decrement. 
+
+
+FACTEUR                 -> id 
+                        | number 
+                        | boolean
+                        | APPEL_FONCTION
+                        | string.
+
+APPEL_FONCTION          -> call id ( APPEL_FONCTION_ARG.
+APPEL_FONCTION_ARG      -> PARAMETER )
+                        | ) .
+
+PARAMETER               -> PARAMETER virgule id type
+                        |  id type .
+
+RETURN                  -> return EXPRESSION 
+
+BOUCLE                  -> FORLOOP_STATEMENT
+                        |  DOWHILELOOP_STATEMENT
+                        |  WHILELOOP_STATEMENT
+
+FORLOOP_STATEMENT       ->  for (VAR_DECLARATION ; CONDITION ; INSTRUCTION) accolade_ouverte STATEMENTS accolade_fermante
+                        |   for (VAR_DECLARATION ; CONDITION ; INSTRUCTION) STATEMENT 
+                        |   for (VAR_DECLARATION : ITERABLE) accolade_ouverte STATEMENTS accolade_fermante   
+                        |   for (VAR_DECLARATION : ITERABLE) STATEMENT 
+                        |   for ITERATOR in ITERABLE : entree tab STATEMENTS
+                        |   for VAR_ID affectation NOMBRE to NOMBRE do STATEMENTS ; 
+                        |   .
+
+WHILELOOP_STATEMENT     ->  while ( CONDITION ) STATEMENT
+                        |   while ( CONDITION ) accolade_ouvrante STATEMENTS accolade_fermante
+                        |   while CONDITION : entree tab STATEMENTS
+                        |   while ( CONDITION ) do STATEMENTS ;
+                        |   .
+
+DOWHILELOOP_STATEMENT   ->  do accolade_ouverte STATEMENTS accolade_fermante while (CONDITION) ;
+                        |   repeat STATEMENTS until CONDITION; 
+                        |   .
+
+
+****************************************************************************************
+
+EXPRESSION              ->   TERM EX'.
+EX'                     ->  OPERATEURADD TERM 
                         | .
+
 
 BOUCLE                  ->  FORLOOP_STATEMENT
                         |   DOWHILELOOP_STATEMENT
                         |   WHILELOOP_STATEMENT.
                         
-AFFECTATION             ->  const ID AFFECTATION2
-                        | ID AFFECTATION2.
+
                         
 AFFECTATION2            ->  SYMBOLE_AFF  EXPRESSION.    
 
