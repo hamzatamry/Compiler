@@ -159,9 +159,10 @@ FONCTION'               -> ID(PARAMETERS) accolade_ouverte INSTS accolade_fermee
 PARAMETERS              -> PARAMETER
                         | .
 
-PARAMETER               -> ID TYPE 
-                        | PARAMETER virgule ID TYPE.
+PARAMETER               -> ID TYPE PARAMETER'
 
+PARAMETER'				-> virgule ID TYPE PARAMETER'
+						|.
 
 OPERATEURSPECIAUX       ->  increment
                         | decrement.
