@@ -3,8 +3,8 @@ Tools punctuations      ~ ! @ # * ( ) _ + ' ;
 virgule                 ,
 deux_points             :
 egal                    =
-accolade_ouverte        {
-accolade_fermee 	    }
+accolade_ouvrante        {
+accolade_fermante 	    }
 guillemets 			    "
 id_pattern              [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])? 
 increment               ++  
@@ -23,9 +23,9 @@ number_pattern          [0-9]+
 
 *****************************************************************************
 
-INSTRUCTIONS 			-> accolade_ouverte INSTRUCTION INSTRUCTIONS accolade_fermee
+INSTRUCTIONS 			-> accolade_ouvrante INSTRUCTION INSTRUCTIONS accolade_fermante
                         | INSTRUCTION INSTRUCTIONS
-                        | INSTRUCTION.
+                        | INSTRUCTION .
 
 INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
@@ -35,11 +35,11 @@ INSTRUCTION             ->  AFFECTATION ;
                         |  FONCTION 
                         |  CONTROLE 
                         |  EXCEPTION
-                        |  INPUT_OUTPUT.
+                        |  INPUT_OUTPUT .
 
 AFFECTATION             -> id deux_points egal  EXPRESSION ;
                         |  id egal EXPRESSION ;
-                        |  id left_arrow EXPRESSION ;.
+                        |  id left_arrow EXPRESSION ; .
 
 EXPRESSION              ->  TERM 
                         |   ( EXPRESSION )
@@ -50,7 +50,7 @@ TERM                    ->  FACTEUR OPERATEURMULT FACTEUR
                         |   FACTEUR
                         |   + FACTEUR 
                         |   minus_sign FACTEUR
-                        |   FACTEUR OPERATEURSPECIAUX.
+                        |   FACTEUR OPERATEURSPECIAUX .
 
 OPERATEURMULT          ->   *
                         |  mult 
@@ -58,17 +58,17 @@ OPERATEURMULT          ->   *
                         |  div
                         |  pourcentage 
                         |  mod
-                        |  modulo. 
+                        |  modulo . 
 
 OPERATEURSPECIAUX       ->  increment
-                        | decrement. 
+                        | decrement . 
 
 
 FACTEUR                 -> id 
                         | number 
                         | boolean
                         | APPEL_FONCTION
-                        | string.
+                        | string .
 
 APPEL_FONCTION          -> call id ( APPEL_FONCTION_ARG.
 APPEL_FONCTION_ARG      -> PARAMETER )
@@ -83,20 +83,19 @@ BOUCLE                  -> FORLOOP_STATEMENT
                         |  DOWHILELOOP_STATEMENT
                         |  WHILELOOP_STATEMENT.
 
-FORLOOP_STATEMENT       ->  for (VAR_DECLARATION ; CONDITIONS ; INSTRUCTION) accolade_ouverte INSTRUCTIONS accolade_fermante
-                        |   for (VAR_DECLARATION ; CONDITIONS ; INSTRUCTION) INSTRUCTION 
-                        |   for (VAR_DECLARATION : id) accolade_ouverte INSTRUCTIONS accolade_fermante   
-                        |   for (VAR_DECLARATION : id) INSTRUCTION 
-                        |   for id in id : entree tab INSTRUCTIONS
-                        |   for id egal number to number do INSTRUCTIONS ;.
+FORLOOP_STATEMENT       ->  for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) accolade_ouvrante INSTRUCTIONS accolade_fermante
+                        |   for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) INSTRUCTION 
+                        |   for ( VAR_DECLARATION deux_points id ) accolade_ouvrante INSTRUCTIONS accolade_fermante   
+                        |   for ( VAR_DECLARATION deux_points id ) INSTRUCTION 
+                        |   for id in id deux_points entree tab INSTRUCTIONS shift_tab
+                        |   for id egal number to number do INSTRUCTIONS ; .
 
 WHILELOOP_STATEMENT     ->  while ( CONDITIONS ) INSTRUCTION
                         |   while ( CONDITIONS ) accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |   while CONDITIONS : entree tab INSTRUCTIONS
-                        |   while ( CONDITIONS ) do INSTRUCTIONS ;.
+                        |   while CONDITIONS deux_points entree tab INSTRUCTIONS shift_tab.
 
-DOWHILELOOP_STATEMENT   ->  do accolade_ouverte INSTRUCTIONS accolade_fermante while (CONDITIONS) ;
-                        |   repeat INSTRUCTIONS until CONDITIONS;.
+DOWHILELOOP_STATEMENT   ->  do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
+                        |   repeat INSTRUCTIONS until CONDITIONS ; .
 
 
 ****************************************************************************************
