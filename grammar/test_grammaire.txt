@@ -77,29 +77,26 @@ APPEL_FONCTION_ARG      -> PARAMETER )
 PARAMETER               -> PARAMETER virgule id type
                         |  id type .
 
-RETURN                  -> return EXPRESSION 
+RETURN                  -> return EXPRESSION.
 
 BOUCLE                  -> FORLOOP_STATEMENT
                         |  DOWHILELOOP_STATEMENT
-                        |  WHILELOOP_STATEMENT
+                        |  WHILELOOP_STATEMENT.
 
-FORLOOP_STATEMENT       ->  for (VAR_DECLARATION ; CONDITION ; INSTRUCTION) accolade_ouverte STATEMENTS accolade_fermante
-                        |   for (VAR_DECLARATION ; CONDITION ; INSTRUCTION) STATEMENT 
-                        |   for (VAR_DECLARATION : ITERABLE) accolade_ouverte STATEMENTS accolade_fermante   
-                        |   for (VAR_DECLARATION : ITERABLE) STATEMENT 
-                        |   for ITERATOR in ITERABLE : entree tab STATEMENTS
-                        |   for VAR_ID affectation NOMBRE to NOMBRE do STATEMENTS ; 
-                        |   .
+FORLOOP_STATEMENT       ->  for (VAR_DECLARATION ; CONDITIONS ; INSTRUCTION) accolade_ouverte INSTRUCTIONS accolade_fermante
+                        |   for (VAR_DECLARATION ; CONDITIONS ; INSTRUCTION) INSTRUCTION 
+                        |   for (VAR_DECLARATION : id) accolade_ouverte INSTRUCTIONS accolade_fermante   
+                        |   for (VAR_DECLARATION : id) INSTRUCTION 
+                        |   for id in id : entree tab INSTRUCTIONS
+                        |   for id egal number to number do INSTRUCTIONS ;.
 
-WHILELOOP_STATEMENT     ->  while ( CONDITION ) STATEMENT
-                        |   while ( CONDITION ) accolade_ouvrante STATEMENTS accolade_fermante
-                        |   while CONDITION : entree tab STATEMENTS
-                        |   while ( CONDITION ) do STATEMENTS ;
-                        |   .
+WHILELOOP_STATEMENT     ->  while ( CONDITIONS ) INSTRUCTION
+                        |   while ( CONDITIONS ) accolade_ouvrante INSTRUCTIONS accolade_fermante
+                        |   while CONDITIONS : entree tab INSTRUCTIONS
+                        |   while ( CONDITIONS ) do INSTRUCTIONS ;.
 
-DOWHILELOOP_STATEMENT   ->  do accolade_ouverte STATEMENTS accolade_fermante while (CONDITION) ;
-                        |   repeat STATEMENTS until CONDITION; 
-                        |   .
+DOWHILELOOP_STATEMENT   ->  do accolade_ouverte INSTRUCTIONS accolade_fermante while (CONDITIONS) ;
+                        |   repeat INSTRUCTIONS until CONDITIONS;.
 
 
 ****************************************************************************************
