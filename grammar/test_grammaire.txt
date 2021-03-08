@@ -1,5 +1,7 @@
 Tools punctuations      ~ ! @ # * ( ) _ + ' ;
 
+double_ampersand        &&
+double_barre            ||
 virgule                 ,
 deux_points             :
 egal                    =
@@ -20,6 +22,7 @@ neq_sign                !=
 equ_sign                ==.     
 string_pattern          [ a-zA-Z0-9_;:!,?\|[](]&~^$µeè@à` ]*
 number_pattern          [0-9]+ 
+comparator              (&|&&|)
 
 *****************************************************************************
 
@@ -31,11 +34,10 @@ INSTRUCTION             ->  AFFECTATION ;
                         |  APPEL_FONCTION ;
                         |  RETURN ;
                         |  BOUCLE
-                        |  VAR_DECLARATION ;
+                        |  INPUT_OUTPUT 
                         |  FONCTION 
                         |  CONTROLE 
-                        |  EXCEPTION
-                        |  INPUT_OUTPUT .
+                        |  VAR_DECLARATION ; .
 
 AFFECTATION             -> id deux_points egal  EXPRESSION ;
                         |  id egal EXPRESSION ;
@@ -44,7 +46,7 @@ AFFECTATION             -> id deux_points egal  EXPRESSION ;
 EXPRESSION              ->  TERM 
                         |   ( EXPRESSION )
                         |   TERM  +   EXPRESSION
-                        |   TERM  minus_sign  EXPRESSION.
+                        |   TERM  minus_sign  EXPRESSION .
 
 TERM                    ->  FACTEUR OPERATEURMULT FACTEUR
                         |   FACTEUR
@@ -70,12 +72,13 @@ FACTEUR                 -> id
                         | APPEL_FONCTION
                         | string .
 
-APPEL_FONCTION          -> call id ( APPEL_FONCTION_ARG.
-APPEL_FONCTION_ARG      -> PARAMETER )
+APPEL_FONCTION          -> call id ( APPEL_FONCTION_ARG .
+
+APPEL_FONCTION_ARG      -> ARGUMENT )
                         | ) .
 
-PARAMETER               -> PARAMETER virgule id type
-                        |  id type .
+ARGUMENT               -> ARGUMENT virgule id 
+                        |  id .
 
 RETURN                  -> return EXPRESSION.
 
@@ -96,6 +99,34 @@ WHILELOOP_STATEMENT     ->  while ( CONDITIONS ) INSTRUCTION
 
 DOWHILELOOP_STATEMENT   ->  do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
                         |   repeat INSTRUCTIONS until CONDITIONS ; .
+
+CONDITIONS              -> CONDITION double_ampersand CONDITIONS
+                        |  CONDITION double_barre CONDITIONS
+                        |  CONDITION and CONDITIONS
+                        |  CONDITION or CONDITIONS
+                        |  ! ( CONDITION )
+                        |  not ( CONDITION )
+                        |  CONDITION.
+
+CONDITION               -> boolean 
+                        | EXPRESSION comparator EXPRESSION.
+
+INPUT_OUTPUT            -> print ( ARGUMENT ) ;
+                        | printf ( ARGUMENT ) ;
+                        | scanf ( ARGUMENT ) ;
+                        | input ( ARGUMENT ) ;
+                        | log ( ARGUMENT )  ;
+                        | fprintf ( ARGUMENT ) ; 
+                        | fscanf ( ARGUMENT ) ;
+                        | fread ( ARGUMENT ) ; 
+                        | fwrite (  ARGUMENT ) ;
+                        | write ( ARGUMENT ) ; 
+                        | read (  ARGUMENT ) ;
+                        | puts ( ARGUMENT ) ; 
+                        | gets (  ARGUMENT ) ; .
+
+PARAMETER               -> PARAMETER virgule id type
+                        |  id type .
 
 
 ****************************************************************************************
