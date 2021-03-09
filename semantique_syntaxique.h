@@ -63,6 +63,10 @@ extern void RETURN();
 extern void BOUCLE();
 extern void FORLOOP_STATEMENT();
 extern void Ffor();
+extern int isMultp(int TOKEN);
+extern int isTermBeg2(int TOKEN);
+extern int isTermBeg(int TOKEN);
+extern int isIO(int TOKEN);
 
 
 extern void FONCTION();

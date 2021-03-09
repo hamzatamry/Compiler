@@ -1,4 +1,5 @@
 #include "semantique_syntaxique.h"
+#include "../analyseur_lexical/headers/lexical.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
