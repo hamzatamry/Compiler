@@ -526,11 +526,11 @@ void lire_specials()
     default:
         SYM_COUR.CODE = ERREUR_TOKEN;
     }
-    if(!string)
-     {
+    // if(!string)
+    //  {
         strcpy(SYM_COUR.NOM, tokens[SYM_COUR.CODE]);
         //lire_car();
-     }
+    //  }
   
     
 }
