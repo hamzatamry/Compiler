@@ -30,7 +30,7 @@ const char tokens[][20] = {
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
     "<>", "(",")", "/*" , "*/", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "\'", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "print", "printf", "scanf", "input",
-    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE_TOKEN"                                 
+    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE", "?"                                
 };
 
 const char lexical_unit[][20] = {
@@ -46,14 +46,14 @@ const char lexical_unit[][20] = {
     "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
     "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN", "QUOTE_TOKEN", "SINGLEQUOTE_TOKEN", "EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
     "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN","PRINT_TOKEN", "PRINTF_TOKEN", "SCANF_TOKEN", "INPUT_TOKEN", "LOG_TOKEN", "FPRINTF_TOKEN", "FSCANF_TOKEN", "FREAD_TOKEN", "FWRITE_TOKEN", 
-    "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN", "CHAR_VALUE_TOKEN"
+    "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN", "CHAR_VALUE_TOKEN","INTERROGATION_TOKEN"
 };
 
 void ouvrir_fichier(char nom[20])
 {
     flux_input = fopen(nom, "r");
 
-    flux_output = fopen("tests\\output\\out_1", "w");
+    flux_output = fopen("..\\tests\\output\\out_1", "w");
 
     if (flux_input == NULL || flux_output == NULL)
     {
@@ -77,12 +77,12 @@ void lire_car()
 
 _Bool isSeparator()
 {
-    return (Car_Cour == ' ') || (Car_Cour == '\n') || (Car_Cour == '\t');
+    return (Car_Cour == ' ') || (Car_Cour == '\n') || (Car_Cour == '\t') || (Car_Cour == EOF);
 }
 
 int mot_cle()
 {
-    for (int i = 0; i < 127; i++)
+    for (int i = 0; i < 129; i++)
     {
         if (strcmp(tokens[i], SYM_COUR.NOM) == 0)
             return i;
@@ -514,7 +514,9 @@ void lire_specials()
         SYM_COUR.CODE = NOT_TOKEN;
         lire_car();
         break;
-    case '?':                             // à ajouter
+    case '?': 
+        SYM_COUR.CODE = INTERROGATION_TOKEN;                            // à ajouter
+        lire_car();
         break;
     // case '\"':
     //     isString();
@@ -524,11 +526,11 @@ void lire_specials()
     default:
         SYM_COUR.CODE = ERREUR_TOKEN;
     }
-    // if(!string)
-    // {
+    if(!string)
+     {
         strcpy(SYM_COUR.NOM, tokens[SYM_COUR.CODE]);
         //lire_car();
-    // }
+     }
   
     
 }
