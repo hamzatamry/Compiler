@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include "..\headers\lexical.h"
 
-int main()
+int main(void)
 {
-    ouvrir_fichier("..\\tests\\input\\in_1");
+    ouvrir_fichier("tests\\input\\in_2");
+
     while (Car_Cour != EOF)
     {
         sym_suiv();

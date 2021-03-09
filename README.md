@@ -1,8 +1,8 @@
 # Analyseur lexical 
 
-## Compilation command
+## Compilation and run command
 ```
-gcc main.c sources\*.c -o lexical
+gcc sources\*.c -o lexical -lregex && lexical
 ```
 ## Documentation
 

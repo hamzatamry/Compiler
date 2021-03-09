@@ -2,6 +2,7 @@ int id=5, myVariable;
 let var1:bool = true, var2, var3;
 const constante <- 6;
 myString is string = "helloWorld";
+int ok = 144984.54;
 
 /* ceci est un commentaire*/
 

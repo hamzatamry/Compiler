@@ -4,20 +4,36 @@
 #include <string.h>
 #include <stdbool.h>
 #include "..\headers\lexical.h"
+#include "..\headers\regex.h"
+
+/*
+
+char* identifier_pattern =  "^[a-z_][a-z_A-Z1-9]*$";
+char* number_pattern = "^[+-]?([0-9]*[.])?[0-9]+$";
+char* string_pattern =  "^(\"|\').*(\"|\')$";
+char* character_pattern = "^\'.\'$";
+char* array_declaration_pattern = "^[a-z_][a-z_A-Z1-9]*(\\[\\])+$";
+
+printf("%d", match("array[]", array_declaration_pattern));
+
+
+*/
 
 FILE* flux_input;
 FILE* flux_output;
+char Car_Cour;
+TSym_Cour SYM_COUR;
 
 Error MESSAGE_ERR[100] = {
-    {FICH_VID_ERR,"fichier vide"},
-    {ID_LONG_ERR,"identificateur long"},
-    {ID_INC_ERR,"identificateur incorrect"},
-    {COMMENT_ERR,"erreur commentaire"},
-    {NUM_LONG_ERR,"numero long"},
-    {STRING_ERR,"string non proprement declare : missing \""}
+    { NUM_ERR     , "Nombre incorrect" },
+    { FICH_VID_ERR, "fichier vide" },
+    { ID_LONG_ERR, "identificateur long" },
+    { ID_INC_ERR, "identificateur incorrect" },
+    { COMMENT_ERR, "erreur commentaire" },
+    { NUM_LONG_ERR, "numero long" },
+    { STRING_ERR, "string non proprement declare : missing \"" }
 };
 
-char Car_Cour;
 
 const char tokens[][20] = {  
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
@@ -47,18 +63,11 @@ const char lexical_unit[][20] = {
     "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN"
 };
 
-typedef struct
-{
-    CODES_LEX CODE;
-    char NOM[20];
-} TSym_Cour;
-
-TSym_Cour SYM_COUR;
-
 void ouvrir_fichier(char nom[20])
 {
     flux_input = fopen(nom, "r");
-    flux_output = fopen("..\\tests\\output\\out_1", "w");
+
+    flux_output = fopen("..\\tests\\output\\out_2", "w");
 
     if (flux_input == NULL || flux_output == NULL)
     {
@@ -68,7 +77,9 @@ void ouvrir_fichier(char nom[20])
     {
         lire_car();
         if (Car_Cour == EOF)
+        {
             ERREUR(FICH_VID_ERR);
+        }
     }
     
 }
@@ -237,20 +248,24 @@ void lire_mots()
 void lire_nombres()
 {
     int i = 0;
-    while (isdigit(Car_Cour))
+
+    while (isdigit(Car_Cour) || Car_Cour == '.')
     {
         SYM_COUR.NOM[i] = Car_Cour;
         lire_car();
         i++;
     }
+
     SYM_COUR.NOM[i] = '\0';
-    if(i > 11)
+
+    if (match(SYM_COUR.NOM, "^([0-9]*[.])?[0-9]+$"))
     {
-        SYM_COUR.CODE = ERREUR_TOKEN;
-        ERREUR(NUM_LONG_ERR);
+        SYM_COUR.CODE = NUM_TOKEN; 
     }
-    else
-        SYM_COUR.CODE = NUM_TOKEN;
+    else 
+    {
+        ERREUR(NUM_ERR);
+    }
 }
 
 void lire_specials()
@@ -517,7 +532,7 @@ void sym_suiv()
     {
         lire_nombres();
     }
-    else if (Car_Cour == '\"')
+    else if (Car_Cour == '"')
     {
         isString();
     }

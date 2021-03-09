@@ -1,6 +1,8 @@
 #ifndef LEXICAL_H 
 #define LEXICAL_H
 
+
+
 typedef enum 
 {
     INT_TOKEN, INTEGER_TOKEN, NUMBER_TOKEN, FLOAT_TOKEN, CHAR_TOKEN, STRING_TOKEN, STR_TOKEN, LONG_TOKEN, DOUBLE_TOKEN, SHORT_TOKEN,
@@ -17,9 +19,16 @@ typedef enum
     PUTS_TOKEN, GETS_TOKEN, CALL_TOKEN, STRINGVAL_TOKEN, ERREUR_TOKEN
 } CODES_LEX;
 
+
+typedef struct
+{
+    CODES_LEX CODE;
+    char NOM[20];
+} TSym_Cour;
+
 typedef enum 
 {
-    FICH_VID_ERR, ID_LONG_ERR, ID_INC_ERR, COMMENT_ERR, NUM_LONG_ERR, STRING_ERR
+    NUM_ERR, FICH_VID_ERR, ID_LONG_ERR, ID_INC_ERR, COMMENT_ERR, NUM_LONG_ERR, STRING_ERR
 } ERREURS;
 
 typedef struct
@@ -44,6 +53,7 @@ extern void afficher_token();
 extern void ERREUR(ERREURS e);
 
 extern char Car_Cour;
+extern TSym_Cour SYM_COUR;
 extern FILE* flux_output;
 extern FILE* flux_input;
 
