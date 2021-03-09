@@ -174,180 +174,126 @@ IDS_CONST               -> id symbole_aff  EXPRESSION virgule IDS_CONST
                 Grammaire LL(1)
 ******************************************************************************************************
 
-INSTRUCTIONS            -> 	accolade_ouvrante INSTRUCTION INSTRUCTIONS accolade_fermante
-                        |	INSTRUCTION FINSTRUCTION .
-
-FINSTRUCTION            ->	INSTRUCTIONS
-                        |	.
-
-INSTRUCTION             ->	AFFECTATION ;
-                        |	APPEL_FONCTION ;
-                        |	RETURN ;
-                        |	BOUCLE
-                        |	INPUT_OUTPUT
-                        |	FONCTION
-                        |	CONTROLE
-                        |	VAR_DECLARATION ; .
-
-AFFECTATION             ->	id Fid .
-
-Fid                     ->	deux_points egal EXPRESSION ;
-                        |	egal EXPRESSION ;
-                        |	left_arrow EXPRESSION ; .
-
-EXPRESSION              ->	TERM FTERM
-                        |	( EXPRESSION ) .
+INSTRUCTIONS ->	accolade_ouvrante INSTRUCTION INSTRUCTIONS accolade_fermante
+|	INSTRUCTION FINSTRUCTION .
+FINSTRUCTION ->	INSTRUCTIONS
+|	.
+INSTRUCTION ->	AFFECTATION ;
+|	APPEL_FONCTION ;
+|	RETURN ;
+|	BOUCLE
+|	INPUT_OUTPUT
+|	FONCTION
+|	CONTROLE
+|	VAR_DECLARATION ; .
+AFFECTATION ->	id Fid .
+Fid ->	deux_points egal EXPRESSION ;
+|	egal EXPRESSION ;
+|	left_arrow EXPRESSION ; .
+EXPRESSION ->	TERM FTERM
+|	( EXPRESSION ) .
 FTERM ->	
-                        |	+ EXPRESSION
-                        |	minus_sign EXPRESSION .
-
+|	+ EXPRESSION
+|	minus_sign EXPRESSION .
 TERM ->	FACTEUR FFACTEUR
-                        |	+ FACTEUR
-                        |	minus_sign FACTEUR .
-
+|	+ FACTEUR
+|	minus_sign FACTEUR .
 FFACTEUR ->	OPERATEURMULT FACTEUR
-                        |	
-                        |	OPERATEURSPECIAUX .
-
+|	
+|	OPERATEURSPECIAUX .
 OPERATEURMULT ->	*
-                        |	mult
-                        |	slash
-                        |	div
-                        |	pourcentage
-                        |	mod
-                        |	modulo .
-
+|	mult
+|	slash
+|	div
+|	pourcentage
+|	mod
+|	modulo .
 OPERATEURSPECIAUX ->	increment
-                        |	decrement .
-
+|	decrement .
 FACTEUR ->	id
-                        |	number
-                        |	boolean
-                        |	APPEL_FONCTION
-                        |	string .
-
-APPEL_FONCTION          ->	call id ( APPEL_FONCTION_ARG .
-
-APPEL_FONCTION_ARG      ->	ARGUMENT )
-                        |	) .
-
-ARGUMENT                ->	id ARGUMENT1 .
-
-ARGUMENT1               ->	virgule id ARGUMENT1
-                        |	.
-
-RETURN                  ->	return EXPRESSION .
-
-BOUCLE                  ->	FORLOOP_STATEMENT
-                        |	DOWHILELOOP_STATEMENT
-                        |	WHILELOOP_STATEMENT .
-
-FORLOOP_STATEMENT       ->	for Ffor .
-
-Ffor                    ->	( F(
-                        |	id Fid3 .
-
-F(                      ->	VAR_DECLARATION FVAR_DECLARATION .
-
-FVAR_DECLARATION        ->	; F;
-                        |	deux_points Fdeux_points .
-
-F;                      ->	CONDITIONS FCONDITIONS1 .
-
-FCONDITIONS1            ->	; F;1 .
-
-F;1                     ->	INSTRUCTION FINSTRUCTION1 .
-
-FINSTRUCTION1           ->	) F)2 .
-
-F)2                     ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |	INSTRUCTION .
-
-Fdeux_points            ->	id Fid4 .
-
-Fid4                    ->	) F)1 .
-
-F)1                     ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |	INSTRUCTION .
-
-Fid3                    ->	in id deux_points entree tab INSTRUCTIONS shift_tab
-                        |	egal number to number do INSTRUCTIONS ; .
-
-WHILELOOP_STATEMENT     ->	while Fwhile .
-
-Fwhile                  ->	( F(1 .
-
-F(1                     ->	CONDITIONS FCONDITIONS .
-
-FCONDITIONS             ->	) F) .
-
-F)                      ->	INSTRUCTION
-                        |	accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |	deux_points entree tab INSTRUCTIONS shift_tab .
-
-DOWHILELOOP_STATEMENT   ->	do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
-                        |	repeat INSTRUCTIONS until CONDITIONS ; .
-
-CONDITIONS              ->	CONDITION FCONDITION
-                        |	! ( CONDITION )
-                        |	not ( CONDITION ) .
-
-FCONDITION              ->	double_ampersand CONDITIONS
-                        |	double_barre CONDITIONS
-                        |	and CONDITIONS
-                        |	or CONDITIONS
-                        |	.
-
-CONDITION               ->	EXPRESSION comparator EXPRESSION .
-
-INPUT_OUTPUT            ->	print ( ARGUMENT ) ;
-                        |	printf ( ARGUMENT ) ;
-                        |	scanf ( ARGUMENT ) ;
-                        |	input ( ARGUMENT ) ;
-                        |	log ( ARGUMENT ) ;
-                        |	fprintf ( ARGUMENT ) ;
-                        |	fscanf ( ARGUMENT ) ;
-                        |	fread ( ARGUMENT ) ;
-                        |	fwrite ( ARGUMENT ) ;
-                        |	write ( ARGUMENT ) ;
-                        |	read ( ARGUMENT ) ;
-                        |	puts ( ARGUMENT ) ;
-                        |	gets ( ARGUMENT ) ; .
-
-FONCTION                ->	def type FONCTION2
-                        |	function type FONCTION2 .
-
-FONCTION2               ->	id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
-
-PARAMETER               ->	id type PARAMETER1 .
-
-PARAMETER1              ->	virgule id type PARAMETER1
-                        |	.
-
-VAR_DECLARATION         ->	const TYPE IDS_CONST
-                        |	let VARS'' .
-
-VARS''                  ->	id Fid1 .
-
-Fid1                    ->	VARS_TYPE FVARS_TYPE .
-
-FVARS_TYPE              ->	symbole_aff Fsymbole_aff1
-                        |	virgule VARS''
-                        |	.
-
-Fsymbole_aff1           ->	EXPRESSION FEXPRESSION1 .
-
-FEXPRESSION1            ->	virgule VARS''
-                        |	.
- 
- VARS_TYPE              ->	deux_points type
-                        |	is type .
- 
- IDS_CONST              ->	id Fid2 .
- 
- Fid2                   ->	symbole_aff Fsymbole_aff .
- 
- Fsymbole_aff           ->	EXPRESSION FEXPRESSION .
- 
- FEXPRESSION            ->	virgule IDS_CONST
-                        |	.
+|	number
+|	boolean
+|	APPEL_FONCTION
+|	string .
+APPEL_FONCTION ->	call id ( APPEL_FONCTION_ARG .
+APPEL_FONCTION_ARG ->	ARGUMENT )
+|	) .
+ARGUMENT ->	id ARGUMENT1 .
+ARGUMENT1 ->	virgule id ARGUMENT1
+|	.
+RETURN ->	return EXPRESSION .
+BOUCLE ->	FORLOOP_STATEMENT
+|	DOWHILELOOP_STATEMENT
+|	WHILELOOP_STATEMENT .
+FORLOOP_STATEMENT ->	for Ffor .
+Ffor ->	( F(
+|	id Fid3 .
+F( ->	VAR_DECLARATION FVAR_DECLARATION .
+FVAR_DECLARATION ->	; F;
+|	deux_points Fdeux_points .
+F; ->	CONDITIONS FCONDITIONS1 .
+FCONDITIONS1 ->	; F;1 .
+F;1 ->	INSTRUCTION FINSTRUCTION1 .
+FINSTRUCTION1 ->	) F)2 .
+F)2 ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
+|	INSTRUCTION .
+Fdeux_points ->	id Fid4 .
+Fid4 ->	) F)1 .
+F)1 ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
+|	INSTRUCTION .
+Fid3 ->	in id deux_points entree tab INSTRUCTIONS shift_tab
+|	egal number to number do INSTRUCTIONS ; .
+WHILELOOP_STATEMENT ->	while Fwhile .
+Fwhile ->	( F(1 .
+F(1 ->	CONDITIONS FCONDITIONS .
+FCONDITIONS ->	) F) .
+F) ->	INSTRUCTION
+|	accolade_ouvrante INSTRUCTIONS accolade_fermante
+|	deux_points entree tab INSTRUCTIONS shift_tab .
+DOWHILELOOP_STATEMENT ->	do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
+|	repeat INSTRUCTIONS until CONDITIONS ; .
+CONDITIONS ->	CONDITION FCONDITION
+|	! ( CONDITION )
+|	not ( CONDITION ) .
+FCONDITION ->	double_ampersand CONDITIONS
+|	double_barre CONDITIONS
+|	and CONDITIONS
+|	or CONDITIONS
+|	.
+CONDITION ->	EXPRESSION comparator EXPRESSION .
+INPUT_OUTPUT ->	print ( ARGUMENT ) ;
+|	printf ( ARGUMENT ) ;
+|	scanf ( ARGUMENT ) ;
+|	input ( ARGUMENT ) ;
+|	log ( ARGUMENT ) ;
+|	fprintf ( ARGUMENT ) ;
+|	fscanf ( ARGUMENT ) ;
+|	fread ( ARGUMENT ) ;
+|	fwrite ( ARGUMENT ) ;
+|	write ( ARGUMENT ) ;
+|	read ( ARGUMENT ) ;
+|	puts ( ARGUMENT ) ;
+|	gets ( ARGUMENT ) ; .
+FONCTION ->	def type FONCTION2
+|	function type FONCTION2 .
+FONCTION2 ->	id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
+PARAMETER ->	id type PARAMETER1 .
+PARAMETER1 ->	virgule id type PARAMETER1
+|	.
+VAR_DECLARATION ->	const TYPE IDS_CONST
+|	let VARS'' .
+VARS'' ->	id Fid1 .
+Fid1 ->	VARS_TYPE FVARS_TYPE .
+FVARS_TYPE ->	symbole_aff Fsymbole_aff1
+|	virgule VARS''
+|	.
+Fsymbole_aff1 ->	EXPRESSION FEXPRESSION1 .
+FEXPRESSION1 ->	virgule VARS''
+|	.
+VARS_TYPE ->	deux_points type
+|	is type .
+IDS_CONST ->	id Fid2 .
+Fid2 ->	symbole_aff Fsymbole_aff .
+Fsymbole_aff ->	EXPRESSION FEXPRESSION .
+FEXPRESSION ->	virgule IDS_CONST
+|	.
