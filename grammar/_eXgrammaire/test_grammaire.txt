@@ -1,0 +1,361 @@
+Tools punctuations      ~ ! @ # * ( ) _ + ' ;
+******************************************************************************
+double_ampersand        &&
+point_interrogation     ?
+double_barre            ||
+virgule                 ,
+deux_points             :
+egal                    =
+accolade_ouvrante        {
+accolade_fermante 	    }
+guillemets 			    "
+id_pattern              [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])? 
+increment               ++  
+slash                    /  
+pourcentage             %
+decrement               --    
+minus_sign              -
+gtr_sign                > 
+lss_sign                < 
+gte_sign                >=
+leq_sign                <=
+neq_sign                !=
+equ_sign                ==.     
+string_pattern          [ a-zA-Z0-9_;:!,?\|[](]&~^$µeè@à` ]*
+number_pattern          [0-9]+ 
+comparator              (&|&&|)
+symbole_aff             =, <-, :=
+*****************************************************************************
+
+INSTRUCTIONS 			-> accolade_ouvrante INSTRUCTION INSTRUCTIONS accolade_fermante
+                        | INSTRUCTION INSTRUCTIONS
+                        | INSTRUCTION .
+
+INSTRUCTION             ->  AFFECTATION ;
+                        |  APPEL_FONCTION ;
+                        |  RETURN ;
+                        |  BOUCLE
+                        |  INPUT_OUTPUT 
+                        |  FONCTION 
+                        |  CONTROLE 
+                        |  VAR_DECLARATION ; .
+
+AFFECTATION             -> id deux_points egal  EXPRESSION ;
+                        |  id egal EXPRESSION ;
+                        |  id left_arrow EXPRESSION ; .
+
+EXPRESSION              ->  TERM 
+                        |   ( EXPRESSION )
+                        |   TERM  +   EXPRESSION
+                        |   TERM  minus_sign  EXPRESSION .
+
+TERM                    ->  FACTEUR OPERATEURMULT FACTEUR
+                        |   FACTEUR
+                        |   + FACTEUR 
+                        |   minus_sign FACTEUR
+                        |   FACTEUR OPERATEURSPECIAUX .
+
+OPERATEURMULT          ->   *
+                        |  mult 
+                        |  slash
+                        |  div
+                        |  pourcentage 
+                        |  mod
+                        |  modulo . 
+
+OPERATEURSPECIAUX       ->  increment
+                        | decrement . 
+
+
+FACTEUR                 -> id 
+                        | number 
+                        | boolean
+                        | APPEL_FONCTION
+                        | string .
+
+APPEL_FONCTION          -> call id ( APPEL_FONCTION_ARG .
+
+APPEL_FONCTION_ARG      -> ARGUMENT )
+                        | ) .
+
+ARGUMENT               -> ARGUMENT virgule id 
+                        |  id .
+
+RETURN                  -> return EXPRESSION.
+
+BOUCLE                  -> FORLOOP_STATEMENT
+                        |  DOWHILELOOP_STATEMENT
+                        |  WHILELOOP_STATEMENT.
+
+FORLOOP_STATEMENT       ->  for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) accolade_ouvrante INSTRUCTIONS accolade_fermante
+                        |   for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) INSTRUCTION 
+                        |   for ( VAR_DECLARATION deux_points id ) accolade_ouvrante INSTRUCTIONS accolade_fermante   
+                        |   for ( VAR_DECLARATION deux_points id ) INSTRUCTION 
+                        |   for id in id deux_points entree tab INSTRUCTIONS shift_tab
+                        |   for id egal number to number do INSTRUCTIONS ; .
+
+WHILELOOP_STATEMENT     ->  while ( CONDITIONS ) INSTRUCTION
+                        |   while ( CONDITIONS ) accolade_ouvrante INSTRUCTIONS accolade_fermante
+                        |   while ( CONDITIONS ) deux_points entree tab INSTRUCTIONS shift_tab .
+
+DOWHILELOOP_STATEMENT   ->  do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
+                        |   repeat INSTRUCTIONS until CONDITIONS ; .
+
+CONDITIONS              -> CONDITION double_ampersand CONDITIONS
+                        |  CONDITION double_barre CONDITIONS
+                        |  CONDITION and CONDITIONS
+                        |  CONDITION or CONDITIONS
+                        |  ! ( CONDITION )
+                        |  not ( CONDITION )
+                        |  CONDITION.
+
+CONDITION               -> EXPRESSION comparator EXPRESSION .
+
+INPUT_OUTPUT            -> print ( ARGUMENT ) ;
+                        | printf ( ARGUMENT ) ;
+                        | scanf ( ARGUMENT ) ;
+                        | input ( ARGUMENT ) ;
+                        | log ( ARGUMENT )  ;
+                        | fprintf ( ARGUMENT ) ; 
+                        | fscanf ( ARGUMENT ) ;
+                        | fread ( ARGUMENT ) ; 
+                        | fwrite (  ARGUMENT ) ;
+                        | write ( ARGUMENT ) ; 
+                        | read (  ARGUMENT ) ;
+                        | puts ( ARGUMENT ) ; 
+                        | gets (  ARGUMENT ) ; .
+
+FONCTION                -> def type FONCTION2 
+                        | function type FONCTION2 .
+
+FONCTION2               -> id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
+
+PARAMETER               -> PARAMETER virgule id type
+                        |  id type .
+
+CONTROL                 -> IF 
+                        |  CASE 
+                        |  SHORTHAND .
+
+IF                      ->   if (  CONDITION  )  BLOCK_IF 
+                        |    if ( CONDITION  )  else BLOCK_IF
+                        |    if ( CONDITION  )  BLOCK_IF elif BLOCK_IF else BLOCK_IF .
+
+BLOCK_IF                ->   INSTRUCTION
+                        |   accolade_ouvrante INSTRUCTIONS accolade_fermante .
+
+CASE                    ->   switch ( EXPRESSION ) accolade_ouvrante BLOCK_CASE accolade_fermante .
+
+BLOCK_CASE              ->  case FACTEUR deux_points INSTRUCTIONS 
+                        |   case FACTEUR deux_points INSTRUCTIONS  BLOCK_CASE 
+                        |   default deux_points INSTRUCTIONS .
+
+SHORTHAND               -> CONDITION point_interrogation INSTRUCTION deux_points INSTRUCTION .
+
+VAR_DECLARATION         -> const TYPE IDS_CONST 
+                        | let VARS'' .             
+
+VARS''                  -> id VARS_TYPE symbole_aff  EXPRESSION virgule VARS'' 
+                        | id VARS_TYPE symbole_aff  EXPRESSION 
+                        | id VARS_TYPE virgule VARS'' 
+                        | id VARS_TYPE . 
+
+VARS_TYPE 				-> deux_points type  
+						| is type .
+
+IDS_CONST               -> id symbole_aff  EXPRESSION virgule IDS_CONST
+                        | id symbole_aff  EXPRESSION .
+
+                        
+****************************************************************************************
+
+EXPRESSION              ->   TERM EX'.
+EX'                     ->  OPERATEURADD TERM 
+                        | .
+
+
+BOUCLE                  ->  FORLOOP_STATEMENT
+                        |   DOWHILELOOP_STATEMENT
+                        |   WHILELOOP_STATEMENT.
+                        
+
+                        
+AFFECTATION2            ->  SYMBOLE_AFF  EXPRESSION.    
+
+SYMBOLE_AFF             -> deux_points EG 
+                        | egal 
+                        | arrow_affec.
+
+EG 						-> egal 
+                        | .
+
+EXPRESSION              ->   TERM EX'.
+EX'                     ->  OPERATEURADD TERM 
+                        | .
+
+VAR_DECLARATION         -> VARS'      
+                        | .
+
+VARS'                   -> const TYPE IDS_CONST 
+                        | let JS_IDS  
+						| VARS''.              
+
+VARS''                  -> ID VARS_TYPE OPT VARS'''. 
+
+VARS_TYPE 				-> deux_points TYPE  
+						| is TYPE.
+
+VARS'''					-> virgule VARS'' 
+						| . 
+
+IDS_CONST               -> ID AFFECTATION' IDS'.
+IDS'					-> virgule IDS_CONST                         
+						| .    
+
+JS_IDS                  -> ID deux_points TYPE OPT JS'.
+JS'						-> virgule JS_IDS 
+                        | .
+
+OPT                     ->  AFFECTATION'
+                        | .
+
+ID                      ->  id_pattern.   
+
+IF_STMT			   		-> if  COND  IF_STMT_SYMB INSTRUCTIONS  SUITE' END
+						| SWITCH ( EXPRESSION ) INSTRUCTIONS END.
+
+SUITE' 					->  SUITE_IF  | .
+IF_STMT_SYMB			->  deux_points | .
+	    	    
+
+COND     		->   ( STATEMENT ) | STATEMENT.
+
+SUITE_IF        -> 	ELIF_STMT | ELSE_BLOCK | .
+
+ELIF_STMT		->  elif COND deux_points INSTRUCTIONS ELIF_SUITE.
+ELIF_SUITE		-> 	ELIF_STMT | ELSE_BLOCK.
+
+ELSE_BLOCK		->  else IF_STMT_SYMB INSTRUCTIONS.
+
+
+SHORTHAND -> COND ? STATEMENT deux_points STATEMENT.
+
+END -> ;
+    | .
+
+
+
+DOWHILELOOP_STATEMENT       ->  do accolade_ouverte STATEMENTS accolade_fermee while (CONDITION) ;
+                            |   repeat STATEMENTS until CONDITION; 
+                            |   .
+
+FORLOOP_STATEMENT       ->  for A_F B_F
+                        |   .
+
+A_F 			-> (VAR_DECLARATION AF'
+				| VAR_ID affectation NOMBRE to NOMBRE.
+
+
+AF'				->  ; CONDITION ; INSTRUCTION)  
+				| (VAR_DECLARATION deux_points ITERABLE). 
+
+B_F 			->  B_F'
+				| entree tab STATEMENTS
+				| ITERATOR in ITERABLE deux_points
+				| do STATEMENTS ;
+                .
+
+B_F'  			-> accolade_ouverte STATEMENTS accolade_fermee | STATEMENT.
+
+
+WHILELOOP_STATEMENT     ->  while A_W B_W.
+
+A_W    -> ( CONDITION )
+		| CONDITION deux_points.
+
+B_W    -> STATEMENT
+		| accolade_ouvrante STATEMENTS accolade_fermante
+		| entree tab STATEMENTS
+		| do STATEMENTS ;.
+
+
+APPEL_FONCTION          -> ID ( PARAMETERS ) ; .
+
+FONCTION                ->  TYPE  FONCTION'
+                        |   function FONCTION'.
+
+FONCTION'               -> ID(PARAMETERS) accolade_ouverte INSTS accolade_fermee ; .
+
+PARAMETERS              -> PARAMETER
+                        | .
+
+PARAMETER               -> ID TYPE 
+                        | PARAMETER virgule ID TYPE.
+
+
+OPERATEURSPECIAUX       ->  increment
+                        | decrement.
+                    
+OPERATEURADD            ->   + 
+                        |  add
+                        |  minus_sign
+                        | minus.
+
+ OPERATEURMULT          ->   *
+                        |  mult 
+                        |  \
+                        |  div
+                        |  % 
+                        |  mod
+                        |  modulo.
+
+RETURN                  -> return EXPRESSION.
+
+CONDITION               -> BOOLEAN 
+                        | EXPRESSION COMPAR EXPRESSION.
+
+
+COMPAR                  ->  gtr_sign 
+                        | lss_sign
+                        | geq_sign
+                        | leq_sign
+                        | neq_sign
+                        | equ_sign.
+
+TYPE                    ->   string 
+                        | number 
+                        | int 
+                        | boolean 
+                        | bool 
+                        | char  
+                        | integer 
+                        | boolean 
+                        | void 
+                        | float 
+                        | double 
+                        | signed
+                        | unsigned
+                        | short.
+
+STRING                  ->   guillemets STR guillemets 
+                        |    ' STR '.
+
+STR                     ->   string_pattern.
+NUMBER                  ->   number_pattern.
+BOOLEAN                 ->   true | false.
+
+
+INPUT_OUTPUT            -> print ( PARAMETERS ) ;
+                        | printf ( PARAMETERS ) ;
+                        | scanf ( PARAMETERS ) ;
+                        | print ( PARAMETERS ) ;
+                        | input ( PARAMETERS ) ;
+                        | log ( PARAMETERS )  ;
+                        | fprintf ( PARAMETERS ) ; 
+                        | fscanf ( PARAMETERS ) ;
+                        | fread ( PARAMETERS ) ; 
+                        | fwrite (  PARAMETERS ) ;
+                        | write ( PARAMETERS ) ; 
+                        | read (  PARAMETERS ) ;
+                        | puts ( PARAMETERS ) ; 
+                        | gets (  PARAMETERS ) ;.
