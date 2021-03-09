@@ -94,30 +94,30 @@ BOUCLE                  ->	FORLOOP_STATEMENT
 
 FORLOOP_STATEMENT       ->	for Ffor .
 
-Ffor                    ->	( F(
+Ffor                    ->	( FOR1
                         |	id Fid3 .
 
-F(                      ->	VAR_DECLARATION FVAR_DECLARATION .
+FOR1                     ->	VAR_DECLARATION FVAR_DECLARATION .
  
-FVAR_DECLARATION        ->	; F;
-                        |	: F:1 .
+FVAR_DECLARATION        ->	; FVAR_DECLARATION2
+                        |	: FVAR_DECLARATION3 .
 
-F;                      ->	CONDITIONS FCONDITIONS1 .
+FVAR_DECLARATION2        ->	CONDITIONS FCONDITIONS1 .
 
-FCONDITIONS1            ->	; F;1 .
+FCONDITIONS1            ->	; FCONDITIONS2 .
   
-F;1                     ->	INSTRUCTION FINSTRUCTION1 .
+FCONDITIONS2            ->	INSTRUCTION FINSTRUCTION1 .
   
-FINSTRUCTION1           ->	) F)3 .
+FINSTRUCTION1           ->	) FINSTRUCTION2 .
   
-F)3                     ->	{ INSTRUCTIONS }
+FINSTRUCTION2            ->	{ INSTRUCTIONS }
                         |	INSTRUCTION .
   
-F:1           ->	id Fid4 .
+FVAR_DECLARATION3       ->	id Fid4 .
                         
-Fid4                    ->	) F)2 .
+Fid4                    ->	) Fid5 .
 
-F)2                     ->	{ INSTRUCTIONS }
+Fid5                     ->	{ INSTRUCTIONS }
                         |	INSTRUCTION .
 
 Fid3                    ->	in id { INSTRUCTIONS }
@@ -125,13 +125,13 @@ Fid3                    ->	in id { INSTRUCTIONS }
 
 WHILELOOP_STATEMENT     ->	while Fwhile .
 
-Fwhile                  ->	( F(1 .
+Fwhile                  ->	( Fwhile2 .
 
-F(1                     ->	CONDITIONS FCONDITIONS .
+Fwhile2                 ->	CONDITIONS FCONDITIONS .
 
-FCONDITIONS             ->	) F) .
+FCONDITIONS             ->	) FCONDITIONS2 .
 
-F)                      ->	INSTRUCTION
+FCONDITIONS2            ->	INSTRUCTION
                         |	{ INSTRUCTIONS } .
 
 DOWHILELOOP_STATEMENT   ->	do { INSTRUCTIONS } while ( CONDITIONS ) ;
@@ -180,13 +180,13 @@ CONTROLE                ->	IF
 IF                      ->	if Fif .
 
 
-Fif                     ->	( F(2 .
+Fif                     ->	( Fif2 .
 
-F(2                     ->	CONDITION FCONDITION1 .
+Fif2                     ->	CONDITION FCONDITION1 .
 
-FCONDITION1             ->	) F)1 .
+FCONDITION1             ->	) FCONDITION2 .
 
-F)1                     ->	BLOCK_IF FBLOCK_IF .
+FCONDITION2             ->	BLOCK_IF FBLOCK_IF .
 
 FBLOCK_IF               ->	
                         |	else BLOCK_IF
@@ -201,9 +201,9 @@ BLOCK_CASE              ->	case Fcase
 
 Fcase                   ->	FACTEUR FFACTEUR1 .
 
-FFACTEUR1               ->	: F: .
+FFACTEUR1               ->	: FFACTEUR2 .
 
-F:                      ->	INSTRUCTIONS FINSTRUCTIONS .
+FFACTEUR2               ->	INSTRUCTIONS FINSTRUCTIONS .
 
 FINSTRUCTIONS           ->	
                         |	BLOCK_CASE .
@@ -211,19 +211,19 @@ FINSTRUCTIONS           ->
 SHORTHAND               ->	( CONDITION ) ? INSTRUCTION : INSTRUCTION .
 
 VAR_DECLARATION         ->	const TYPE IDS_CONST
-                        |	let VARS'' .
+                        |	let VARS2 .
 
-VARS''                  ->	id Fid1 .
+VARS2                  ->	id Fid1 .
 
 Fid1                    ->	VARS_TYPE FVARS_TYPE .
 
 FVARS_TYPE              ->	symbole_aff Fsymbole_aff1
-                        |	, VARS''
+                        |	, VARS2
                         |	.
 
 Fsymbole_aff1           ->	EXPRESSION FEXPRESSION1 .
 
-FEXPRESSION1            ->	, VARS''
+FEXPRESSION1            ->	, VARS2
                         |	.
 
 VARS_TYPE               ->	: type
