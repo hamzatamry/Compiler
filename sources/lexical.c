@@ -125,7 +125,6 @@ void isID()
 
 void isString()
 {
-    
     int i = 0;
     do
     {
@@ -134,7 +133,7 @@ void isString()
         lire_car();
     }while (Car_Cour != '\"' && Car_Cour != EOF);
     
-    if(Car_Cour == '\"')
+    if (Car_Cour == '\"')
     {
         SYM_COUR.NOM[i] = Car_Cour;
         i++;
