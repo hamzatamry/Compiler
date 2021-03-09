@@ -6,34 +6,20 @@
 #include "..\headers\lexical.h"
 #include "..\headers\regex.h"
 
-/*
-
-char* identifier_pattern =  "^[a-z_][a-z_A-Z1-9]*$";
-char* number_pattern = "^[+-]?([0-9]*[.])?[0-9]+$";
-char* string_pattern =  "^(\"|\').*(\"|\')$";
-char* character_pattern = "^\'.\'$";
-char* array_declaration_pattern = "^[a-z_][a-z_A-Z1-9]*(\\[\\])+$";
-
-printf("%d", match("array[]", array_declaration_pattern));
-
-
-*/
-
 FILE* flux_input;
 FILE* flux_output;
 char Car_Cour;
 TSym_Cour SYM_COUR;
 
 Error MESSAGE_ERR[100] = {
-    { NUM_ERR     , "Nombre incorrect" },
+    { NUM_ERR     , "Valeur numero incorrecte" },
+    { CHAR_ERR, "Valeur caractere incorrecte" },
     { FICH_VID_ERR, "fichier vide" },
     { ID_LONG_ERR, "identificateur long" },
     { ID_INC_ERR, "identificateur incorrect" },
     { COMMENT_ERR, "erreur commentaire" },
-    { NUM_LONG_ERR, "numero long" },
     { STRING_ERR, "string non proprement declare : missing \"" }
 };
-
 
 const char tokens[][20] = {  
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
@@ -44,7 +30,7 @@ const char tokens[][20] = {
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
     "<>", "(",")", "/*" , "*/", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "\'", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "print", "printf", "scanf", "input",
-    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE"                                 
+    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE_TOKEN"                                 
 };
 
 const char lexical_unit[][20] = {
@@ -60,14 +46,14 @@ const char lexical_unit[][20] = {
     "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
     "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN", "QUOTE_TOKEN", "SINGLEQUOTE_TOKEN", "EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
     "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN","PRINT_TOKEN", "PRINTF_TOKEN", "SCANF_TOKEN", "INPUT_TOKEN", "LOG_TOKEN", "FPRINTF_TOKEN", "FSCANF_TOKEN", "FREAD_TOKEN", "FWRITE_TOKEN", 
-    "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN"
+    "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN", "CHAR_VALUE_TOKEN"
 };
 
 void ouvrir_fichier(char nom[20])
 {
     flux_input = fopen(nom, "r");
 
-    flux_output = fopen("..\\tests\\output\\out_2", "w");
+    flux_output = fopen("tests\\output\\out_1", "w");
 
     if (flux_input == NULL || flux_output == NULL)
     {
@@ -144,9 +130,9 @@ void isString()
         SYM_COUR.NOM[i] = Car_Cour;
         i++;
         lire_car();
-    }while (Car_Cour != '\"' && Car_Cour != EOF);
+    }while (Car_Cour != '"' && Car_Cour != EOF);
     
-    if (Car_Cour == '\"')
+    if (Car_Cour == '"')
     {
         SYM_COUR.NOM[i] = Car_Cour;
         i++;
@@ -165,7 +151,38 @@ void isString()
 
 void isChar()
 {
+    int i = 0;
 
+    do 
+    {
+        SYM_COUR.NOM[i] = Car_Cour;
+        lire_car();
+        i++;
+    }
+    while (Car_Cour != EOF && Car_Cour != '\'');
+
+    SYM_COUR.NOM[i] = '\'';
+    SYM_COUR.NOM[i + 1] = '\0';
+
+    if (Car_Cour == EOF)
+    {
+        SYM_COUR.CODE = ERREUR_TOKEN;
+        ERREUR(CHAR_ERR);
+        return;
+    }
+
+    if (match(SYM_COUR.NOM, "^\'.\'$"))
+    {
+        SYM_COUR.CODE = CHAR_VALUE_TOKEN; 
+    }
+    else 
+    {
+        SYM_COUR.CODE = ERREUR_TOKEN;
+        ERREUR(CHAR_ERR);
+
+    }
+
+    lire_car();
 }
 
 _Bool isSpecial()
@@ -227,7 +244,7 @@ _Bool isSpecial()
 void lire_mots()
 {
     int i = 0;
-    while (!isSeparator() && !isSpecial())
+    while (!isSeparator() && !isSpecial() && Car_Cour != '\'' && Car_Cour != '"')
     {
         SYM_COUR.NOM[i] = Car_Cour;
         lire_car();
@@ -271,6 +288,7 @@ void lire_nombres()
 void lire_specials()
 {
     bool string = false;
+
     switch (Car_Cour)
     {
     case ';':
@@ -292,8 +310,6 @@ void lire_specials()
             SYM_COUR.CODE = INCREM_TOKEN;
             lire_car();
         }
-        break;
-
         break;
     case '-':
         SYM_COUR.CODE = MOINS_TOKEN;
@@ -508,11 +524,11 @@ void lire_specials()
     default:
         SYM_COUR.CODE = ERREUR_TOKEN;
     }
-    if(!string)
-    {
+    // if(!string)
+    // {
         strcpy(SYM_COUR.NOM, tokens[SYM_COUR.CODE]);
         //lire_car();
-    }
+    // }
   
     
 }

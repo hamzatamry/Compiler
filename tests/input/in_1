@@ -1,13 +1,24 @@
 int id=5, myVariable;
-let var1:bool = true, var2, var3;
+
+let var1: boolean = true, var2, var3;
+
 const constante <- 6;
+
 myString is string = "helloWorld";
-int ok = 144984.54;
 
-/* ceci est un commentaire*/
+float ok = 144984.54;
 
-function number myFunction(){
+int number = 84894989;
+
+/* ceci est un commentaire */
+
+function number myFunction() 
+{
+    float f = 1.00084845, a = 1.489489;
+    char c = 'a';
+    string mot = "erherherher";
     number itr = input("enter a number : ");
+
     for(int i=0; i<itr; i++)
     {
         puts(i);
@@ -17,7 +28,7 @@ function number myFunction(){
     do
     {
         read(myVariable);
-    }while(i < 5);
+    } while(i < 5);
     
     return itr;
 }
