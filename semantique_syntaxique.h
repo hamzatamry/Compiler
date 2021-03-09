@@ -44,6 +44,29 @@ extern bool good;  // variale globale indiquant si l'analyseur syntaxique valide
 extern void ouvrir_fichier(char nom[20]);
 extern void Test_Symbole(CODES_LEX lex,ERREURS err);
 extern void Sym_Suiv();
+extern void PROGRAM();
+extern void INSTRUCTIONS();
+extern void FINSTRUCTION();
+extern void INSTRUCTION();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+extern void ();
+
+
 extern void ERREUR(ERREURS e);
 
 #endif
