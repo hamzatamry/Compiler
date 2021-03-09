@@ -9,22 +9,15 @@ deux_points             :
 egal                    =
 accolade_ouvrante        {
 accolade_fermante 	    }
-guillemets 			    "
-id_pattern              [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])? 
 increment               ++  
 slash                    /  
 pourcentage             %
 decrement               --    
-minus_sign              -
-gtr_sign                > 
-lss_sign                < 
-gte_sign                >=
-leq_sign                <=
-neq_sign                !=
-equ_sign                ==.     
+minus_sign              -   
+id_pattern              [a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])? 
 string_pattern          [ a-zA-Z0-9_;:!,?\|[](]&~^$µeè@à` ]*
 number_pattern          [0-9]+ 
-comparator              (&|&&|)
+comparator              (>, >=, <, <=, ==, ===, !=)
 symbole_aff             =, <-, :=
 
 ***************************************************************************************
