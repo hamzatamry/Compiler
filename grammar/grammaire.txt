@@ -173,13 +173,13 @@ IDS_CONST               -> id symbole_aff  EXPRESSION virgule IDS_CONST
                 Grammaire LL(1)
 ******************************************************************************************************
 
-INSTRUCTIONS ->	accolade_ouvrante INSTRUCTION INSTRUCTIONS accolade_fermante
+INSTRUCTIONS            ->	accolade_ouvrante INSTRUCTION INSTRUCTIONS accolade_fermante
                         |	INSTRUCTION FINSTRUCTION .
 
-FINSTRUCTION ->	INSTRUCTIONS
+FINSTRUCTION            ->	INSTRUCTIONS
                         |	.
 
-INSTRUCTION ->	AFFECTATION ;
+INSTRUCTION             ->	AFFECTATION ;
                         |	APPEL_FONCTION ;
                         |	RETURN ;
                         |	BOUCLE
@@ -188,28 +188,28 @@ INSTRUCTION ->	AFFECTATION ;
                         |	CONTROLE
                         |	VAR_DECLARATION ; .
 
-AFFECTATION ->	id Fid .
+AFFECTATION             ->	id Fid .
 
-Fid ->	deux_points egal EXPRESSION ;
+Fid                     ->	deux_points egal EXPRESSION ;
                         |	egal EXPRESSION ;
                         |	left_arrow EXPRESSION ; .
 
-EXPRESSION ->	TERM FTERM
+EXPRESSION              ->	TERM FTERM
                         |	( EXPRESSION ) .
 
-FTERM ->	
+FTERM                   ->	
                         |	+ EXPRESSION
                         |	minus_sign EXPRESSION .
 
-TERM ->	FACTEUR FFACTEUR
+TERM                    ->	FACTEUR FFACTEUR
                         |	+ FACTEUR
                         |	minus_sign FACTEUR .
 
-FFACTEUR ->	OPERATEURMULT FACTEUR
+FFACTEUR                ->	OPERATEURMULT FACTEUR
                         |	
                         |	OPERATEURSPECIAUX .
 
-OPERATEURMULT ->	*
+OPERATEURMULT           ->	*
                         |	mult
                         |	slash
                         |	div
@@ -217,89 +217,90 @@ OPERATEURMULT ->	*
                         |	mod
                         |	modulo .
 
-OPERATEURSPECIAUX ->	increment
+OPERATEURSPECIAUX       ->	increment
                         |	decrement .
 
-FACTEUR ->	id
+FACTEUR                 ->	id
                         |	number
                         |	boolean
                         |	APPEL_FONCTION
                         |	string .
 
-APPEL_FONCTION ->	call id ( APPEL_FONCTION_ARG .
+APPEL_FONCTION          ->	call id ( APPEL_FONCTION_ARG .
 
-APPEL_FONCTION_ARG ->	ARGUMENT )
+APPEL_FONCTION_ARG      ->	ARGUMENT )
                         |	) .
 
-ARGUMENT ->	id ARGUMENT1 .
+ARGUMENT                ->	id ARGUMENT1 .
 
-ARGUMENT1 ->	virgule id ARGUMENT1
+ARGUMENT1               ->	virgule id ARGUMENT1
                         |	.
 
-RETURN ->	return EXPRESSION .
+RETURN                  ->	return EXPRESSION .
 
-BOUCLE ->	FORLOOP_STATEMENT
+BOUCLE                  ->	FORLOOP_STATEMENT
                         |	DOWHILELOOP_STATEMENT
                         |	WHILELOOP_STATEMENT .
 
-FORLOOP_STATEMENT ->	for Ffor .
+FORLOOP_STATEMENT       ->	for Ffor .
 
-Ffor ->	( F(
+Ffor                    ->	( F(
                         |	id Fid3 .
 
-F( ->	VAR_DECLARATION FVAR_DECLARATION .
-                        FVAR_DECLARATION ->	; F;
+F(                      ->	VAR_DECLARATION FVAR_DECLARATION .
+ 
+FVAR_DECLARATION        ->	; F;
                         |	deux_points Fdeux_points1 .
 
-F; ->	CONDITIONS FCONDITIONS1 .
+F;                      ->	CONDITIONS FCONDITIONS1 .
 
-FCONDITIONS1 ->	; F;1 .
+FCONDITIONS1            ->	; F;1 .
   
-F;1 ->	INSTRUCTION FINSTRUCTION1 .
+F;1                     ->	INSTRUCTION FINSTRUCTION1 .
   
-FINSTRUCTION1 ->	) F)3 .
+FINSTRUCTION1           ->	) F)3 .
   
-F)3 ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
+F)3                     ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
                         |	INSTRUCTION .
   
-Fdeux_points1 ->	id Fid4 .
+Fdeux_points1           ->	id Fid4 .
                         
-Fid4 ->	) F)2 .
+Fid4                    ->	) F)2 .
 
-F)2 ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
+F)2                     ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
                         |	INSTRUCTION .
 
-Fid3 ->	in id deux_points entree tab INSTRUCTIONS shift_tab
+Fid3                    ->	in id deux_points entree tab INSTRUCTIONS shift_tab
                         |	egal number to number do INSTRUCTIONS ; .
 
-WHILELOOP_STATEMENT ->	while Fwhile .
+WHILELOOP_STATEMENT     ->	while Fwhile .
 
-Fwhile ->	( F(1 .
+Fwhile                  ->	( F(1 .
 
-F(1 ->	CONDITIONS FCONDITIONS .
+F(1                     ->	CONDITIONS FCONDITIONS .
 
-FCONDITIONS ->	) F) .
+FCONDITIONS             ->	) F) .
 
-F) ->	INSTRUCTION
+F)                      ->	INSTRUCTION
                         |	accolade_ouvrante INSTRUCTIONS accolade_fermante
                         |	deux_points entree tab INSTRUCTIONS shift_tab .
 
-DOWHILELOOP_STATEMENT ->	do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
+DOWHILELOOP_STATEMENT   ->	do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
                         |	repeat INSTRUCTIONS until CONDITIONS ; .
 
-CONDITIONS ->	CONDITION FCONDITION
+CONDITIONS              ->	CONDITION FCONDITION
                         |	! ( CONDITION )
                         |	not ( CONDITION ) .
 
-FCONDITION ->	double_ampersand CONDITIONS
+FCONDITION              ->	double_ampersand CONDITIONS
                         |	double_barre CONDITIONS
                         |	and CONDITIONS
                         |	or CONDITIONS
                         |	.
 
-CONDITION ->	EXPRESSION comparator EXPRESSION .
+CONDITION               ->	EXPRESSION comparator EXPRESSION .
 
-INPUT_OUTPUT ->	print ( ARGUMENT ) ;
+INPUT_OUTPUT            ->	print ( ARGUMENT ) ;
                         |	printf ( ARGUMENT ) ;
                         |	scanf ( ARGUMENT ) ;
                         |	input ( ARGUMENT ) ;
@@ -313,78 +314,78 @@ INPUT_OUTPUT ->	print ( ARGUMENT ) ;
                         |	puts ( ARGUMENT ) ;
                         |	gets ( ARGUMENT ) ; .
 
-FONCTION ->	def type FONCTION2
+FONCTION                ->	def type FONCTION2
                         |	function type FONCTION2 .
 
-FONCTION2 ->	id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
+FONCTION2               ->	id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
 
-PARAMETER ->	id type PARAMETER1 .
+PARAMETER               ->	id type PARAMETER1 .
 
-PARAMETER1 ->	virgule id type PARAMETER1
+PARAMETER1              ->	virgule id type PARAMETER1
                         |	.
 
-CONTROLE ->	IF
+CONTROLE                ->	IF
                         |	CASE
                         |	SHORTHAND .
 
-IF ->	if Fif .
+IF                      ->	if Fif .
 
 
-Fif ->	( F(2 .
+Fif                     ->	( F(2 .
 
-F(2 ->	CONDITION FCONDITION1 .
+F(2                     ->	CONDITION FCONDITION1 .
 
-FCONDITION1 ->	) F)1 .
+FCONDITION1             ->	) F)1 .
 
-F)1 ->	BLOCK_IF FBLOCK_IF .
+F)1                     ->	BLOCK_IF FBLOCK_IF .
 
-FBLOCK_IF ->	
+FBLOCK_IF               ->	
                         |	else BLOCK_IF
                         |	elif BLOCK_IF else BLOCK_IF .
 
-BLOCK_IF ->	accolade_ouvrante INSTRUCTIONS accolade_fermante .
+BLOCK_IF                ->	accolade_ouvrante INSTRUCTIONS accolade_fermante .
 
-CASE ->	switch ( EXPRESSION ) accolade_ouvrante BLOCK_CASE accolade_fermante .
+CASE                    ->	switch ( EXPRESSION ) accolade_ouvrante BLOCK_CASE accolade_fermante .
 
-BLOCK_CASE ->	case Fcase
+BLOCK_CASE              ->	case Fcase
                         |	default deux_points INSTRUCTIONS .
 
-Fcase ->	FACTEUR FFACTEUR1 .
+Fcase                   ->	FACTEUR FFACTEUR1 .
 
-FFACTEUR1 ->	deux_points Fdeux_points .
+FFACTEUR1               ->	deux_points Fdeux_points .
 
-Fdeux_points ->	INSTRUCTIONS FINSTRUCTIONS .
+Fdeux_points            ->	INSTRUCTIONS FINSTRUCTIONS .
 
-FINSTRUCTIONS ->	
+FINSTRUCTIONS           ->	
                         |	BLOCK_CASE .
 
-SHORTHAND ->	( CONDITION ) point_interrogation INSTRUCTION deux_points INSTRUCTION .
+SHORTHAND               ->	( CONDITION ) point_interrogation INSTRUCTION deux_points INSTRUCTION .
 
-VAR_DECLARATION ->	const TYPE IDS_CONST
+VAR_DECLARATION         ->	const TYPE IDS_CONST
                         |	let VARS'' .
 
-VARS'' ->	id Fid1 .
+VARS''                  ->	id Fid1 .
 
-Fid1 ->	VARS_TYPE FVARS_TYPE .
+Fid1                    ->	VARS_TYPE FVARS_TYPE .
 
-FVARS_TYPE ->	symbole_aff Fsymbole_aff1
+FVARS_TYPE              ->	symbole_aff Fsymbole_aff1
                         |	virgule VARS''
                         |	.
 
-Fsymbole_aff1 ->	EXPRESSION FEXPRESSION1 .
+Fsymbole_aff1           ->	EXPRESSION FEXPRESSION1 .
 
-FEXPRESSION1 ->	virgule VARS''
+FEXPRESSION1            ->	virgule VARS''
                         |	.
 
-VARS_TYPE ->	deux_points type
+VARS_TYPE               ->	deux_points type
                         |	is type .
 
-IDS_CONST ->	id Fid2 .
+IDS_CONST               ->	id Fid2 .
 
-Fid2 ->	symbole_aff Fsymbole_aff .
+Fid2                    ->	symbole_aff Fsymbole_aff .
 
-Fsymbole_aff ->	EXPRESSION FEXPRESSION .
+Fsymbole_aff            ->	EXPRESSION FEXPRESSION .
 
 
-FEXPRESSION ->	virgule IDS_CONST
+FEXPRESSION             ->	virgule IDS_CONST
                         |	.
