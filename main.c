@@ -6,7 +6,7 @@
 
 int main()
 {
-    ouvrir_fichier("../lex.txt");
+    ouvrir_fichier("..\\analyseur_lexical\\tests\\output\\out_1");
     Sym_Suiv();
     PROGRAM();
     if (good)                                             // variale globale indiquant si l'analyseur syntaxique valide ou pas le fichier
