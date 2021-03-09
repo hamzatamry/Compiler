@@ -1,5 +1,5 @@
 Tools punctuations      ~ ! @ # * ( ) _ + ' ;
-
+******************************************************************************
 double_ampersand        &&
 double_barre            ||
 virgule                 ,
@@ -95,7 +95,7 @@ FORLOOP_STATEMENT       ->  for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) a
 
 WHILELOOP_STATEMENT     ->  while ( CONDITIONS ) INSTRUCTION
                         |   while ( CONDITIONS ) accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |   while CONDITIONS deux_points entree tab INSTRUCTIONS shift_tab.
+                        |   while ( CONDITIONS ) deux_points entree tab INSTRUCTIONS shift_tab .
 
 DOWHILELOOP_STATEMENT   ->  do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
                         |   repeat INSTRUCTIONS until CONDITIONS ; .
@@ -108,8 +108,7 @@ CONDITIONS              -> CONDITION double_ampersand CONDITIONS
                         |  not ( CONDITION )
                         |  CONDITION.
 
-CONDITION               -> boolean 
-                        | EXPRESSION comparator EXPRESSION.
+CONDITION               -> EXPRESSION comparator EXPRESSION .
 
 INPUT_OUTPUT            -> print ( ARGUMENT ) ;
                         | printf ( ARGUMENT ) ;
