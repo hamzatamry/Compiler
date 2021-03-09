@@ -1,6 +1,7 @@
 Tools punctuations      ~ ! @ # * ( ) _ + ' ;
 ******************************************************************************
 double_ampersand        &&
+point_interrogation     ?
 double_barre            ||
 virgule                 ,
 deux_points             :
@@ -124,8 +125,32 @@ INPUT_OUTPUT            -> print ( ARGUMENT ) ;
                         | puts ( ARGUMENT ) ; 
                         | gets (  ARGUMENT ) ; .
 
+FONCTION                -> def type FONCTION2 
+                        | function type FONCTION2 .
+
+FONCTION2               -> id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
+
 PARAMETER               -> PARAMETER virgule id type
                         |  id type .
+
+CONTROL                 -> IF 
+                        |  CASE 
+                        |  SHORTHAND .
+
+IF                      ->   if (  CONDITION  )  BLOCK_IF 
+                        |    if ( CONDITION  )  else BLOCK_IF
+                        |    if ( CONDITION  )  BLOCK_IF elif BLOCK_IF else BLOCK_IF .
+
+BLOCK_IF                ->   INSTRUCTION
+                        |   accolade_ouvrante INSTRUCTIONS accolade_fermante .
+
+CASE                    ->   switch ( EXPRESSION ) accolade_ouvrante BLOCK_CASE accolade_fermante .
+
+BLOCK_CASE              ->  case FACTEUR deux_points INSTRUCTIONS 
+                        |   case FACTEUR deux_points INSTRUCTIONS  BLOCK_CASE 
+                        |   default deux_points INSTRUCTIONS .
+
+SHORTHAND               -> CONDITION point_interrogation INSTRUCTION deux_points INSTRUCTION .
 
 
 ****************************************************************************************
