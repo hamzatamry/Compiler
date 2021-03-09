@@ -95,12 +95,11 @@ FORLOOP_STATEMENT       ->  for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) a
                         |   for ( VAR_DECLARATION ; CONDITIONS ; INSTRUCTION ) INSTRUCTION 
                         |   for ( VAR_DECLARATION deux_points id ) accolade_ouvrante INSTRUCTIONS accolade_fermante   
                         |   for ( VAR_DECLARATION deux_points id ) INSTRUCTION 
-                        |   for id in id deux_points entree tab INSTRUCTIONS shift_tab
+                        |   for id in id accolade_ouvrante INSTRUCTIONS accolade_fermante
                         |   for id egal number to number do INSTRUCTIONS ; .
 
 WHILELOOP_STATEMENT     ->  while ( CONDITIONS ) INSTRUCTION
-                        |   while ( CONDITIONS ) accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |   while ( CONDITIONS ) deux_points entree tab INSTRUCTIONS shift_tab .
+                        |   while ( CONDITIONS ) accolade_ouvrante INSTRUCTIONS accolade_fermante .
 
 DOWHILELOOP_STATEMENT   ->  do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
                         |   repeat INSTRUCTIONS until CONDITIONS ; .
@@ -132,7 +131,7 @@ INPUT_OUTPUT            -> print ( ARGUMENT ) ;
 FONCTION                -> def type FONCTION2 
                         | function type FONCTION2 .
 
-FONCTION2               -> id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
+FONCTION2               -> id ( PARAMETER ) accolade_ouvrante INSTRUCTIONS accolade_fermante .
 
 PARAMETER               -> PARAMETER virgule id type
                         |  id type .
@@ -270,7 +269,7 @@ Fid4                    ->	) F)2 .
 F)2                     ->	accolade_ouvrante INSTRUCTIONS accolade_fermante
                         |	INSTRUCTION .
 
-Fid3                    ->	in id deux_points entree tab INSTRUCTIONS shift_tab
+Fid3                    ->	in id accolade_ouvrante INSTRUCTIONS accolade_fermante
                         |	egal number to number do INSTRUCTIONS ; .
 
 WHILELOOP_STATEMENT     ->	while Fwhile .
@@ -282,8 +281,7 @@ F(1                     ->	CONDITIONS FCONDITIONS .
 FCONDITIONS             ->	) F) .
 
 F)                      ->	INSTRUCTION
-                        |	accolade_ouvrante INSTRUCTIONS accolade_fermante
-                        |	deux_points entree tab INSTRUCTIONS shift_tab .
+                        |	accolade_ouvrante INSTRUCTIONS accolade_fermante .
 
 DOWHILELOOP_STATEMENT   ->	do accolade_ouvrante INSTRUCTIONS accolade_fermante while ( CONDITIONS ) ;
                         |	repeat INSTRUCTIONS until CONDITIONS ; .
@@ -317,7 +315,7 @@ INPUT_OUTPUT            ->	print ( ARGUMENT ) ;
 FONCTION                ->	def type FONCTION2
                         |	function type FONCTION2 .
 
-FONCTION2               ->	id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermee .
+FONCTION2               ->	id ( PARAMETER ) accolade_ouverte INSTRUCTIONS accolade_fermante .
 
 PARAMETER               ->	id type PARAMETER1 .
 
