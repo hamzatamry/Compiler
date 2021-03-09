@@ -36,7 +36,7 @@ typedef enum
     VIR_ERR, EG_ERR, AFF_ERR, INF_ERR, INFEG_ERR, SUP_ERR, SUPEG_ERR, DIFF_ERR, PO_ERR, PF_ERR,
     DC_ERR, FC_ERR, ACO_ERR, ACF_ERR, EOF_ERR, ID_ERR, NUM_ERR, ELSE_ERR, UNTIL_ERR, REPEAT_ERR, FOR_ERR,
     DOWNTO_ERR, CASE_ERR, OF_ERR, INTO_ERR ,CONST_VAR_BEGIN_ERR, INST_ERR, FACT_ERR, POUR_ERR, ERR_FICH_VID,
-    CAS_ERR, DOUBLONS_ERR, CONST_MODIF_ERR, UNDECLARED_ERR, PRO_ID_ERR, TYPE_ERR, VARS_TYPE_ERR
+    CAS_ERR, DOUBLONS_ERR, CONST_MODIF_ERR, UNDECLARED_ERR, PRO_ID_ERR, TYPE_ERR, VARS_TYPE_ERR,INCREM_ERR, DECREM_ERR
 }   ERREURS;
 
 extern FILE* lexical_output;
@@ -54,17 +54,47 @@ extern void EXPRESSION();
 extern void FTERM();
 extern void TERM();
 extern void FFACTEUR();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
-extern void ();
+extern void FACTEUR();
+extern void APPEL_FONCTION();
+extern void APPEL_FONCTION_ARG();
+extern void ARGUMENT();
+extern void ARGUMENT1();
+extern void RETURN();
+extern void BOUCLE();
+extern void FORLOOP_STATEMENT();
+extern void Ffor();
+
+
+extern void FONCTION();
+extern void FONCTION2();
+extern void PARAMETER();
+extern void PARAMETER1();
+extern void CONTROLE ();
+extern void IF();
+extern void FIF();
+extern void FIF2();
+extern void FCONDITION1();
+extern void FCONDITION2();
+extern void FBLOCK_IF();
+extern void BLOCK_IF();
+extern void CASE();
+extern void BLOCK_CASE();
+extern void Fcase();
+extern void FFACTEUR1();
+extern void FFACTEUR2();
+extern void FINSTRUCTIONS();
+extern void SHORTHAND();
+extern void VAR_DECLARATION();
+extern void VARS2();
+extern void Fid1();
+extern void FVARS_TYPE();
+extern void Fsymbole_aff1();
+extern void FEXPRESSION();
+extern void VARS_TYPE();
+extern void IDS_CONST();
+extern void Fid2();
+extern void Fsymbole_aff();
+extern void FEXPRESSION();
 
 
 extern void ERREUR(ERREURS e);
