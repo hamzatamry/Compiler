@@ -87,56 +87,157 @@ int isIO(int TOKEN){
 void INSTRUCTION(){
     switch(SYM_COUR.CODE){
         case ID_TOKEN: 
+        Sym_Suiv();
             AFFECTATION();
-            Test_Symbole(ACF_TOKEN, ACF_ERR);
+            Test_Symbole(PV_TOKEN, PV_ERR);
             break;
         case CALL_TOKEN:
+        Sym_Suiv();
             APPEL_FONCTION();
-            Test_Symbole(ACF_TOKEN, ACF_ERR);
+            Test_Symbole(PV_TOKEN, PV_ERR);
             break;
         case RETURN_TOKEN:
+        Sym_Suiv();
             RETURN();
-            Test_Symbole(ACF_TOKEN, ACF_ERR);
+            Test_Symbole(PV_TOKEN, PV_ERR);
             break;
         case FOR_TOKEN:
+        Sym_Suiv();
             BOUCLE();
             break;
         case DO_TOKEN:
+        Sym_Suiv();
             BOUCLE();
             break;
         case REPEAT_TOKEN:
+        Sym_Suiv();
             BOUCLE();
             break;
         case WHILE_TOKEN:
+        Sym_Suiv();
             BOUCLE();
             break;
     }
     if(isIO(SYM_COUR.CODE)){
+        Sym_Suiv();
         INPUT_OUTPUT();
     }
     else{
         switch(SYM_COUR.CODE){
             case DEF_TOKEN:
+            Sym_Suiv();
                 FONCTION();
                 break;
             case FUNCTION_TOKEN:
+            Sym_Suiv();
                 FONCTION();
                 break;
-            case :
+            case IF_TOKEN:
+            Sym_Suiv();
                 CONTROLE();
                 break;
-            case :
+            case SWITCH_TOKEN:
+            Sym_Suiv();
                 CONTROLE();
                 break;
-            case :
+            case PO_TOKEN:
+            Sym_Suiv();
                 CONTROLE();
                 break;
-            case :
-                CONTROLE();
+            case CONST_TOKEN:
+            Sym_Suiv();
+                VAR_DECLARATION();
+                Test_Symbole(PV_TOKEN, PV_ERR);
+                break;
+            case LET_TOKEN:
+            Sym_Suiv();
+                VAR_DECLARATION();
+                Test_Symbole(PV_TOKEN, PV_ERR);
                 break;
         }
     }
 }
+
+void AFFECTATION(){
+    Test_Symbole(ID_TOKEN,ID_ERR);
+    Fid();
+}
+void Fid(){
+    switch(SYM_COUR.CODE){
+        case AFFECPASCAL_TOKEN:
+        Sym_Suiv();
+            EXPRESSION();
+            Test_Symbole(PV_TOKEN, PV_ERR);
+            break;
+        case AFF_ERR:
+        Sym_Suiv();
+            EXPRESSION();
+            Test_Symbole(PV_TOKEN, PV_ERR);
+            break;
+        case AFFECARROW_TOKEN:
+        Sym_Suiv();
+            EXPRESSION();
+            Test_Symbole(PV_TOKEN, PV_ERR);
+            break;
+    }
+}
+//if begining of term 1 else 0
+int isTermBeg(int TOKEN){
+    if(TOKEN==PLUS_TOKEN || TOKEN==MINUS_TOKEN || TOKEN==ID_TOKEN || TOKEN==NUMBER_TOKEN || TOKEN==BOOL_TOKEN || TOKEN==BOOLEAN_TOKEN || TOKEN==NUM_TOKEN || TOKEN==CALL_TOKEN || TOKEN==STR_TOKEN || TOKEN==STRING_TOKEN ){
+        return 1;
+    }
+    return 0;
+}
+
+void EXPRESSION(){
+    if(isTermBeg(SYM_COUR.CODE)){
+        Sym_Suiv();
+        TERM();
+        FTERM();
+    }
+    else{
+        Sym_Suiv();
+        Test_Symbole(PO_TOKEN,PO_ERR);
+        EXPRESSION();
+        Test_Symbole(PF_TOKEN,PF_ERR);
+    }
+}
+
+void FTERM(){
+    if(SYM_COUR.CODE==PLUS_TOKEN || SYM_COUR.CODE==MINUS_TOKEN){
+        Sym_Suiv();
+        EXPRESSION();
+    }
+}
+
+//if begining of term 1 else 0
+int isTermBeg2(int TOKEN){
+    if(TTOKEN==ID_TOKEN || TOKEN==NUMBER_TOKEN || TOKEN==BOOL_TOKEN || TOKEN==BOOLEAN_TOKEN || TOKEN==NUM_TOKEN || TOKEN==CALL_TOKEN || TOKEN==STR_TOKEN || TOKEN==STRING_TOKEN ){
+        return 1;
+    }
+    return 0;
+}
+void TERM(){
+    if(isTermBeg2(SYM_COUR.CODE)){
+        Sym_Suiv();
+        FACTEUR();
+        FFACTEUR();
+    }
+    else if(SYM_COUR==PLUS_TOKEN || SYM_COUR==MINUS_TOKEN){
+        Sym_Suiv();
+        FACTEUR();
+    }
+    else{}
+}
+//if multip 1 else 0
+int isMultp(int TOKEN){
+    
+}
+
+void FFACTEUR(){
+
+}
+
 
 void ERREUR(ERREURS e)
 {
