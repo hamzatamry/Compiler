@@ -1,14 +1,24 @@
-int id=5;
+int id=5, myVariable;
 let var1:bool = true, var2, var3;
 const constante <- 6;
 myString is string = "helloWorld";
 
-int function(){
-    for(int i=0; i<id; i++)
+/* ceci est un commentaire*/
+
+function number myFunction(){
+    number itr = input("enter a number : ");
+    for(int i=0; i<itr; i++)
     {
+        puts(i);
+        id++;
     }
-    for(int i=0; i<id; i++)
+
+    do
     {
-    }
-    return 10;
+        read(myVariable);
+    }while(i < 5);
+    
+    return itr;
 }
+
+call myFunction();
