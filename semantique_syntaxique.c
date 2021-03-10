@@ -1,5 +1,5 @@
 #include "semantique_syntaxique.h"
-#include "../analyseur_lexical/headers/lexical.h"
+// #include "../analyseur_lexical/headers/lexical.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -12,9 +12,10 @@ char ERR[][100] = {
     "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
     "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
     "different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
-    "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur", "numero erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
+    "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
     "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
-    "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,"erreur is or :","erreur dans incrementation","erreur dans decrementation"
+    "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,"erreur is or :","erreur dans incrementation","erreur dans decrementation",
+    "call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR"
 };
 
 
@@ -43,7 +44,7 @@ void Sym_Suiv()
     SYM_COUR.NOM[i] = '\0';
     fscanf(lexical_output,"%d", &(SYM_COUR.CODE));
 }
-
+//if we merge the two erreurs is the order still okay?
 void Test_Symbole(CODES_LEX lex,ERREURS err)
 {
     if(SYM_COUR.CODE == lex)
@@ -77,7 +78,7 @@ void FINSTRUCTION(){
 
 //if IO token 1 else 0;
 int isIO(int TOKEN){
-    if(TOKEN==PRINT_TOKEN || TOKEN==PRINTF_TOKEN || TOKEN==SCANF_TOKEN || TOKEN==INPUT_TOKEN || TOKEN==LOG_TOKEN || TOKEN==FPRINTF_TOKEN || TOKEN==FSCANF_TOKEN || TOKEN==FREAD_TOKEN || TOKEN==FWRITE_TOKEN || TOKEN==WRITE_TOKEN || TOKEN==READ || TOKEN==PUTS_TOKEN || TOKEN==GETS_TOKEN){
+    if(TOKEN==PRINT_TOKEN || TOKEN==PRINTF_TOKEN || TOKEN==SCANF_TOKEN || TOKEN==INPUT_TOKEN || TOKEN==LOG_TOKEN || TOKEN==FPRINTF_TOKEN || TOKEN==FSCANF_TOKEN || TOKEN==FREAD_TOKEN || TOKEN==FWRITE_TOKEN || TOKEN==WRITE_TOKEN || TOKEN==READ_TOKEN || TOKEN==PUTS_TOKEN || TOKEN==GETS_TOKEN){
         return 1;
     }
     else{
@@ -224,7 +225,7 @@ void TERM(){
         FACTEUR();
         FFACTEUR();
     }
-    else if(SYM_COUR==PLUS_TOKEN || SYM_COUR==MINUS_TOKEN){
+    else if(SYM_COUR.CODE==PLUS_TOKEN || SYM_COUR.CODE==MINUS_TOKEN){
         Sym_Suiv();
         FACTEUR();
     }
@@ -245,10 +246,10 @@ void FFACTEUR(){
     }
     else{
         Sym_Suiv();
-        if(SYM_COUR==INCREM_TOKEN){
+        if(SYM_COUR.CODE==INCREM_TOKEN){
             Test_Symbole(INCREM_TOKEN,INCREM_ERR);
         }
-        else if(SYM_COUR==DECREM_TOKEN){
+        else if(SYM_COUR.CODE==DECREM_TOKEN){
             Test_Symbole(DECREM_TOKEN,DECREM_ERR);
         }
     }
@@ -314,11 +315,11 @@ void BOUCLE(){
             break;
         case DO_TOKEN:
             Sym_Suiv();
-            DOWHILELOOP_STATEMENT
+            DOWHILELOOP_STATEMENT();
             break;
        case REPEAT_TOKEN:
             Sym_Suiv();
-            DOWHILELOOP_STATEMENT
+            DOWHILELOOP_STATEMENT();
             break;
         case WHILE_TOKEN:
             Sym_Suiv();
@@ -469,7 +470,7 @@ void FCONDITIONS(){
 void FCONDITIONS2(){
     if(SYM_COUR.CODE == ACO_TOKEN){
         INSTRUCTIONS();
-        Test_Symbole(ACF_TOKEN,ACF_ERR)
+        Test_Symbole(ACF_TOKEN,ACF_ERR);
     }
     else{
         INSTRUCTION();
@@ -527,8 +528,7 @@ void CONDITION(){
 
 void INPUT_OUTPUT(){
     if(SYM_COUR.CODE == PRINT_TOKEN || SYM_COUR.CODE == PRINTF_TOKEN || SYM_COUR.CODE == SCANF_TOKEN || SYM_COUR.CODE == INPUT_TOKEN ||
-        SYM_COUR.CODE == LOG_TOKEN || SYM_COUR.CODE == FPRINTF_TOKEN || SYM_COUR.CODE == FSCANF_TOKEN || SYM_COUR.CODE == FREADF_TOKEN || SYM_COUR.CODE == FREADF_TOKEN
-        || SYM_COUR.CODE == FWRITEF_TOKEN || SYM_COUR.CODE == WRITE_TOKEN || SYM_COUR.CODE == READ_TOKEN || SYM_COUR.CODE == PUTS_TOKEN || SYM_COUR.CODE == GETS_TOKEN){
+        SYM_COUR.CODE == LOG_TOKEN || SYM_COUR.CODE == FPRINTF_TOKEN || SYM_COUR.CODE == FSCANF_TOKEN || SYM_COUR.CODE == WRITE_TOKEN || SYM_COUR.CODE == READ_TOKEN || SYM_COUR.CODE == PUTS_TOKEN || SYM_COUR.CODE == GETS_TOKEN){
             Test_Symbole(PO_TOKEN,PO_ERR);
             ARGUMENT();
             Test_Symbole(PF_TOKEN,PF_TOKEN);
@@ -579,9 +579,9 @@ void FONCTION(){
 void FONCTION2(){
     if(SYM_COUR.CODE==ID_TOKEN){
         sym_suiv();
-        Test_Symbole(PO_TOKEN, "parenthese ouvrante erreur");
+        Test_Symbole(PO_TOKEN, PO_ERR);
         PARAMETER();
-        Test_Symbole(PF_TOKEN, "parenthese fermante erreur");
+        Test_Symbole(PF_TOKEN, PF_ERR);
         Test_Symbole(ACO_TOKEN, ACO_TOKEN);
         INSTRUCTIONS();
         Test_Symbole(ACF_TOKEN, ACF_TOKEN);
@@ -614,7 +614,7 @@ void PARAMETER(){
 }
 
 void PARAMETER1(){
-    Test_Symbole(VIR_TOKEN, "virgule erreur");
+    Test_Symbole(VIR_TOKEN, VIR_ERR);
     if(SYM_COUR.CODE==ID_TOKEN){
         sym_suiv();
         if(SYM_COUR.CODE==INT_TOKEN||
@@ -652,7 +652,7 @@ void IF(){
 }
 
 void FIF(){
-    Test_Symbole(PO_TOKEN, "parenthese ouvrante erreur");
+    Test_Symbole(PO_TOKEN, PO_ERR);
     FIF2();
 }
 
@@ -662,7 +662,7 @@ void FIF2(){
 }
 
 void FCONDITION1() {
-    Test_Symbole(PF_TOKEN, "parenthese fermante erreur");
+    Test_Symbole(PF_TOKEN, PF_ERR);
     FCONDITION2();
 }
 void FCONDITION2(){
@@ -675,9 +675,9 @@ void FBLOCK_IF(){
         BLOCK_IF();
     }
     else {
-        elIF(); 
+        Test_Symbole(ELIF_TOKEN,ELIF_ERR);
         BLOCK_IF();    
-        Test_Symbole(ELSE_TOKEN,"else erreur");
+        Test_Symbole(ELSE_TOKEN,ELSE_ERR);
         BLOCK_IF();
         
 }
@@ -690,9 +690,9 @@ void BLOCK_IF(){
 
 void CASE(){
     if(SYM_COUR.CODE==SWITCH_TOKEN){
-        Test_Symbole(PO_TOKEN, "parenthese ouvrante erreur");
+        Test_Symbole(PO_TOKEN, PO_ERR);
         EXPRESSION();
-        Test_Symbole(PF_TOKEN, "parenthese fermante erreur");
+        Test_Symbole(PF_TOKEN, PF_ERR);
         Test_Symbole(ACO_TOKEN, ACO_ERR);
         BLOCK_CASE();
         Test_Symbole(ACF_TOKEN, ACF_ERR);
@@ -703,7 +703,7 @@ void BLOCK_CASE(){
     if(SYM_COUR.CODE==CASE_TOKEN){
         Fcase();
     }else if(SYM_COUR.CODE==CASE_TOKEN){
-        Test_Symbole(PTS_TOKEN, "double points erreur");
+        Test_Symbole(PTS_TOKEN, PTS_ERR);
         INSTRUCTIONS();
     }
 }
@@ -713,7 +713,7 @@ void Fcase(){
     FFACTEUR1();
 }
 void FFACTEUR1(){
-    Test_Symbole(PTS_TOKEN, "double points erreur");
+    Test_Symbole(PTS_TOKEN, PTS_ERR);
     FFACTEUR2();
 }
 void FFACTEUR2(){
@@ -724,18 +724,18 @@ void FINSTRUCTIONS(){
     BLOCK_CASE();
 }
 void SHORTHAND(){
-    Test_Symbole(PO_TOKEN, "parenthese ouvrante erreur");
+    Test_Symbole(PO_TOKEN, PO_ERR);
     CONDITION();
-    Test_Symbole(PF_TOKEN, "parenthese fermante erreur");
-    Test_Symbole(INTERROGATION_TOKEN, "point d'interrogation erreur");
+    Test_Symbole(PF_TOKEN, PF_ERR);
+    Test_Symbole(INTERROGATION_TOKEN, INTERROGATION_ERR);
     INSTRUCTION();
-    Test_Symbole(PTS_TOKEN, "double points erreur");
+    Test_Symbole(PTS_TOKEN, PTS_ERR);
     INSTRUCTION();
 }
 void VAR_DECLARATION(){
     switch (SYM_COUR.CODE){
         case CONST_TOKEN:
-            TYPE();
+            Test_Symbole(TYPE_TOKEN,TYPE_ERR);
             IDS_CONST();
             break;
         case LET_TOKEN: 
@@ -764,7 +764,7 @@ void Fsymbole_aff1(){
     FEXPRESSION();
 }
 
-void FEXPRESSION(){
+void FEXPRESSION1(){
     switch (SYM_COUR.CODE){
         case VIR_TOKEN : VARS2(); break;
         default: ; break;
@@ -794,12 +794,12 @@ void VARS_TYPE(){
 }
 
 void IDS_CONST(){
-    Test_Symbole(ID_TOKEN,"identificateur erreur");
+    Test_Symbole(ID_TOKEN,ID_ERR);
     Fid2();
 }
 
 void Fid2(){
-    Test_Symbole(AFFECT_TOKEN, "affectation erreur");
+    Test_Symbole(AFFECT_TOKEN, AFF_ERR);
     Fsymbole_aff();
 }
 
