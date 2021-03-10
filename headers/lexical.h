@@ -38,7 +38,7 @@ typedef enum
     DC_ERR, FC_ERR, ACO_ERR, ACF_ERR, EOF_ERR, ID_ERR, ELSE_ERR, UNTIL_ERR, REPEAT_ERR, FOR_ERR,
     DOWNTO_ERR, CASE_ERR, OF_ERR, INTO_ERR ,CONST_VAR_BEGIN_ERR, INST_ERR, FACT_ERR, POUR_ERR, ERR_FICH_VID,
     CAS_ERR, DOUBLONS_ERR, CONST_MODIF_ERR, UNDECLARED_ERR, PRO_ID_ERR, TYPE_ERR, VARS_TYPE_ERR,INCREM_ERR, DECREM_ERR,CALL_ERR,
-    RETURN_ERR,EQU_ERR,TO_ERR,INTERROGATION_ERR,ELIF_ERR
+    RETURN_ERR,EQU_ERR,TO_ERR,INTERROGATION_ERR,ELIF_ERR,COMPARATOR_ERR
 } ERREURS;
 
 // Error MESSAGE_ERR[100] = {
@@ -60,7 +60,7 @@ char ERR[][100] = {
     "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
     "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
     "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,
-    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "NUM_ERR"
+    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "NUM_ERR","COMPARATOR_ERR"
 };
 
 
