@@ -14,7 +14,7 @@ typedef enum
     BXOR_TOKEN, TILD_TOKEN, LEFTSHIFT_TOKEN, RIGHTSHIFT_TOKEN, BAND_TOKEN, BOR_TOKEN, AND_TOKEN, AND1_TOKEN, OR_TOKEN, OR1_TOKEN, NOT_TOKEN, NOT1_TOKEN,
     QUOTE_TOKEN,SINGLEQUOTE_TOKEN, EOF_TOKEN, ID_TOKEN, NUM_TOKEN, ELSE_TOKEN, UNTIL_TOKEN, REPEAT_TOKEN, FOR_TOKEN, DOWNTO_TOKEN, CASE_TOKEN, OF_TOKEN,
     INTO_TOKEN , RETURN_TOKEN, PRINT_TOKEN, PRINTF_TOKEN, SCANF_TOKEN, INPUT_TOKEN, LOG_TOKEN, FPRINTF_TOKEN, FSCANF_TOKEN, FREAD_TOKEN, FWRITE_TOKEN, 
-    PUTS_TOKEN, GETS_TOKEN, CALL_TOKEN, STRINGVAL_TOKEN, ERREUR_TOKEN, CHAR_VALUE_TOKEN,INTERROGATION_TOKEN,TO_TOKEN,ELIF_TOKEN
+    PUTS_TOKEN, GETS_TOKEN, CALL_TOKEN, STRINGVAL_TOKEN, ERREUR_TOKEN, CHAR_VALUE_TOKEN, INTERROGATION_TOKEN, TO_TOKEN, ELIF_TOKEN
 } CODES_LEX;
 
 
@@ -40,6 +40,28 @@ typedef enum
     CAS_ERR, DOUBLONS_ERR, CONST_MODIF_ERR, UNDECLARED_ERR, PRO_ID_ERR, TYPE_ERR, VARS_TYPE_ERR,INCREM_ERR, DECREM_ERR,CALL_ERR,
     RETURN_ERR,EQU_ERR,TO_ERR,INTERROGATION_ERR,ELIF_ERR
 } ERREURS;
+
+// Error MESSAGE_ERR[100] = {
+//     { NUM_ERR     , "Valeur numero incorrecte" },
+//     { CHAR_ERR, "Valeur caractere incorrecte" },
+//     { FICH_VID_ERR, "fichier vide" },
+//     { ID_LONG_ERR, "identificateur long" },
+//     { ID_INC_ERR, "identificateur incorrect" },
+//     { COMMENT_ERR, "erreur commentaire" },
+//     { STRING_ERR, "string non proprement declare : missing \"" }
+// };
+
+char ERR[][100] = {
+    "Valeur numero incorrecte", "Valeur caractere incorrecte", "fichier vide", "fichier vide", "identificateur long", "identificateur incorrect" ,"erreur commentaire",
+    "string non proprement declare : missing \"", "erreur program","erreur constante", "erreur variable","erreur begin","End Erreur", "if erreur", "then erreur","While erreur",
+    "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
+    "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
+    "different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
+    "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
+    "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
+    "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,
+    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "NUM_ERR"
+};
 
 
 typedef struct

@@ -11,15 +11,6 @@ FILE* flux_output;
 char Car_Cour;
 TSym_Cour SYM_COUR;
 
-Error MESSAGE_ERR[100] = {
-    { NUM_ERR     , "Valeur numero incorrecte" },
-    { CHAR_ERR, "Valeur caractere incorrecte" },
-    { FICH_VID_ERR, "fichier vide" },
-    { ID_LONG_ERR, "identificateur long" },
-    { ID_INC_ERR, "identificateur incorrect" },
-    { COMMENT_ERR, "erreur commentaire" },
-    { STRING_ERR, "string non proprement declare : missing \"" }
-};
 
 const char tokens[][20] = {  
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
@@ -30,7 +21,7 @@ const char tokens[][20] = {
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
     "<>", "(",")", "/*" , "*/", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "\'", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "print", "printf", "scanf", "input",
-    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE", "?", "to","ELIF"                               
+    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE", "?", "to","elif"                               
 };
 
 const char lexical_unit[][20] = {
@@ -82,7 +73,7 @@ _Bool isSeparator()
 
 int mot_cle()
 {
-    for (int i = 0; i < 130; i++)
+    for (int i = 0; i < 131; i++)
     {
         if (strcmp(tokens[i], SYM_COUR.NOM) == 0)
             return i;
@@ -573,7 +564,7 @@ void afficher_token()
 
 void ERREUR(ERREURS e)
 {
-    printf("%s -> %s\n", SYM_COUR.NOM, MESSAGE_ERR[e].msg);
+    printf("%s -> %s\n", SYM_COUR.NOM, ERR[e]);
 }
 
 /****************************************************************************************************************************/
