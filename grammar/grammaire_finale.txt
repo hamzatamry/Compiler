@@ -129,9 +129,9 @@ Fwhile                  ->	( Fwhile2 .
 
 Fwhile2                 ->	CONDITIONS FCONDITIONS .
 
-FCONDITIONS             ->	) FCONDITIONS2 .
+FCONDITIONS             ->	) FCONDITIONS3 .
 
-FCONDITIONS2            ->	INSTRUCTION
+FCONDITIONS3            ->	INSTRUCTION
                         |	{ INSTRUCTIONS } .
 
 DOWHILELOOP_STATEMENT   ->	do { INSTRUCTIONS } while ( CONDITIONS ) ;
