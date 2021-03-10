@@ -4,6 +4,7 @@
 
 int main()
 {
+	printf("yo\n");
     ouvrir_fichier("..\\analyseur_lexical\\tests\\output\\out_1");
     Sym_Suiv();
     PROGRAM();
