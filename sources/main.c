@@ -12,7 +12,7 @@ int main(void)
         afficher_token();
     }
     printf("EOF -> EOF_TOKEN");
-    fprintf(flux_output,"EOF %d\n",EOF_TOKEN);     // g est le fichier d'entree de l'analyseur syntaxique
+    fprintf(flux_output,"EOF %d\n",EOF_TOKEN);     // flux_output est le fichier d'entree de l'analyseur syntaxique
     fclose(flux_output);
     fclose(flux_input);
     return 0;
