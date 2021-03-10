@@ -1,9 +1,7 @@
-#ifndef SEMANTIQUE_SYNTAXIQUE_H
-#define SEMANTIQUE_SYNTAXIQUE_H
+#ifndef SYNTAXIQUE_H
+#define SYNTAXIQUE_H
+#include "..\..\analyseur_lexical\headers\lexical.h"
 
-#include <stdio.h>
-#include <stdbool.h>
-#include "../analyseur_lexical/headers/lexical.h"
 // typedef enum 
 // {
 //     INT_TOKEN, INTEGER_TOKEN, NUMBER_TOKEN, FLOAT_TOKEN, CHAR_TOKEN, STRING_TOKEN, STR_TOKEN, LONG_TOKEN, DOUBLE_TOKEN, SHORT_TOKEN,
@@ -40,9 +38,9 @@
 // }   ERREURS;
 
 extern FILE* lexical_output;
-extern bool good;  // variale globale indiquant si l'analyseur syntaxique valide ou pas le fichier
+extern _Bool good;  // variale globale indiquant si l'analyseur syntaxique valide ou pas le fichier
 extern void ouvrir_fichier_syntaxique(char nom[20]);
-extern void Test_Symbole(CODES_LEX lex,ERREURS err);
+extern void Test_Symbole(CODES_LEX lex, ERREURS err);
 extern void Sym_Suiv();
 extern void PROGRAM();
 extern void INSTRUCTIONS();
@@ -122,6 +120,6 @@ extern void FEXPRESSION();
 extern void TYPE();
 
 
-extern void ERREUR(ERREURS e);
+extern void erreur_syntaxique(ERREURS e);
 
 #endif

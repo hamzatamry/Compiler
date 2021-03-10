@@ -1,14 +1,18 @@
-#include "semantique_syntaxique.h"
-// #include "../analyseur_lexical/headers/lexical.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
+#include "..\headers\syntaxique.h"
 
 FILE* lexical_output;
-bool good = true;
+_Bool good = true;
 
-
+void _log()
+{
+    printf("SYM_COUR.NOM = %s SYM_COUR.CODE = %d\n", SYM_COUR.NOM, SYM_COUR.CODE);
+    exit(-1);
+}
 
 void ouvrir_fichier_syntaxique(char nom[20])
 {
@@ -24,27 +28,21 @@ void ouvrir_fichier_syntaxique(char nom[20])
 
 void Sym_Suiv()
 {
-    char c;
-    int i = 0;
-
-    while((c = fgetc(lexical_output)) != ' ')
-    {
-        SYM_COUR.NOM[i] = c;
-        i++;
-    }
-    SYM_COUR.NOM[i] = '\0';
+    fscanf(lexical_output,"%s", &(SYM_COUR.NOM));
     fscanf(lexical_output,"%d", &(SYM_COUR.CODE));
 }
-//if we merge the two erreurs is the order still okay?
+
 void Test_Symbole(CODES_LEX lex,ERREURS err)
 {
     if(SYM_COUR.CODE == lex)
     {
         Sym_Suiv();
     }
-
     else
-        ERREUR(err);
+    {
+        erreur_syntaxique(err);
+    }
+        
 }
 
 void PROGRAM(){
@@ -52,17 +50,21 @@ void PROGRAM(){
 }
 
 void INSTRUCTIONS(){
+    
     if(SYM_COUR.CODE==ACO_TOKEN){
+        
         Sym_Suiv();
         INSTRUCTION();
         INSTRUCTIONS();
         Test_Symbole(ACF_TOKEN, ACF_ERR);
     }
     else{
+       
         INSTRUCTION();
         FINSTRUCTION();
     }
 }
+
 void FINSTRUCTION(){
     INSTRUCTIONS();
 }
@@ -147,6 +149,7 @@ void INSTRUCTION(){
                 VAR_DECLARATION();
                 Test_Symbole(PV_TOKEN, PV_ERR);
                 break;
+            default:  good = false;
         }
     }
 }
@@ -155,6 +158,7 @@ void AFFECTATION(){
     Test_Symbole(ID_TOKEN,ID_ERR);
     Fid();
 }
+
 void Fid(){
     switch(SYM_COUR.CODE){
         case AFFECPASCAL_TOKEN:
@@ -202,7 +206,6 @@ void FTERM(){
         EXPRESSION();
     }
 }
-
 //if begining of term 1 else 0
 int isTermBeg2(int TOKEN){
     if(TOKEN==ID_TOKEN || TOKEN==NUMBER_TOKEN || TOKEN==BOOL_TOKEN || TOKEN==BOOLEAN_TOKEN || TOKEN==NUM_TOKEN || TOKEN==CALL_TOKEN || TOKEN==STR_TOKEN || TOKEN==STRING_TOKEN ){
@@ -210,6 +213,7 @@ int isTermBeg2(int TOKEN){
     }
     return 0;
 }
+
 void TERM(){
     if(isTermBeg2(SYM_COUR.CODE)){
         Sym_Suiv();
@@ -344,7 +348,6 @@ void FOR1(){
 
 }
 
-
 void FVAR_DECLARATION(){
     switch(SYM_COUR.CODE){
         case PV_TOKEN:
@@ -354,17 +357,15 @@ void FVAR_DECLARATION(){
             FVAR_DECLARATION3();
             break;
         default: 
-            ERREUR(TYPE_ERR);
+            erreur_syntaxique(TYPE_ERR);
     }
 
 }
-
 
 void FVAR_DECLARATION2(){
     CONDITIONS();
     FCONDITIONS1();
 }
-
 
 void FCONDITIONS1(){
     Test_Symbole(PV_TOKEN,PV_ERR);
@@ -372,18 +373,15 @@ void FCONDITIONS1(){
 
 }
 
-
 void FCONDITIONS2(){
     INSTRUCTION();
     FINSTRUCTION1();
 }
 
-
 void FINSTRUCTION1(){
     Test_Symbole(PF_TOKEN,PF_ERR);
     FINSTRUCTION2();
 }
-
 
 void FINSTRUCTION2(){
     if(SYM_COUR.CODE == ACO_TOKEN){
@@ -395,12 +393,10 @@ void FINSTRUCTION2(){
     }
 }
 
-
 void FVAR_DECLARATION3(){
     Test_Symbole(ID_TOKEN,ID_ERR);
     Fid4();
 }
-
 
 void Fid4(){
     Test_Symbole(PF_TOKEN,PF_ERR);
@@ -416,6 +412,7 @@ void Fid5(){
         INSTRUCTION();
     }
 }
+
 void Fid3(){
     if(SYM_COUR.CODE == IN_TOKEN){
         Test_Symbole(ID_TOKEN,ID_ERR);
@@ -440,18 +437,15 @@ void WHILELOOP_STATEMENT(){
 
 }
 
-
 void Fwhile(){
     Test_Symbole(PO_TOKEN,PO_ERR);
     Fwhile2();
 }
 
-
 void Fwhile2(){
     CONDITIONS();
     FCONDITIONS();
 }
-
 
 void FCONDITIONS(){
     Test_Symbole(PF_TOKEN,PF_ERR);
@@ -505,7 +499,6 @@ void CONDITIONS(){
     }
 }
 
-
 void FCONDITION(){
     if(SYM_COUR.CODE == AND_TOKEN || SYM_COUR.CODE == OR_TOKEN || SYM_COUR.CODE == AND1_TOKEN || SYM_COUR.CODE == OR1_TOKEN)
         CONDITIONS();
@@ -534,9 +527,10 @@ void COMPARATOR(){
         case(DIFF1_TOKEN):
             break;
         default:
-            ERREUR(COMPARATOR_ERR);
+            erreur_syntaxique(COMPARATOR_ERR);
     }
 }
+
 void INPUT_OUTPUT(){
     if(SYM_COUR.CODE == PRINT_TOKEN || SYM_COUR.CODE == PRINTF_TOKEN || SYM_COUR.CODE == SCANF_TOKEN || SYM_COUR.CODE == INPUT_TOKEN ||
         SYM_COUR.CODE == LOG_TOKEN || SYM_COUR.CODE == FPRINTF_TOKEN || SYM_COUR.CODE == FSCANF_TOKEN || SYM_COUR.CODE == WRITE_TOKEN || SYM_COUR.CODE == READ_TOKEN || SYM_COUR.CODE == PUTS_TOKEN || SYM_COUR.CODE == GETS_TOKEN){
@@ -546,7 +540,6 @@ void INPUT_OUTPUT(){
 
     }
 }
-
 
 // void FONCTION(){
 //     if(SYM_COUR.CODE == DEF_TOKEN){
@@ -559,7 +552,6 @@ void INPUT_OUTPUT(){
 //         FONCTION2();
 //     }
 // }
-
 
 void FONCTION(){
     if(SYM_COUR.CODE==DEF_TOKEN||SYM_COUR.CODE==FUNCTION_TOKEN){
@@ -649,6 +641,7 @@ void PARAMETER1(){
         }
     }
 }
+
 void CONTROLE (){
     switch(SYM_COUR.CODE){
         case IF_TOKEN : IF(); break;
@@ -676,6 +669,7 @@ void FCONDITION1() {
     Test_Symbole(PF_TOKEN, PF_ERR);
     FCONDITION2();
 }
+
 void FCONDITION2(){
     BLOCK_IF(); 
     FBLOCK_IF();
@@ -724,17 +718,21 @@ void Fcase(){
     FACTEUR();
     FFACTEUR1();
 }
+
 void FFACTEUR1(){
     Test_Symbole(PTS_TOKEN, PTS_ERR);
     FFACTEUR2();
 }
+
 void FFACTEUR2(){
     INSTRUCTIONS(); 
     FINSTRUCTIONS();
 }
+
 void FINSTRUCTIONS(){
     BLOCK_CASE();
 }
+
 void SHORTHAND(){
     Test_Symbole(PO_TOKEN, PO_ERR);
     CONDITION();
@@ -744,6 +742,7 @@ void SHORTHAND(){
     Test_Symbole(PTS_TOKEN, PTS_ERR);
     INSTRUCTION();
 }
+
 void VAR_DECLARATION(){
     switch (SYM_COUR.CODE){
         case CONST_TOKEN:
@@ -755,15 +754,18 @@ void VAR_DECLARATION(){
             break;
     }
 }
+
 void VARS2(){
     if(SYM_COUR.CODE==ID_TOKEN){
         Fid1();
     }
 }
+
 void Fid1(){
     VARS_TYPE();
     FVARS_TYPE();
 }
+
 void FVARS_TYPE(){
     switch (SYM_COUR.CODE){
         case AFFECT_TOKEN : Fsymbole_aff1(); break;
@@ -771,6 +773,7 @@ void FVARS_TYPE(){
         default: ; break;
     }
 }
+
 void Fsymbole_aff1(){
     EXPRESSION(); 
     FEXPRESSION();
@@ -782,6 +785,7 @@ void FEXPRESSION1(){
         default: ; break;
     }
 }
+
 void VARS_TYPE(){
     if(SYM_COUR.CODE==PTS_TOKEN|SYM_COUR.CODE==IS_TOKEN)
         if(SYM_COUR.CODE==INT_TOKEN||
@@ -847,12 +851,11 @@ void TYPE(){
             SYM_COUR.CODE== AUTO_TOKEN||SYM_COUR.CODE== VOID_TOKEN)
             Sym_Suiv();
     else
-        ERREUR(TYPE_ERR);
+        erreur_syntaxique(TYPE_ERR);
 }
 
-
-void ERREUR(ERREURS e)
+void erreur_syntaxique(ERREURS e)
 {
     good = false;
-   printf("%s\n",ERR[e]);
+    printf("%s\n", ERR[e]);
 }

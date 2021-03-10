@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "semantique_syntaxique.h"
+#include <assert.h>
+#include "..\headers\syntaxique.h"
 
 int main()
 {
 	printf("yo\n");
-    ouvrir_fichier_syntaxique("..\\analyseur_lexical\\tests\\output\\out_1");
+    ouvrir_fichier_syntaxique("tests\\input\\out_1");
     Sym_Suiv();
     PROGRAM();
+    printf("here\n");
     if (good)       
     {
         printf("BRAVO: le programme est correcte!!!");
