@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "..\headers\lexical.h"
 
 int main(void)
 {
-    ouvrir_fichier("..\\tests\\input\\in_1");
+    ouvrir_fichier("tests\\input\\in_1");
 
     while (Car_Cour != EOF)
     {

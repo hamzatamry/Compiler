@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 #include "..\headers\lexical.h"
 #include "..\headers\regex.h"
 
@@ -13,7 +14,7 @@ TSym_Cour SYM_COUR;
 
 
 char ERR[][100] = {
-    "Valeur numero incorrecte", "Valeur caractere incorrecte", "fichier vide", "fichier vide", "identificateur long", "identificateur incorrect" ,"erreur commentaire",
+    "Valeur numero incorrecte", "Valeur caractere incorrecte", "fichier vide", "identificateur long", "identificateur incorrect" ,"erreur commentaire",
     "string non proprement declare : missing \"", "erreur program","erreur constante", "erreur variable","erreur begin","End Erreur", "if erreur", "then erreur","While erreur",
     "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
     "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
@@ -56,7 +57,7 @@ void ouvrir_fichier(char nom[20])
 {
     flux_input = fopen(nom, "r");
 
-    flux_output = fopen("..\\tests\\output\\out_1", "w");
+    flux_output = fopen("tests\\output\\out_1", "w");
 
     if (flux_input == NULL || flux_output == NULL)
     {
@@ -133,7 +134,7 @@ void isString()
         SYM_COUR.NOM[i] = Car_Cour;
         i++;
         lire_car();
-    }while (Car_Cour != '"' && Car_Cour != EOF);
+    }while (Car_Cour != '"' && Car_Cour != '\n' && Car_Cour != EOF);
     
     if (Car_Cour == '"')
     {
@@ -144,7 +145,7 @@ void isString()
     else
     {
         SYM_COUR.CODE = ERREUR_TOKEN;
-        ERREUR(STRING_ERR);
+        ERREUR(STRINGVAL_ERR);
     }
 
      SYM_COUR.NOM[i] = '\0';
