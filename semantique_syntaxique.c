@@ -10,7 +10,7 @@ bool good = true;
 
 
 
-void ouvrir_fichier(char nom[20])
+void ouvrir_fichier_syntaxique(char nom[20])
 {
     lexical_output = fopen(nom,"r");
     
@@ -455,10 +455,10 @@ void Fwhile2(){
 
 void FCONDITIONS(){
     Test_Symbole(PF_TOKEN,PF_ERR);
-    FCONDITIONS2();
+    FCONDITIONS3();
 }
 
-void FCONDITIONS2(){
+void FCONDITIONS3(){
     if(SYM_COUR.CODE == ACO_TOKEN){
         INSTRUCTIONS();
         Test_Symbole(ACF_TOKEN,ACF_ERR);
@@ -517,6 +517,26 @@ void CONDITION(){
     EXPRESSION();
 }
 
+void COMPARATOR(){
+    switch(SYM_COUR.CODE){
+        case(SUP_TOKEN):
+            break;
+        case(INF_TOKEN):
+            break;
+        case(INFEG_TOKEN):
+            break;
+        case(EQU_TOKEN):
+            break;
+        case(TRIPPLEEQU_TOKEN):
+            break;
+        case(SUPEG_TOKEN):
+            break;
+        case(DIFF1_TOKEN):
+            break;
+        default:
+            ERREUR(COMPARATOR_ERR);
+    }
+}
 void INPUT_OUTPUT(){
     if(SYM_COUR.CODE == PRINT_TOKEN || SYM_COUR.CODE == PRINTF_TOKEN || SYM_COUR.CODE == SCANF_TOKEN || SYM_COUR.CODE == INPUT_TOKEN ||
         SYM_COUR.CODE == LOG_TOKEN || SYM_COUR.CODE == FPRINTF_TOKEN || SYM_COUR.CODE == FSCANF_TOKEN || SYM_COUR.CODE == WRITE_TOKEN || SYM_COUR.CODE == READ_TOKEN || SYM_COUR.CODE == PUTS_TOKEN || SYM_COUR.CODE == GETS_TOKEN){

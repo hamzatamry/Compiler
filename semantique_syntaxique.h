@@ -41,7 +41,7 @@
 
 extern FILE* lexical_output;
 extern bool good;  // variale globale indiquant si l'analyseur syntaxique valide ou pas le fichier
-extern void ouvrir_fichier(char nom[20]);
+extern void ouvrir_fichier_syntaxique(char nom[20]);
 extern void Test_Symbole(CODES_LEX lex,ERREURS err);
 extern void Sym_Suiv();
 extern void PROGRAM();
@@ -75,6 +75,7 @@ extern void FCONDITIONS2();
 extern void FINSTRUCTION1();
 extern void FINSTRUCTION2();
 extern void FVAR_DECLARATION3();
+extern void COMPARATOR();
 extern void Fid4();
 extern void Fid5();
 extern void Fid3();
@@ -82,7 +83,7 @@ extern void WHILELOOP_STATEMENT();
 extern void Fwhile();
 extern void Fwhile2();
 extern void FCONDITIONS();
-extern void FCONDITIONS2();
+extern void FCONDITIONS3();
 extern void DOWHILELOOP_STATEMENT();
 extern void CONDITIONS();
 extern void FCONDITION();
