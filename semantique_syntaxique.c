@@ -7,16 +7,7 @@
 
 FILE* lexical_output;
 bool good = true;
-char ERR[][100] = {
-    "erreur program","erreur constante", "erreur variable","erreur begin","End Erreur", "if erreur", "then erreur","While erreur",
-    "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
-    "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
-    "different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
-    "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
-    "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
-    "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,"erreur is or :","erreur dans incrementation","erreur dans decrementation",
-    "call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR"
-};
+
 
 
 void ouvrir_fichier(char nom[20])
@@ -680,6 +671,7 @@ void FBLOCK_IF(){
         Test_Symbole(ELSE_TOKEN,ELSE_ERR);
         BLOCK_IF();
         
+    }
 }
 
 void BLOCK_IF(){
@@ -735,7 +727,7 @@ void SHORTHAND(){
 void VAR_DECLARATION(){
     switch (SYM_COUR.CODE){
         case CONST_TOKEN:
-            Test_Symbole(TYPE_TOKEN,TYPE_ERR);
+            TYPE();
             IDS_CONST();
             break;
         case LET_TOKEN: 
@@ -813,6 +805,29 @@ void FEXPRESSION(){
         case VIR_TOKEN : IDS_CONST(); break;
         default : break;
     }
+}
+
+void TYPE(){
+     if(SYM_COUR.CODE==INT_TOKEN||
+            SYM_COUR.CODE== INTEGER_TOKEN||
+            SYM_COUR.CODE== NUMBER_TOKEN||
+            SYM_COUR.CODE== FLOAT_TOKEN||
+            SYM_COUR.CODE== CHAR_TOKEN||
+            SYM_COUR.CODE== STRING_TOKEN||
+            SYM_COUR.CODE== STR_TOKEN||
+            SYM_COUR.CODE== LONG_TOKEN||
+            SYM_COUR.CODE== DOUBLE_TOKEN||
+            SYM_COUR.CODE== SHORT_TOKEN||
+            SYM_COUR.CODE==UNSIGNED_TOKEN||
+            SYM_COUR.CODE== BOOLEAN_TOKEN||
+            SYM_COUR.CODE== BOOL_TOKEN||
+            SYM_COUR.CODE== LET_TOKEN||
+            SYM_COUR.CODE== $_TOKEN||
+            SYM_COUR.CODE== BYTE_TOKEN||
+            SYM_COUR.CODE== AUTO_TOKEN||SYM_COUR.CODE== VOID_TOKEN)
+            Sym_Suiv();
+    else
+        ERREUR(TYPE_ERR);
 }
 
 
