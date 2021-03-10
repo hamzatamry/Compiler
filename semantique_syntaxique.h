@@ -75,6 +75,7 @@ extern void FCONDITIONS2();
 extern void FINSTRUCTION1();
 extern void FINSTRUCTION2();
 extern void FVAR_DECLARATION3();
+extern void COMPARATOR();
 extern void Fid4();
 extern void Fid5();
 extern void Fid3();
