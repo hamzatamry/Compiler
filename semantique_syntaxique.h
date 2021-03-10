@@ -118,6 +118,7 @@ extern void IDS_CONST();
 extern void Fid2();
 extern void Fsymbole_aff();
 extern void FEXPRESSION();
+extern void TYPE();
 
 
 extern void ERREUR(ERREURS e);
