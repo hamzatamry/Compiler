@@ -22,7 +22,8 @@ char ERR[][100] = {
     "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
     "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
     "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,
-    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "COMPARATOR_ERR", "DIFF1_ERR"
+    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "COMPARATOR_ERR", "DIFF1_ERR",
+    "NUM_ERR"
 };
 
 const char tokens[][20] = {  
