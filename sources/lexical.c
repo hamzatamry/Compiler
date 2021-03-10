@@ -12,6 +12,18 @@ char Car_Cour;
 TSym_Cour SYM_COUR;
 
 
+char ERR[][100] = {
+    "Valeur numero incorrecte", "Valeur caractere incorrecte", "fichier vide", "fichier vide", "identificateur long", "identificateur incorrect" ,"erreur commentaire",
+    "string non proprement declare : missing \"", "erreur program","erreur constante", "erreur variable","erreur begin","End Erreur", "if erreur", "then erreur","While erreur",
+    "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
+    "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
+    "different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
+    "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
+    "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
+    "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,
+    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "NUM_ERR"
+};
+
 const char tokens[][20] = {  
     "int", "integer", "number", "float", "char", "string", "str", "long", "double",                                   
     "short", "unsigned", "boolean", "bool", "let", "$", "byte", "auto", "void", "true", "false",                      

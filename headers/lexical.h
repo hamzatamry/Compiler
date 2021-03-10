@@ -1,6 +1,6 @@
 #ifndef LEXICAL_H 
 #define LEXICAL_H
-#include <stdio.h>
+
 typedef enum 
 {
     INT_TOKEN, INTEGER_TOKEN, NUMBER_TOKEN, FLOAT_TOKEN, CHAR_TOKEN, STRING_TOKEN, STR_TOKEN, LONG_TOKEN, DOUBLE_TOKEN, SHORT_TOKEN,
@@ -51,19 +51,6 @@ typedef enum
 //     { STRING_ERR, "string non proprement declare : missing \"" }
 // };
 
-char ERR[][100] = {
-    "Valeur numero incorrecte", "Valeur caractere incorrecte", "fichier vide", "fichier vide", "identificateur long", "identificateur incorrect" ,"erreur commentaire",
-    "string non proprement declare : missing \"", "erreur program","erreur constante", "erreur variable","erreur begin","End Erreur", "if erreur", "then erreur","While erreur",
-    "Do erreur","Erreur READ","WRITE erreur","Point virgule erreur","point erreur","double points erreur","plus erreur","monis erreur","multiplication erreur",
-    "division erreur", "virgule erreur", "egale erreur", "affectation erreur", "inferieur erreur", "inferieur ou egale erreur", "superieur erreur", "superieur ou egale erreur",
-    "different erreur","parenthese ouvrante erreur", "parenthese fermante erreur", "debut commentaire erreur", "fin commentaire erreur", "accolade ouvrante erreur",
-    "accolade fermante erreur", "fin de fichier erreur", "identificateur erreur","else erreur", "until erreur", "repeat erreur", "for erreur",
-    "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
-    "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,
-    "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "NUM_ERR"
-};
-
-
 typedef struct
 {
     ERREURS CODE;
@@ -89,6 +76,7 @@ extern char Car_Cour;
 extern TSym_Cour SYM_COUR;
 extern FILE* flux_output;
 extern FILE* flux_input;
+extern char ERR[][100];
 
 #endif
 
