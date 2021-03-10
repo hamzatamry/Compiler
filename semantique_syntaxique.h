@@ -41,7 +41,7 @@
 
 extern FILE* lexical_output;
 extern bool good;  // variale globale indiquant si l'analyseur syntaxique valide ou pas le fichier
-extern void ouvrir_fichier(char nom[20]);
+extern void ouvrir_fichier_syntaxique(char nom[20]);
 extern void Test_Symbole(CODES_LEX lex,ERREURS err);
 extern void Sym_Suiv();
 extern void PROGRAM();
