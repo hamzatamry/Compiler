@@ -455,10 +455,10 @@ void Fwhile2(){
 
 void FCONDITIONS(){
     Test_Symbole(PF_TOKEN,PF_ERR);
-    FCONDITIONS2();
+    FCONDITIONS3();
 }
 
-void FCONDITIONS2(){
+void FCONDITIONS3(){
     if(SYM_COUR.CODE == ACO_TOKEN){
         INSTRUCTIONS();
         Test_Symbole(ACF_TOKEN,ACF_ERR);
@@ -531,7 +531,7 @@ void COMPARATOR(){
             break;
         case(SUPEG_TOKEN):
             break;
-        case("!="):
+        case(DIFF1_TOKEN):
             break;
         default:
             ERREUR(COMPARATOR_ERR);

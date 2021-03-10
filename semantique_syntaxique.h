@@ -83,7 +83,7 @@ extern void WHILELOOP_STATEMENT();
 extern void Fwhile();
 extern void Fwhile2();
 extern void FCONDITIONS();
-extern void FCONDITIONS2();
+extern void FCONDITIONS3();
 extern void DOWHILELOOP_STATEMENT();
 extern void CONDITIONS();
 extern void FCONDITION();
