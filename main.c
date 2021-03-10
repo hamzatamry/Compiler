@@ -7,7 +7,7 @@
 int main()
 {
 	printf("yo\n");
-    ouvrir_fichier("..\\analyseur_lexical\\tests\\output\\out_1");
+    ouvrir_fichier_syntaxique("..\\analyseur_lexical\\tests\\output\\out_1");
     Sym_Suiv();
     PROGRAM();
     if (good)                                             // variale globale indiquant si l'analyseur syntaxique valide ou pas le fichier

@@ -10,7 +10,7 @@ bool good = true;
 
 
 
-void ouvrir_fichier(char nom[20])
+void ouvrir_fichier_syntaxique(char nom[20])
 {
     lexical_output = fopen(nom,"r");
     
