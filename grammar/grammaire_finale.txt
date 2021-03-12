@@ -55,6 +55,12 @@ TERM                    ->	FACTEUR FFACTEUR
                         |	+ FACTEUR
                         |	- FACTEUR .
 
+FACTEUR                 ->	id
+                        |	number
+                        |	boolean
+                        |	APPEL_FONCTION
+                        |	string .
+
 FFACTEUR                ->	OPERATEURMULT FACTEUR
                         |	
                         |	OPERATEURSPECIAUX .
@@ -70,11 +76,7 @@ OPERATEURMULT           ->	*
 OPERATEURSPECIAUX       ->	++
                         |	-- .
 
-FACTEUR                 ->	id
-                        |	number
-                        |	boolean
-                        |	APPEL_FONCTION
-                        |	string .
+
 
 APPEL_FONCTION          ->	call id ( APPEL_FONCTION_ARG .
 
@@ -177,6 +179,8 @@ CONTROLE                ->	IF
                         |	CASE
                         |	SHORTHAND .
 
+SHORTHAND               ->	( CONDITION ) ? INSTRUCTION : INSTRUCTION .
+
 IF                      ->	if Fif .
 
 
@@ -208,7 +212,6 @@ FFACTEUR2               ->	INSTRUCTIONS FINSTRUCTIONS .
 FINSTRUCTIONS           ->	
                         |	BLOCK_CASE .
 
-SHORTHAND               ->	( CONDITION ) ? INSTRUCTION : INSTRUCTION .
 
 VAR_DECLARATION         ->	const TYPE IDS_CONST
                         |	let VARS2 .
