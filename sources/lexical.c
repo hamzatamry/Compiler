@@ -23,7 +23,7 @@ char ERR[][100] = {
     "downto erreur", "case erreur", "of erreur", "into erreur", "erreur debut programme", "instruction erreur", "facteur erreur", "pour erreur", "fichier vide",
     "cas erreur","erreur doublons","erreur modification constante", "erreur identificateur non declare", "erreur identificateur du programme non autorise", "erreur declaration type" ,
     "erreur is or :","erreur dans incrementation","erreur dans decrementation","call erreur","return erreur","EQU_ERR","TO_ERR","INTERROGATION_ERR","ELIF_ERR", "COMPARATOR_ERR", "DIFF1_ERR",
-    "NUM_ERR"
+    "NUM_ERR", "SWITCH_ERR", "DEFAULT_ERR"
 };
 
 const char tokens[][20] = {  
@@ -35,7 +35,7 @@ const char tokens[][20] = {
     "is", "===", "in", "**", "**=", "+=", "-=", "*=", "/=", "%%=", "^=", "&=", "|=", "++", "--",                      
     "<>", "(",")", "/*" , "*/", "{", "}", "^", "~", "<<", ">>", "&", "|", "&&", "and", "||", "or", "!", "not", "\"", "\'", "EOF",
     "ID", "NUM", "ELSE", "UNTIL", "REPEAT", "for", "DOWNTO", "CASE", "OF", "INTO", "return", "print", "printf", "scanf", "input",
-    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE", "?", "to","elif", "!="                               
+    "log", "fprintf", "fscanf", "fread", "fwrite", "puts", "gets", "call","STRINGVAL", "LE RESTE", "CHAR_VALUE", "?", "to","elif", "!=", "default"                               
 };
 
 const char lexical_unit[][20] = {
@@ -51,7 +51,7 @@ const char lexical_unit[][20] = {
     "ACO_TOKEN", "ACF_TOKEN", "BXOR_TOKEN", "TILD_TOKEN", "LEFTSHIFT_TOKEN", "RIGHTSHIFT_TOKEN", "BAND_TOKEN", "BOR_TOKEN", "AND_TOKEN", "AND1_TOKEN", 
     "OR_TOKEN", "OR1_TOKEN", "NOT_TOKEN", "NOT1_TOKEN", "QUOTE_TOKEN", "SINGLEQUOTE_TOKEN", "EOF_TOKEN", "ID_TOKEN", "NUM_TOKEN", "ELSE_TOKEN", "UNTIL_TOKEN", "REPEAT_TOKEN", "FOR_TOKEN",
     "DOWNTO_TOKEN", "CASE_TOKEN", "OF_TOKEN", "INTO_TOKEN" , "RETURN_TOKEN","PRINT_TOKEN", "PRINTF_TOKEN", "SCANF_TOKEN", "INPUT_TOKEN", "LOG_TOKEN", "FPRINTF_TOKEN", "FSCANF_TOKEN", "FREAD_TOKEN", "FWRITE_TOKEN", 
-    "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN", "CHAR_VALUE_TOKEN","INTERROGATION_TOKEN", "TO_TOKEN","ELIF_TOKEN", "DIFF1_TOKEN"
+    "PUTS_TOKEN", "GETS_TOKEN","CALL_TOKEN", "STRINGVAL_TOKEN", "ERREUR_TOKEN", "CHAR_VALUE_TOKEN","INTERROGATION_TOKEN", "TO_TOKEN","ELIF_TOKEN", "DIFF1_TOKEN", "DEFAULT_TOKEN"
 };
 
 void ouvrir_fichier(char nom[20])
@@ -87,7 +87,7 @@ _Bool isSeparator()
 
 int mot_cle()
 {
-    for (int i = 0; i < 132; i++)
+    for (int i = 0; i < 133; i++)
     {
         if (strcmp(tokens[i], SYM_COUR.NOM) == 0)
             return i;
