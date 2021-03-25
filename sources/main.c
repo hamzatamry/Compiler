@@ -5,11 +5,9 @@
 
 int main()
 {
-	printf("yo\n");
-    ouvrir_fichier_syntaxique("tests\\input\\out_1");
+    ouvrir_fichier_syntaxique("tests\\input\\out_3");
     Sym_Suiv();
     PROGRAM();
-    printf("here\n");
     if (good)       
     {
         printf("BRAVO: le programme est correcte!!!");

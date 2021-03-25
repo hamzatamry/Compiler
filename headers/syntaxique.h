@@ -117,7 +117,7 @@ extern void IDS_CONST();
 extern void Fid2();
 extern int SYMBOLE_AFF();
 extern void Fsymbole_aff();
-extern void FEXPRESSION();
+extern void FEXPRESSION1();
 extern void TYPE();
 
 
