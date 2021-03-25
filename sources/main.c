@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    ouvrir_fichier("..\\tests\\input\\in_1");
+    ouvrir_fichier("tests\\input\\in_1");
 
     while (Car_Cour != EOF)
     {

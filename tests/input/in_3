@@ -1,0 +1,13 @@
+let z is integer <- 14849798;
+let a : char = 'a';
+
+function void myFunction(b:char, c:integer){
+    let x is int = 10;
+    const float y = 1.4508798;
+    for i = 0 to 10 do
+    {
+        puts(b);
+    }; 
+}
+
+call myfunction(a, z);
