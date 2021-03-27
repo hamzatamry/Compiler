@@ -58,7 +58,7 @@ void ouvrir_fichier(char nom[20])
 {
     flux_input = fopen(nom, "r");
 
-    flux_output = fopen("tests\\output\\out_1", "w");
+    flux_output = fopen("C:\\Users\\zakar\\Desktop\\compilation\\analyseur-syntaxique\\tests\\input\\out_3", "w");
 
     if (flux_input == NULL || flux_output == NULL)
     {
@@ -575,9 +575,16 @@ void sym_suiv()
 
 void afficher_token()
 {
-    printf("%s -> %s\n", SYM_COUR.NOM, lexical_unit[SYM_COUR.CODE]);
-    fprintf(flux_output, "%s %d\n", SYM_COUR.NOM, SYM_COUR.CODE);
-    fflush(flux_output);
+    if( SYM_COUR.CODE == DC_TOKEN || SYM_COUR.CODE == FC_TOKEN)
+    {
+          printf("%s -> %s\n", SYM_COUR.NOM, lexical_unit[SYM_COUR.CODE]);
+    }
+    else{
+        printf("%s -> %s\n", SYM_COUR.NOM, lexical_unit[SYM_COUR.CODE]);
+        fprintf(flux_output, "%s %d\n", SYM_COUR.NOM, SYM_COUR.CODE);
+        fflush(flux_output);
+    }
+  
 }
 
 void ERREUR(ERREURS e)

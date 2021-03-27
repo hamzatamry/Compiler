@@ -1,13 +1,34 @@
 let z is integer <- 14849798;
 let a : char = 'a';
+integer b = 50, myVariable, other = 30;
 
-function void myFunction(b:char, c:integer){
-    let x is int = 10;
-    const float y = 1.4508798;
-    for i = 0 to 10 do
+int id=5, myVariable;
+
+let var1: boolean = true;
+
+const int constante <- 6;
+
+float ok = 144984.54;
+
+int myNumber = 84894989;
+
+/* ceci est un commentaire */
+
+
+function number myFunction() 
+{
+    float f = 1.00084845, a = 1.489489;
+    char c = 'a';
+    string mot = "erherherher";
+    number itr = input();
+
+    
+    do
     {
-        puts(b);
-    }; 
+        read(myVariable);
+    } while(i < 5);
+    
+    return itr;
 }
 
-call myfunction(a, z);
+call myFunction();
