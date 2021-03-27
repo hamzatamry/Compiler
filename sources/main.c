@@ -10,11 +10,12 @@ int main()
     PROGRAM();
     if (good)       
     {
-        printf("BRAVO: le programme est correcte!!!");
+        printf("\033[32mBRAVO: le programme est correcte!!!\033[0m");
+    
     }                                     
     else 
     {
-        printf("PAS BRAVO: fin de programme erronee!!!!");
+        printf("\033[31mPAS BRAVO: fin de programme erronee!!!!\033[0m");
     }
     return 0;
 }

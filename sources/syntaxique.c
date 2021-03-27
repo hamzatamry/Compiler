@@ -15,7 +15,6 @@ void _log(int ligne)
 
 void ouvrir_fichier_syntaxique(char nom[22])
 {
-    printf("%s",nom);
     lexical_output = fopen(nom,"r");
     
     if (lexical_output == NULL) 
@@ -47,8 +46,6 @@ void Test_Symbole(CODES_LEX lex,ERREURS err)
 }
 
 void PROGRAM(){
-    printf("debut\n");
-    _log(50);
     INSTRUCTIONS();
 }
 
@@ -56,7 +53,6 @@ void INSTRUCTIONS(){
     
     if(SYM_COUR.CODE==ACO_TOKEN){
         Sym_Suiv();
-        _log(59);
         INSTRUCTION();
         INSTRUCTIONS();
         // Test_Symbole(ACF_TOKEN, ACF_ERR);
@@ -74,7 +70,6 @@ void INSTRUCTIONS(){
 void FINSTRUCTION(){
     if (SYM_COUR.CODE == EOF_TOKEN ||SYM_COUR.CODE == ACF_TOKEN)
     {
-        _log(77);
         return;
     }
     INSTRUCTIONS();
@@ -99,7 +94,6 @@ void INSTRUCTION(){
     }
     if(isType()==1)
     {
-        _log(101);
         VAR_DECLARATION();
          Test_Symbole(PV_TOKEN, PV_ERR);
         return;
@@ -107,7 +101,6 @@ void INSTRUCTION(){
     switch(SYM_COUR.CODE){
         case ID_TOKEN: 
             Sym_Suiv();
-            _log(109);
             if( SYM_COUR.CODE == INCREM_TOKEN)
             {
                 Sym_Suiv();
@@ -156,7 +149,7 @@ void INSTRUCTION(){
             Test_Symbole(PV_TOKEN, PV_ERR);
             break;
         case LET_TOKEN:
-        _log(150);
+        
             VAR_DECLARATION();
             Test_Symbole(PV_TOKEN, PV_ERR);
             break;
@@ -262,7 +255,6 @@ void FFACTEUR(){
 
 void FACTEUR(){
     if(SYM_COUR.CODE==ID_TOKEN || SYM_COUR.CODE==TRUE_TOKEN || SYM_COUR.CODE == FALSE_TOKEN || SYM_COUR.CODE==NUM_TOKEN|| SYM_COUR.CODE==CALL_TOKEN || SYM_COUR.CODE==STRINGVAL_TOKEN || SYM_COUR.CODE == CHAR_VALUE_TOKEN ){
-        _log(252);
         Sym_Suiv();
     }
     else if(SYM_COUR.CODE==CALL_TOKEN){
@@ -306,7 +298,6 @@ void ARGUMENT1(){
     if(SYM_COUR.CODE==VIR_TOKEN){
         Test_Symbole(VIR_TOKEN,VIR_ERR);
         Test_Symbole(ID_TOKEN,ID_ERR);
-        _log(301);
         ARGUMENT1();
     }
     else{}
@@ -343,13 +334,12 @@ void FORLOOP_STATEMENT(){
 
 void Ffor(){
     if(SYM_COUR.CODE==PO_TOKEN){
-        _log(328);
+
         Test_Symbole(PO_TOKEN,PO_ERR);
         FOR1();
     }
     else if(SYM_COUR.CODE==ID_TOKEN){
         Test_Symbole(ID_TOKEN,ID_ERR);
-        _log(316);
         Fid3();
     }
     else{
@@ -364,7 +354,6 @@ void FOR1(){
 }
 
 void FVAR_DECLARATION(){
-    _log(349);
     switch(SYM_COUR.CODE){
         case PV_TOKEN:
             Sym_Suiv();
@@ -385,7 +374,6 @@ void FVAR_DECLARATION2(){
 }
 
 void FCONDITIONS1(){
-    _log(371);
     Test_Symbole(PV_TOKEN,PV_ERR);
     FCONDITIONS2();
 
@@ -443,12 +431,12 @@ void Fid3(){
     }
     else{
         Test_Symbole(EG_TOKEN,EG_ERR);
-        _log(407);
+
         Test_Symbole(NUM_TOKEN,NUM_ERR);
         Test_Symbole(TO_TOKEN,TO_ERR);
         Test_Symbole(NUM_TOKEN,NUM_ERR);
         Test_Symbole(DO_TOKEN,DO_ERR);
-        _log(412);
+
         INSTRUCTIONS();
         // Test_Symbole(PV_TOKEN,PV_ERR);
     }
@@ -515,7 +503,7 @@ void CONDITIONS(){
         Test_Symbole(PF_TOKEN,PF_ERR);
     }
     else {
-        _log(498);
+
         CONDITION();
         FCONDITION();
     }
@@ -561,7 +549,7 @@ void INPUT_OUTPUT(){
     if(SYM_COUR.CODE == PRINT_TOKEN || SYM_COUR.CODE == PRINTF_TOKEN || SYM_COUR.CODE == SCANF_TOKEN || SYM_COUR.CODE == INPUT_TOKEN ||
         SYM_COUR.CODE == LOG_TOKEN || SYM_COUR.CODE == FPRINTF_TOKEN || SYM_COUR.CODE == FSCANF_TOKEN || SYM_COUR.CODE == WRITE_TOKEN || SYM_COUR.CODE == READ_TOKEN || SYM_COUR.CODE == PUTS_TOKEN || SYM_COUR.CODE == GETS_TOKEN){
             Sym_Suiv();
-            _log(521);
+    
             Test_Symbole(PO_TOKEN,PO_ERR);
             ARGUMENT();
             Test_Symbole(PF_TOKEN,PF_TOKEN);
@@ -585,23 +573,19 @@ void FONCTION(){
     if(SYM_COUR.CODE==DEF_TOKEN||SYM_COUR.CODE==FUNCTION_TOKEN){
         Sym_Suiv();
         TYPE();
-        _log(544);
+
         FONCTION2();
     }
 }
 
 void FONCTION2(){
     Test_Symbole(ID_TOKEN, ID_ERR);
-    _log(551);
     Test_Symbole(PO_TOKEN, PO_ERR);
     PARAMETER();
     Test_Symbole(PF_TOKEN, PF_ERR);
-    _log(555);
     Test_Symbole(ACO_TOKEN, ACO_TOKEN);
-    _log(557);
     INSTRUCTIONS();
     Test_Symbole(ACF_TOKEN, ACF_TOKEN);
-    _log(558);
 }
 
 void PARAMETER(){
@@ -622,7 +606,7 @@ void PARAMETER1(){
         Test_Symbole(ID_TOKEN,ID_ERR);
         Test_Symbole(PTS_TOKEN,PTS_ERR);   // added new 
         TYPE();
-        _log(573);
+
         PARAMETER1();
     }
 }
@@ -743,7 +727,7 @@ void VAR_DECLARATION(){
             VARS2();
             break;
         default :
-                _log(718); 
+         
                 TYPE();
                   VARS2();
     }
@@ -762,9 +746,9 @@ void Fid1(){
 void FVARS_TYPE(){
     if(SYMBOLE_AFF() == 1)
     {
-        _log(737);
+
         Sym_Suiv();
-        _log(739);
+
         Fsymbole_aff1();
     }
     else if(SYM_COUR.CODE == VIR_TOKEN)
