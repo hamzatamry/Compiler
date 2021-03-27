@@ -1,16 +1,20 @@
 let z is integer <- 14849798;
+
 const int constante <- 6;
+
 let a : char = 'a', h : string;
+
 integer b = 50, myVariable, other = 30;
+
 int id=5, myVariable;
+
 let var1: boolean = true;
+
 float ok = 144984.54;
+
 int myNumber = 84894989;
 
-def void myOtherFunction(parametre:integer){
-    printf(parametre);
-
-}
+/* Ceci est un commentaire */
 
 function number myFunction() 
 {
@@ -29,13 +33,17 @@ function number myFunction()
         puts(i);
     }
 
-
     do
     {
         read(myVariable);
     } while(i < 5);
     
     return itr;
+}
+
+def void myOtherFunction(parametre:integer){
+    printf(parametre);
+
 }
 
 call myFunction();
