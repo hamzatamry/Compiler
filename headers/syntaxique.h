@@ -119,6 +119,7 @@ extern int SYMBOLE_AFF();
 extern void Fsymbole_aff();
 extern void FEXPRESSION1();
 extern void TYPE();
+extern int isType();
 
 
 extern void erreur_syntaxique(ERREURS e);

@@ -94,9 +94,25 @@ void INSTRUCTION(){
 
     if(isIO(SYM_COUR.CODE) == 1){
         INPUT_OUTPUT();
+        Test_Symbole(PV_TOKEN,PV_ERR);
+        return;
+    }
+    if(isType()==1)
+    {
+        _log(101);
+        VAR_DECLARATION();
+         Test_Symbole(PV_TOKEN, PV_ERR);
+        return;
     }
     switch(SYM_COUR.CODE){
         case ID_TOKEN: 
+            Sym_Suiv();
+            _log(109);
+            if( SYM_COUR.CODE == INCREM_TOKEN)
+            {
+                Sym_Suiv();
+                return;
+            }
             AFFECTATION();
             Test_Symbole(PV_TOKEN, PV_ERR);
             break;
@@ -140,15 +156,16 @@ void INSTRUCTION(){
             Test_Symbole(PV_TOKEN, PV_ERR);
             break;
         case LET_TOKEN:
+        _log(150);
             VAR_DECLARATION();
             Test_Symbole(PV_TOKEN, PV_ERR);
             break;
         //default: good = false;
     }
+    
 }
 
 void AFFECTATION(){
-    Test_Symbole(ID_TOKEN,ID_ERR);
     Fid();
 }
 
@@ -169,6 +186,9 @@ void Fid(){
             EXPRESSION();
             Test_Symbole(PV_TOKEN, PV_ERR);
             break;
+        case INCREM_TOKEN :
+            Sym_Suiv();
+            break;
     }
 }
 //if begining of term 1 else 0
@@ -183,6 +203,9 @@ void EXPRESSION(){
     if(isTermBeg(SYM_COUR.CODE) == 1){
         TERM();
         FTERM();
+    }
+    else if( isIO(SYM_COUR.CODE) == 1 ){
+        INPUT_OUTPUT();
     }
     else{
         Test_Symbole(PO_TOKEN,PO_ERR);
@@ -239,6 +262,7 @@ void FFACTEUR(){
 
 void FACTEUR(){
     if(SYM_COUR.CODE==ID_TOKEN || SYM_COUR.CODE==TRUE_TOKEN || SYM_COUR.CODE == FALSE_TOKEN || SYM_COUR.CODE==NUM_TOKEN|| SYM_COUR.CODE==CALL_TOKEN || SYM_COUR.CODE==STRINGVAL_TOKEN || SYM_COUR.CODE == CHAR_VALUE_TOKEN ){
+        _log(252);
         Sym_Suiv();
     }
     else if(SYM_COUR.CODE==CALL_TOKEN){
@@ -270,15 +294,19 @@ void APPEL_FONCTION_ARG(){
 }
 
 void ARGUMENT(){
-    Test_Symbole(ID_TOKEN,ID_ERR);
-    ARGUMENT1();
+    if (SYM_COUR.CODE == ID_TOKEN)
+    {
+        Test_Symbole(ID_TOKEN,ID_ERR);
+        ARGUMENT1();
+    }
+
 }
 
 void ARGUMENT1(){
     if(SYM_COUR.CODE==VIR_TOKEN){
         Test_Symbole(VIR_TOKEN,VIR_ERR);
         Test_Symbole(ID_TOKEN,ID_ERR);
-        _log(280);
+        _log(301);
         ARGUMENT1();
     }
     else{}
@@ -315,6 +343,7 @@ void FORLOOP_STATEMENT(){
 
 void Ffor(){
     if(SYM_COUR.CODE==PO_TOKEN){
+        _log(328);
         Test_Symbole(PO_TOKEN,PO_ERR);
         FOR1();
     }
@@ -335,8 +364,10 @@ void FOR1(){
 }
 
 void FVAR_DECLARATION(){
+    _log(349);
     switch(SYM_COUR.CODE){
         case PV_TOKEN:
+            Sym_Suiv();
             FVAR_DECLARATION2();
             break;
         case PTS_TOKEN :
@@ -354,6 +385,7 @@ void FVAR_DECLARATION2(){
 }
 
 void FCONDITIONS1(){
+    _log(371);
     Test_Symbole(PV_TOKEN,PV_ERR);
     FCONDITIONS2();
 
@@ -483,6 +515,7 @@ void CONDITIONS(){
         Test_Symbole(PF_TOKEN,PF_ERR);
     }
     else {
+        _log(498);
         CONDITION();
         FCONDITION();
     }
@@ -532,7 +565,7 @@ void INPUT_OUTPUT(){
             Test_Symbole(PO_TOKEN,PO_ERR);
             ARGUMENT();
             Test_Symbole(PF_TOKEN,PF_TOKEN);
-            Test_Symbole(PV_TOKEN,PV_ERR);
+            
     }
 }
 
@@ -572,10 +605,14 @@ void FONCTION2(){
 }
 
 void PARAMETER(){
-    Test_Symbole(ID_TOKEN,ID_ERR);
-    Test_Symbole(PTS_TOKEN,PTS_ERR);   // added new 
-    TYPE();
-    PARAMETER1();
+    if(SYM_COUR.CODE == ID_TOKEN)
+    {
+        Test_Symbole(ID_TOKEN,ID_ERR);
+        Test_Symbole(PTS_TOKEN,PTS_ERR);   // added new 
+        TYPE();
+        PARAMETER1();
+    }
+    
 }
 
 void PARAMETER1(){
@@ -705,6 +742,10 @@ void VAR_DECLARATION(){
             Sym_Suiv();
             VARS2();
             break;
+        default :
+                _log(718); 
+                TYPE();
+                  VARS2();
     }
 }
 
@@ -721,7 +762,9 @@ void Fid1(){
 void FVARS_TYPE(){
     if(SYMBOLE_AFF() == 1)
     {
+        _log(737);
         Sym_Suiv();
+        _log(739);
         Fsymbole_aff1();
     }
     else if(SYM_COUR.CODE == VIR_TOKEN)
@@ -800,7 +843,6 @@ void TYPE(){
             SYM_COUR.CODE==UNSIGNED_TOKEN||
             SYM_COUR.CODE== BOOLEAN_TOKEN||
             SYM_COUR.CODE== BOOL_TOKEN||
-            SYM_COUR.CODE== LET_TOKEN||
             SYM_COUR.CODE== $_TOKEN||
             SYM_COUR.CODE== BYTE_TOKEN||
             SYM_COUR.CODE== AUTO_TOKEN||SYM_COUR.CODE== VOID_TOKEN)
@@ -808,6 +850,30 @@ void TYPE(){
     else
         erreur_syntaxique(TYPE_ERR);
 }
+
+int isType()
+{
+    if(SYM_COUR.CODE==INT_TOKEN||
+            SYM_COUR.CODE== INTEGER_TOKEN||
+            SYM_COUR.CODE== NUMBER_TOKEN||
+            SYM_COUR.CODE== FLOAT_TOKEN||
+            SYM_COUR.CODE== CHAR_TOKEN||
+            SYM_COUR.CODE== STRING_TOKEN||
+            SYM_COUR.CODE== STR_TOKEN||
+            SYM_COUR.CODE== LONG_TOKEN||
+            SYM_COUR.CODE== DOUBLE_TOKEN||
+            SYM_COUR.CODE== SHORT_TOKEN||
+            SYM_COUR.CODE==UNSIGNED_TOKEN||
+            SYM_COUR.CODE== BOOLEAN_TOKEN||
+            SYM_COUR.CODE== BOOL_TOKEN||
+            SYM_COUR.CODE== $_TOKEN||
+            SYM_COUR.CODE== BYTE_TOKEN||
+            SYM_COUR.CODE== AUTO_TOKEN||SYM_COUR.CODE== VOID_TOKEN)
+            return 1;
+    else
+        return 0;
+}
+
 
 void erreur_syntaxique(ERREURS e)
 {
