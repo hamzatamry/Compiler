@@ -450,7 +450,7 @@ void Fid3(){
         Test_Symbole(DO_TOKEN,DO_ERR);
         _log(412);
         INSTRUCTIONS();
-        Test_Symbole(PV_TOKEN,PV_ERR);
+        // Test_Symbole(PV_TOKEN,PV_ERR);
     }
 }
 
